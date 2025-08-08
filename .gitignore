@@ -1,0 +1,7 @@
+.vs/
+bin/
+obj/
+Freemold.Api/token.json
+Freemold.Api/credentials.json
+Freemold.Modules/Services/SendgridService.cs
+Freemold.Api/appsettings.json

@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+
+    int page = Convert.ToInt32(ViewBag.page);
+    int pagesize = Convert.ToInt32(ViewBag.pagesize);
+    int totalcount = Convert.ToInt32(ViewBag.totalcount);
+    int totalpage = Convert.ToInt32(Math.Truncate((decimal)(totalcount - 1) / pagesize)) + 1;
+
+
+    int pagesperblock = ViewBag.pageblock;
+    int currentBlock = (int)Math.Ceiling((decimal)page / pagesperblock);
+    int startPage = (currentBlock - 1) * pagesperblock + 1;
+    int endPage = Math.Min(startPage + pagesperblock - 1, totalpage);
+
+}
+
+<div class="d-flex justify-content-end mt-3">
+    <ul class="pagination">
+        <!-- 처음 페이지 이동 -->
+        <li class="page-item @(page == 1 ? "disabled" : "")">
+            <a class="page-link" href="?page=1" aria-label="처음">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        <!-- 이전 페이지 이동 -->
+        <li class="page-item @(page == 1 ? "disabled" : "")">
+            <a class="page-link" href="?page=@(page - 1)">이전</a>
+        </li>
+
+        <!-- 페이지 번호 리스트 -->
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            <li class="page-item @(i == page ? "active" : "")">
+                <a class="page-link" href="?page=@i">@i</a>
+            </li>
+        }
+
+        <!-- 다음 페이지 이동 -->
+        <li class="page-item @(page == totalpage ? "disabled" : "")">
+            <a class="page-link" href="?page=@(page + 1)">다음</a>
+        </li>
+
+        <!-- 마지막 페이지 이동 -->
+        <li class="page-item @(page == totalpage ? "disabled" : "")">
+            <a class="page-link" href="?page=@totalpage" aria-label="마지막">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
