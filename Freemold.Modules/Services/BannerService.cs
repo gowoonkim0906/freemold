@@ -26,7 +26,7 @@ namespace Freemold.Modules.Services
 
 
             var query = _appdbcontext.TbBanners
-                              .Where(
+                              .Where( 
                                         x => x.Deleted == "N"
                                             && x.IsUse == "Y"
                                             && x.BType == "N"
