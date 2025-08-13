@@ -33,8 +33,8 @@ namespace Freemold.Modules.Services
                                             && (x.BannerUnlimit == "Y" || (x.SDate != null && x.EDate != null && x.SDate <= today && x.EDate >= today))
                                             && bannerIds.Contains(x.BIdx)
                                      )
-                              .OrderByDescending(x => x.Idx) // Idx 내림차순
-                              .Take(3)                       // 상위 3개만
+                              .OrderByDescending(x => x.Idx)  // Idx 내림차순
+                              .Take(3)                        // 상위 3개만
                               .AsNoTracking();
 
             var sql = query.ToQueryString();
