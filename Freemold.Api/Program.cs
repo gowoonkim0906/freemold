@@ -1,6 +1,7 @@
 using Freemold.Modules.Common;
 using Freemold.Modules.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Tls;
 using System;
 
@@ -14,10 +15,24 @@ builder.Services.AddSwaggerGen();           // Swagger 문서 생성용
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendWhitelist", policy =>
+        policy
+            .WithOrigins(
+                "http://dev.freemold.net",
+                "https://dev.freemold.net",
+                "https://www.freemold.net"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            // .AllowCredentials() // 쿠키/세션 쓸 때만
+    );
+});
+
 builder.Services.AddScoped<DbConn>(provider =>
 {
     return new DbConn(connectionString);
-
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -55,6 +70,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddHttpClient();
     builder.Services.AddTransient<ITest, Test>();
     builder.Services.AddTransient<ISendgridService, SendgridService>();
+    builder.Services.AddTransient<IBannerService, BannerService>();
     builder.Services.AddScoped<IEmailService>(provider =>
     {
         var env = provider.GetRequiredService<IWebHostEnvironment>();

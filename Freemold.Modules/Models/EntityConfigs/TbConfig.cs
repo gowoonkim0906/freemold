@@ -1,4 +1,4 @@
-﻿using Freemold.Modules.Models.EF;
+﻿using Freemold.Modules.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

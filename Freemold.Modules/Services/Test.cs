@@ -1,5 +1,5 @@
 ﻿using Freemold.Modules.Common;
-using Freemold.Modules.Models.EF;
+using Freemold.Modules.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

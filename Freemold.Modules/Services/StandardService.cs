@@ -1,6 +1,5 @@
 ﻿using Freemold.Modules.Common;
 using Freemold.Modules.Models;
-using Freemold.Modules.Models.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Freemold.Modules.Models.EF;
+namespace Freemold.Modules;
 
 public partial class VwNcategoryList
 {

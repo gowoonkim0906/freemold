@@ -1,4 +1,3 @@
-using Freemold.Modules.Models.EF;
 using Freemold.Modules.Models;
 using Freemold.Modules.Services;
 using Microsoft.AspNetCore.Mvc;

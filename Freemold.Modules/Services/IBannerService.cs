@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Freemold.Modules.Services
 {
-    public interface ITest
+    public interface IBannerService
     {
-        List<BakBanner> tt();
+        Task<List<TbBanner>> BannerList(List<string> bannerIds);
     }
 }

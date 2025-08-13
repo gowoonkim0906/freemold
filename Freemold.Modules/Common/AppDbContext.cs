@@ -1,5 +1,5 @@
 ﻿
-using Freemold.Modules.Models.EF;
+using Freemold.Modules.Models;
 using Freemold.Modules.Models.EntityConfigs;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
