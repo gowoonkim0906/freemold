@@ -1,8 +1,10 @@
 ﻿@using Freemold.Modules.Models;
 
-
 @{
     var datelist = ViewBag.datelist as List<StatisticsModel> ?? new List<StatisticsModel>();
+    var hourlist = ViewBag.hourlist as List<StatisticsHourModel> ?? new List<StatisticsHourModel>();
+    var refererlist = ViewBag.refererlist as List<StatisticsRefererModel> ?? new List<StatisticsRefererModel>();
+    var countrylist = ViewBag.countrylist as List<StatisticsCountryModel> ?? new List<StatisticsCountryModel>();
 }
 
 <div class="container-fluid px-4">
@@ -68,17 +70,16 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>순위</td>
-                                <td>System Architect</td>
+                                <td>합계</td>
+                                <td>@ViewBag.hourtotal</td>
                             </tr>
-                            <tr>
-                                <td>Fiona Green</td>
-                                <td>COO</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                            </tr>
+                            @foreach (var item in hourlist)
+                            {
+                                <tr>
+                                    <td>@item.sHour</td>
+                                    <td>@item.TotalCnt</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -101,20 +102,23 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
+                                <td>합계</td>
+                                <td></td>
+                                <td>@(refererlist.Sum(m => m.TotalCnt))</td>
                             </tr>
-                            <tr>
-                                <td>Fiona Green</td>
-                                <td>COO</td>
-                                <td>San Francisco</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                            </tr>
+                            @{
+                                int listnum = 1;
+                                foreach (var item in refererlist)
+                                 {
+                                    <tr>
+                                        <td>@listnum</td>
+                                        <td>@(item.HttpReferer == "" ? "직접/즐겨찾기" : item.HttpReferer)</td>
+                                        <td>@item.TotalCnt</td>
+                                    </tr>
+
+                                    listnum++;
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -138,23 +142,25 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>Edinburgh</td>
+                                <td>합계</td>
+                                <td></td>
+                                <td></td>
+                                <td>@(countrylist.Sum(m => m.TotalCnt))</td>
                             </tr>
-                            <tr>
-                                <td>Fiona Green</td>
-                                <td>COO</td>
-                                <td>San Francisco</td>
-                                <td>Edinburgh</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>Edinburgh</td>
-                            </tr>
+                            @{
+                                int listcnum = 1;
+                                foreach (var item in countrylist)
+                                {
+                                    <tr>
+                                        <td>@listcnum</td>
+                                        <td>@item.CCode</td>
+                                        <td>@item.CName</td>
+                                        <td>@item.TotalCnt</td>
+                                    </tr>
+
+                                    listcnum++;
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>

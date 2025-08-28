@@ -1,0 +1,23 @@
+﻿.imgcnt {
+    position: absolute;
+    display: inline-block;
+    margin-left: 20px;
+    height: 16px;
+    padding: 0px 5px 0px 5px;
+    background-color: #6a46e0;
+    font-weight: normal;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.viewcnt {
+    position: absolute;
+    display: inline-block;
+    height: 16px;
+    padding: 0px 5px 0px 5px;
+    background-color: #e06a46;
+    font-weight: normal;
+    color: #fff;
+    border-radius: 5px;
+}
+

@@ -40,21 +40,5 @@ namespace Freemold.Modules.Models
         public string? RegDate { get; set; }
     }
 
-    public class ProductModel
-    {
-        public string? pimg1 { get; set; }
-
-        public string? pname { get; set; }
-
-        public string? pcode { get; set; }
-
-        public double pcapacity { get; set; }
-
-        public string? pcapunit { get; set; }
-
-        public string? psize { get; set; }
-        public string? pquality { get; set; }
-        public int memberuid { get; set; }
-        public string? company_name { get; set; }
-    }
+    
 }

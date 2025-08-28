@@ -1,0 +1,63 @@
+﻿using Freemold.Modules.Common;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Freemold.Modules.Repositories
+{
+    public class CodeRepository : BaseRepository
+    {
+
+        private readonly IDbContextFactory<AppDbContext> _factory;
+        public CodeRepository(AppDbContext _appdbcontext, IDbContextFactory<AppDbContext> factory) : base(_appdbcontext)
+        {
+            _factory = factory;
+        }
+
+        //용량 목록 조회
+        public IQueryable<TbCode> GetCodeList()
+        {
+            try
+            {
+                return _appdbcontext.TbCodes;
+            }
+            catch 
+            {
+                throw;
+            }
+        }
+
+        //카테고리 목록 조회
+        public IQueryable<TbCategory> GetCategoryList()
+        {
+            try
+            {
+                return _appdbcontext.TbCategories;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<string> GetCategoryFullname(string catagory)
+        {
+
+            await using var db = await _factory.CreateDbContextAsync();
+
+
+            var result = await db.Database
+            .SqlQuery<string>($@"
+                SELECT STRING_AGG(dbo.FN_NCATEGORY_FULLNAME(value), '|') AS Value
+                FROM STRING_SPLIT({catagory}, ',')
+            ")
+            .SingleOrDefaultAsync();
+
+            return result ?? string.Empty;
+
+        }
+    }
+}

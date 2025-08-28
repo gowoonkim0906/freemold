@@ -1,0 +1,93 @@
+﻿@using Freemold.Modules.Models;
+@using Freemold.Modules.Common;
+@{
+
+    var list = ViewBag.list as List<AdminProductModel> ?? new List<AdminProductModel>();
+    int pageno = (int)ViewBag.pageno;
+}
+<div class="container-fluid px-4">
+    <div class="mb-3 mt-4">
+        <form class="d-flex align-items-center" role="search">
+            <input type="text" class="form-control form-control-sm me-2 datepicker" placeholder="이름 검색" style="max-width: 100px;">
+            <span class="mx-2">~</span>
+            <input type="text" class="form-control form-control-sm me-2 datepicker" placeholder="근무지 검색" style="max-width: 100px;">
+            <button type="submit" class="btn btn-sm btn-primary">검색</button>
+        </form>
+    </div>
+    <div class="row mt-4">
+        <div class="col-xl-12">
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr class="text-center">
+                            <th></th>
+                            <th>번호</th>
+                            <th>업체명</th>
+                            <th>이미지</th>
+                            <th>제품명</th>
+                            <th>제품코드</th>
+                            <th>카테고리</th>
+                            <th>용량</th>
+                            <th>사이즈</th>
+                            <th>재질</th>
+                            <th>원산지</th>
+                            <th>조회</th>
+                            <th>
+                                Skin
+                                Care
+                            </th>
+                            <th>Make Up</th>
+                            <th>
+                                Green
+                                Package
+                            </th>
+                            <th>노출</th>
+                            <th>
+                                승인
+                                상태
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (list.Any())
+                        {
+                            int no = pageno;
+                            foreach (var item in list)
+                            {
+                                ++no;
+                                <tr>
+                                    <td></td>
+                                    <td class ="text-center">@no</td>
+                                    <td>@item.CompanyName</td>
+                                    <td class="text-center">
+                                        <div class="imgcnt">1</div> <!--이미지수-->
+                                        <div class="viewcnt">2</div> <!--조회수-->
+                                        <img src="http://freemold.net/data/Product/@(item.PImg1)" style="height:60px" />
+                                    </td>
+                                    <td>@item.PName</td>
+                                    <td>@item.PCode</td>
+                                    <td>@Html.Raw(item.PCategoryName?.Replace("|", "<br/>"))</td>
+                                    <td>@item.PCapacity+" "+@item.PCapUnit</td>
+                                    <td>@item.PSize</td>
+                                    <td class="text-center">@item.PQuality</td>
+                                    <td class="text-center">@item.POrigin</td>
+                                    <td class="text-center">@item.PHit</td>
+                                    <td>Edinburgh</td>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>@item.PUseSt</td>
+                                    <td>@item.PApproval</td>
+                                </tr>
+                            }
+                        }
+                        
+                    </tbody>
+                </table>
+
+                @Html.Partial(Url.Content("_Pagination"))
+            </div>
+        </div>
+    </div>
+
+</div>
+

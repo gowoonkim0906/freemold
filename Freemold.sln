@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freemold.Modules", "Freemol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freemold.Api", "Freemold.Api\Freemold.Api.csproj", "{EADE66CA-D2D9-464A-8490-CF1C55C2FD37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "standardmold.Admin", "standardmold.Admin\standardmold.Admin.csproj", "{7265E7A9-6842-41E9-8AC1-E60DE09A3862}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "allinkbeauty.Admin", "standardmold.Admin\allinkbeauty.Admin.csproj", "{7265E7A9-6842-41E9-8AC1-E60DE09A3862}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "standardmold", "standardmold\standardmold.csproj", "{5C57933A-40DA-45BD-9A92-DAE801682EB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "allinkbeauty", "standardmold\allinkbeauty.csproj", "{5C57933A-40DA-45BD-9A92-DAE801682EB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

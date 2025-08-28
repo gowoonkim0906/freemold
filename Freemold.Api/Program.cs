@@ -1,4 +1,5 @@
 using Freemold.Modules.Common;
+using Freemold.Modules.Repositories;
 using Freemold.Modules.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -68,7 +69,6 @@ void ConfigureServices(WebApplicationBuilder builder)
 {
 
     builder.Services.AddHttpClient();
-    builder.Services.AddTransient<ITest, Test>();
     builder.Services.AddTransient<ISendgridService, SendgridService>();
     builder.Services.AddTransient<IBannerService, BannerService>();
     builder.Services.AddScoped<IEmailService>(provider =>
@@ -76,6 +76,5 @@ void ConfigureServices(WebApplicationBuilder builder)
         var env = provider.GetRequiredService<IWebHostEnvironment>();
         return new EmailService(env.ContentRootPath);
     });
-    
 
 }

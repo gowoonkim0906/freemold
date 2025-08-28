@@ -1,0 +1,16 @@
+﻿using Freemold.Modules.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Freemold.Modules.Services
+{
+    internal interface IBeautyService
+    {
+        Task<List<TbCode>> GetCodeList(string sort);
+        Task<List<TbCategory>> GetCategoryList(string UpCode, string StdMld = "");
+        Task<List<ProductModel>> GetProductList(string pageorderby);
+    }
+}

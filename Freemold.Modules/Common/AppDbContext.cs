@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Freemold.Modules.Common
 {
-    public class AppDbContext : DbContext
+    public partial class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
