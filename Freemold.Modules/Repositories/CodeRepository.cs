@@ -43,6 +43,18 @@ namespace Freemold.Modules.Repositories
             }
         }
 
+        public IQueryable<VwNcategoryList> GetVwNcategoryList()
+        {
+            try
+            {
+                return _appdbcontext.VwNcategoryLists;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public async Task<string> GetCategoryFullname(string catagory)
         {
 

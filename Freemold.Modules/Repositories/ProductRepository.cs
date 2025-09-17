@@ -8,8 +8,8 @@ namespace Freemold.Modules.Repositories
         public ProductRepository(AppDbContext _appdbcontext) : base(_appdbcontext)
         {}
 
-        //스탠다드몰드 관리자 제품리스트
-        public IQueryable<AdminProductDetailModel> GetProductView()
+        //allinkbeauty 문의사항 상세내용
+        public IQueryable<AdminProductDetailModel> GetInquiryProductView()
         {
             try
             {
@@ -143,6 +143,93 @@ namespace Freemold.Modules.Repositories
                                 IsUse = c.IsUse,
                                 ImgCnt = AppDbContext.FnImageCount(i.ProdUid)
 
+                            };
+
+                return query;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IQueryable<ProductDetailModel> GetProductView()
+        {
+            try
+            {
+                var query = from i in _appdbcontext.ProductLists
+                            join p in _appdbcontext.Member1s
+                                on i.MemberUid equals p.Uid
+                            select new ProductDetailModel
+                            {
+                                ProdUid = i.ProdUid,
+                                ItId = i.ItId,
+                                CoId = i.CoId,
+                                MemberGubun = i.MemberGubun,
+                                MemberUid = i.MemberUid,
+                                PCategory = i.PCategory,
+                                PName = i.PName,
+                                PName2 = i.PName2,
+                                PCode = i.PCode,
+                                PMoq = i.PMoq,
+                                PMoqDeal = i.PMoqDeal,
+                                PImg1 = i.PImg1,
+                                PImg2 = i.PImg2,
+                                PImg3 = i.PImg3,
+                                PImg4 = i.PImg4,
+                                PImg5 = i.PImg5,
+                                PImg6 = i.PImg6,
+                                PCapacity = i.PCapacity,
+                                PCapUnit = i.PCapUnit,
+                                PSize = i.PSize,
+                                POrigin = i.POrigin,
+                                PMemo = i.PMemo,
+                                PMemo2 = i.PMemo2,
+                                PRegdate = i.PRegdate,
+                                PModdate = i.PModdate,
+                                PAppdate = i.PAppdate,
+                                PUse = i.PUse,
+                                PUseSt = i.PUseSt,
+                                PNew = i.PNew,
+                                PHot = i.PHot,
+                                PQuality = i.PQuality,
+                                PSeq = i.PSeq,
+                                PHit = i.PHit,
+                                IsRefill = i.IsRefill,
+                                IsPcr = i.IsPcr,
+                                IsMove = i.IsMove,
+                                Visit = i.Visit,
+                                PApproval = i.PApproval,
+                                ProdType = i.ProdType,
+                                Deleted = i.Deleted,
+                                UpCat = i.UpCat,
+                                Cat = i.Cat,
+                                Tag0 = i.Tag0,
+                                Tag1 = i.Tag1,
+                                Tag2 = i.Tag2,
+                                Tag3 = i.Tag3,
+                                Tag4 = i.Tag4,
+                                Tag5 = i.Tag5,
+                                Tag6 = i.Tag6,
+                                Tag7 = i.Tag7,
+                                Tag8 = i.Tag8,
+                                Tag9 = i.Tag9,
+
+                                Uid = p.Uid,
+                                CompanyName = p.CompanyName,
+                                CompanyNameE = p.CompanyNameE,
+                                CompanyNameC = p.CompanyNameC,
+                                Tel = p.Tel,
+                                Fax = p.Fax,
+                                Mobile = p.Mobile,
+                                Email = p.Email,
+                                Mainemail = p.Mainemail,
+                                Damdang = p.Damdang,
+                                DamdangTel = p.DamdangTel,
+                                DamdangDep = p.DamdangDep,
+                                DamdangPos = p.DamdangPos,
+                                DamdangEmail = p.DamdangEmail,
+                                ComType = p.ComType
                             };
 
                 return query;

@@ -15,9 +15,10 @@ namespace Freemold.Modules.Services
         List<StatisticsCountryModel> StatisticsCountryList(DateTime? sDate = null, DateTime? eDate = null);
         List<InquiryModel> InquiryList();
         InquiryViewModel InquiryView(int idx);
-        AdminProductDetailModel ProductView(int idx);
+        AdminProductDetailModel InquiryProductView(int idx);
         List<AdminProductModel> KProductList();
         List<AdminProductModel> CProductList();
+        ProductDetailModel ProductView(int ProdUid);
         Task<string> GetCategoryFullname(string catagory);
 
         bool BlockIp(string ip);

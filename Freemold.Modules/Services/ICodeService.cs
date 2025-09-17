@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Freemold.Modules.Services
 {
-    internal interface IBeautyService
+    public interface ICodeService
     {
         Task<List<TbCode>> GetCodeList(string sort);
         Task<List<TbCategory>> GetCategoryList(string UpCode, string StdMld = "");
-        Task<List<ProductModel>> GetProductList(string pageorderby);
+        Task<List<VwNcategoryList>> GetVwNcategoryList(string[] ACode, string StdMld = "");
+        Task<List<CategoryModel>> GetModalVwNcategoryList(string ACode, string StdMld = "", string[] Selectval = null);
     }
 }

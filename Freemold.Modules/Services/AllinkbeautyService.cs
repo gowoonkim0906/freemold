@@ -1,5 +1,4 @@
 ﻿using Freemold.Modules.Common;
-using Freemold.Modules.Data;
 using Freemold.Modules.Models;
 using Freemold.Modules.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -171,9 +170,9 @@ namespace Freemold.Modules.Services
             return result;
         }
 
-        public AdminProductDetailModel ProductView(int idx)
+        public AdminProductDetailModel InquiryProductView(int idx)
         {
-            var result = _productRepository.GetProductView().FirstOrDefault(m => m.ProdUid == idx) ?? null;
+            var result = _productRepository.GetInquiryProductView().FirstOrDefault(m => m.ProdUid == idx) ?? null;
 
             return result ?? new AdminProductDetailModel();
         }
@@ -192,6 +191,13 @@ namespace Freemold.Modules.Services
                         .Where(m => m.Deleted == "N" && m.PayUse == "Y" && m.Approval == "Y" &&  m.MemberUid == 635)
                         .OrderByDescending(m => m.PModdate).ToList();
             return result;
+        }
+
+        public ProductDetailModel ProductView(int ProdUid)
+        {
+            var result = _productRepository.GetProductView().FirstOrDefault(m => m.ProdUid == ProdUid) ?? null;
+
+            return result ?? new ProductDetailModel();
         }
 
         public async Task<string> GetCategoryFullname(string catagory)

@@ -1,0 +1,132 @@
+﻿.upload-container {
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+#dropZone {
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed #aaa;
+    border-radius: 10px;
+    background: #f9f9f9;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    display: flex; /* flex layout 사용 */
+    flex-wrap: wrap; /* 넘치면 줄 바꿈 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 10px; /* 이미지 간 간격 */
+    margin: 0 auto;
+}
+
+#dropZone.dragover {
+    background: #e6f7ff;
+    border-color: #3498db;
+}
+
+#dropText {
+    color: #888;
+    font-size: 16px;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* 클릭 방지 (선택) */
+}
+
+.image-preview {
+    position: relative; /* 반드시 있어야 함 */
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+}
+
+.image-preview img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    -webkit-user-drag: none;
+    user-drag: none;
+    user-select: none;
+}
+
+.btn-delete {
+    position: absolute; /* image-preview 기준으로 */
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+}
+
+.btn-upload {
+    background: #2ecc71;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn-upload:hover {
+    background: #27ae60;
+}
+
+.upload-notice {
+    font-size: 14px;
+    color: #666;
+    margin-top: 15px;
+    text-align: left;
+    padding: 10px;
+}
+
+.upload-notice ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.upload-notice li {
+    position: relative;
+    padding-left: 16px;
+    margin: 8px 0;
+}
+
+.upload-notice li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #333;
+    font-size: 16px;
+    line-height: 1;
+}

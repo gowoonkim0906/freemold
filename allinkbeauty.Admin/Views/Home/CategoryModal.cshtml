@@ -1,0 +1,112 @@
+﻿@using Freemold.Modules;
+@using Freemold.Modules.Models;
+@{
+    Layout = null;
+
+    var list = ViewBag.categoryList as List<CategoryModel> ?? new List<CategoryModel>();
+
+    string Bcode = "";
+    string code = "";
+    bool selectval = false;
+}
+<style>
+    /* 팝업 공통 타이포/여백 */
+    .popup-list {
+        font-size: 13px;
+    }
+
+    /* 핵심: 자동 컬럼 그리드 */
+    .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 최소 240px, 그 이상은 균등 분배 */
+        gap: 6px 16px; /* 행/열 간격 */
+    }
+
+        .cat-grid li {
+            list-style: none;
+            margin: 0;
+            padding: 0.25rem 0.5rem;
+            /* 한국어/혼합문자 줄바꿈 안전장치 */
+            word-break: keep-all; /* 한국어 단어 중간 분절 방지 */
+            overflow-wrap: anywhere; /* 너무 긴 토큰은 어디서든 줄바꿈 허용 */
+            line-height: 1.4;
+        }
+
+    /* 모달 스크롤 높이 제한 재사용 */
+    .modal-dialog-scrollable {
+        max-height: 80vh;
+    }
+</style>
+<div class="modal-content">
+    <div class="modal-header border-0 pb-4">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+    </div>
+    <div class="modal-body pt-0">
+        <div class="table-responsive popup-list" id="modalcategory">
+            <ul class="cat-grid pt-3">
+                @foreach (var item in list)
+                {
+                    code = item.Ccode.Trim() == "" ? item.Bcode : item.Ccode;
+                    selectval = item.CheckYN == "Y" ? true : false;
+
+                    if (Bcode  != item.Bcode && Bcode != "")
+                    {
+                        @:</ul>
+                        @:<ul class="cat-grid pt-3">            
+                    }
+                    
+                    <li class="@(Bcode  != item.Bcode || Bcode == "" ? "fw-bold" : "") @(selectval ?  "text-primary" : "")" style="cursor:pointer"  onclick="clickCat('@item.Bcode.Trim()','@item.Ccode.Trim()')"  id="@(code)" data-val="@code" >
+                    <input type="checkbox" class="form-check-input visually-hidden" id="sel-@(code)" value="@(code)" data-selectval = "@item.CatName"  @(selectval ? "checked" : "") />
+                    @item.CatName
+                    </li>
+
+                    Bcode = item.Bcode;
+                }
+                
+            </ul>
+
+        </div>
+    </div>
+    <div class="modal-footer popup-footer border-0">
+        <button type="button" class="btn btn-outline-secondary" onclick="selectcategory()">선택완료(창닫기)</button>
+    </div>
+</div>
+
+<script>
+    function clickCat(bcode, ccode){
+
+        if(ccode == ""){
+
+            if($("#"+bcode).hasClass('text-primary')){
+                $("#"+bcode).removeClass('text-primary');
+                $("#sel-"+bcode).prop('checked',false);
+            }else{
+                $("#"+bcode).addClass('text-primary');
+                $("#sel-"+bcode).prop('checked',true);
+            }
+
+        }else{
+            
+            if($("#"+ccode).hasClass('text-primary')){
+                $("#"+ccode).removeClass('text-primary');
+                $("#sel-"+ccode).prop('checked',false);
+            }else{
+
+                $("#"+ccode).addClass('text-primary');
+                $("#sel-"+ccode).prop('checked',true);
+
+                if(!$("#"+bcode).hasClass('text-primary')){
+                  $("#"+bcode).addClass('text-primary');
+                  $("#sel-"+bcode).prop('checked',true);
+                }
+            }
+        }
+
+    }
+
+    
+</script>
+
+
+
+

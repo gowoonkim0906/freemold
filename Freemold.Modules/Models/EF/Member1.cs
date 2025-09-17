@@ -195,6 +195,10 @@ public partial class Member1
 
     public string CoItemUse { get; set; } = null!;
 
+    public string? CoRemove { get; set; }
+
+    public DateTime? CoRemoveDate { get; set; }
+
     public string LeaveDate { get; set; } = null!;
 
     public string InterceptDate { get; set; } = null!;

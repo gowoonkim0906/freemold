@@ -1,7 +1,9 @@
+using Freemold.Modules;
 using Freemold.Modules.Common;
 using Freemold.Modules.Models;
 using Freemold.Modules.Repositories;
 using Freemold.Modules.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using standardmold.Admin.Models;
 using System.Collections.Generic;
@@ -13,12 +15,13 @@ namespace standardmold.Admin.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAllinkbeautyService _allinkbeautyService;
-        private readonly CodeRepository _codeRepository;
+        private readonly ICodeService _codeService;
 
-        public HomeController(ILogger<HomeController> logger, IAllinkbeautyService allinkbeautyService)
+        public HomeController(ILogger<HomeController> logger, IAllinkbeautyService allinkbeautyService, ICodeService codeService)
         {
             _logger = logger;
             _allinkbeautyService = allinkbeautyService;
+            _codeService = codeService;
         }
 
         public IActionResult Index()
@@ -77,7 +80,6 @@ namespace standardmold.Admin.Controllers
 
             return View(list);
         }
-
 
         public IActionResult KProductList(int page = 1)
         {
@@ -146,7 +148,43 @@ namespace standardmold.Admin.Controllers
             return View();
         }
 
+        public async Task<IActionResult> CProductEdit(int produid)
+        {
+            ProductDetailModel productinfo = _allinkbeautyService.ProductView(produid);
 
+
+            List<TbCode> codelist = new List<TbCode>();
+            codelist = await _codeService.GetCodeList("¿ø»êÁö");
+
+            List<TbCategory> categorylist = new List<TbCategory>();
+            categorylist = await _codeService.GetCategoryList("0000" , "Y");
+
+
+            ViewBag.productinfo = productinfo;
+            ViewBag.categorylist = categorylist;
+            ViewBag.codelist = codelist;    
+
+            return View();
+        }
+
+        public async Task<IActionResult> CategoryModal(string ACode, string[] selectcode) {
+
+            List<CategoryModel> list = new List<CategoryModel>();
+            list = await _codeService.GetModalVwNcategoryList(ACode, "Y", selectcode);
+
+
+            ViewBag.categoryList = list;    
+
+            return View();
+        }
+
+        public async Task<JsonResult> CategoryList(string[] ACode) { 
+        
+            List<VwNcategoryList> list = new List<VwNcategoryList>();
+            list =  await _codeService.GetVwNcategoryList(ACode);
+
+            return Json(new { Item1 = "success", Item2 = list });   
+        }
 
         public JsonResult InquiryView(int idx) {
 
@@ -155,7 +193,7 @@ namespace standardmold.Admin.Controllers
             AdminProductDetailModel result2 = null;
 
             if (result1 != null) {
-                result2 = _allinkbeautyService.ProductView(result1.pidx);
+                result2 = _allinkbeautyService.InquiryProductView(result1.pidx);
             }
 
             return Json(new { Item1 = "success", Item2 = result1, Item3 = result2 });

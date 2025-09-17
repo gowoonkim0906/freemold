@@ -1,6 +1,7 @@
 using Freemold.Modules.Common;
 using Freemold.Modules.Repositories;
 using Freemold.Modules.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -77,6 +78,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 
     builder.Services.AddHttpClient();
     builder.Services.AddScoped<IAllinkbeautyService, AllinkbeautyService>();
+    builder.Services.AddScoped<ICodeService, CodeService>();
 
     //Repository µî·Ï
     builder.Services.AddScoped<MemberRepository>();
