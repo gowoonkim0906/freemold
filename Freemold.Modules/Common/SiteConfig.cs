@@ -9,5 +9,10 @@ namespace Freemold.Modules.Common
     public class SiteConfig
     {
         public static string fileurl = "https://www.freemold.net/data";
+
+        public static string fileuploadfolder = @"D:\HostRoot\HostWeb\Freemold";
+        public static string fileuploadpath = @"D:\HostRoot\HostWeb\Freemold\Data\Temp\";
+
+
     }
 }

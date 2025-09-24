@@ -3,6 +3,7 @@
 @using Freemold.Modules.Common;
 @{
     var productinfo = ViewBag.productinfo as ProductDetailModel ?? new ProductDetailModel();
+    var productcategory = ViewBag.productcategory as List<CategoryFullnameModel> ?? new List<CategoryFullnameModel>();
     var categorylist = ViewBag.categorylist as List<TbCategory> ?? new List<TbCategory>();
     var codelist = ViewBag.codelist as List<TbCode> ?? new List<TbCode>();
 
@@ -55,7 +56,7 @@
                             @foreach (var item in categorylist)
                             {
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="@item.Code" value="@item.Code" @(item.Code.Contains(UpCat) ? "checked" : "")>
+                                    <input class="form-check-input" type="radio" name="upcat" id="@item.Code" value="@item.Code" @(item.Code.Contains(UpCat) ? "checked" : "")>
                                     <label class="form-check-label" for="@item.Code">@item.NameKor</label>
                                 </div>
                                     
@@ -70,6 +71,13 @@
                                 <button type="button" class="btn btn-outline-dark btn-sm" onclick="catagorymodalopen()">카테고리</button>
                             </div>
                             <div class="col" id="selectcategory">
+                                @if (productcategory?.Any() ?? false)
+                                {
+                                    foreach (var item in productcategory)
+                                    {
+                                        <div class="text-break" data-val="@(item.Code)">@item.FullName</div>
+                                    }
+                                }
                             </div>
                         </div>
                             
@@ -107,7 +115,7 @@
 
                     <div class="mt-4">
                         <label for="p_quality" class="form-label">원산지 <span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" name="p_origin" id="p_origin">
                             <option value="">원산지를 선택해주세요</option>
                             @foreach (var item in codelist)
                             {
@@ -183,7 +191,7 @@
                         </div>
                     </div>
 
-                    <input type="file" id="file-keep" multiple style="display:none;" />
+                    <input type="file" id="file-keep" multiple  style="display:none" />
                     <div name="hiddenfile" id="hiddenfile"></div>
                     <input type="hidden" name="delete_existing_ids" id="delete_existing_ids" value="">
                     <input type="hidden" name="image_order" id="image_order">
@@ -207,7 +215,7 @@
                     <!-- 2. 내용 -->
                     <div class="my-4">
                         <label class="form-label">내용 <span class="text-danger">*</span></label>
-                        <div id="editor" class="border rounded-2"></div>
+                        <div id="editor" class="border rounded-2">@Html.Raw(productinfo.PMemo)</div>
 
                         <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
                         <input type="hidden" id="contentHtml" name="contentHtml" required>
@@ -222,9 +230,12 @@
             <!-- 4. 액션 버튼 -->
             <div class="d-flex justify-content-center gap-2 pt-3 ">
                 <button type="button" class="btn btn-outline-secondary" onclick="history.back()">취소</button>
-                <button type="submit" class="btn btn-primary">등록</button>
+                <button type="button" class="btn btn-primary" onclick="productsave()">등록</button>
             </div>
     </div>
+    <input type="file" id="file-keep" multiple style="display:none;" />
+    <input type="hidden" name="delete_existing_ids" id="delete_existing_ids" value="">
+    <input type="hidden" name="image_order" id="image_order">
     </form>
 </div>
 
@@ -252,8 +263,18 @@
             }
             form.classList.add('was-validated');
           }, false);
-        })();
 
+
+
+          const previews = document.querySelectorAll('.image-preview');
+          const dropText = document.getElementById('dropText');
+          if (previews.length > 0 && dropText) {
+              dropText.style.display = 'none';
+          }
+
+
+
+        })();
 
 
 
@@ -286,27 +307,101 @@
           }
         });
 
-        // 폼 제출 시 에디터 내용을 hidden input에 담아 전송
-        const form = document.querySelector('form.needs-validation');
-        form.addEventListener('submit', function(e){
-          const html = editor.getHTML().trim();
-          const md   = editor.getMarkdown().trim();
 
-          // 내용 비었는지 간단 체크 (HTML 태그만 남는 경우 보정)
-          const plain = md.replace(/[#>*`~\-\s]/g, '');
-          document.getElementById('contentHtml').value = html;
-          document.getElementById('contentMd').value   = md;
+        function productsave(){
 
-          if (!plain) {
-            e.preventDefault(); e.stopPropagation();
-            // 부트스트랩 invalid 표시 트리거
-            document.getElementById('contentHtml').setCustomValidity('required');
-            form.classList.add('was-validated');
-            return;
-          } else {
-            document.getElementById('contentHtml').setCustomValidity('');
-          }
-        });
+            const _FormData = new FormData();
+
+            datasave(); //파일 담기
+
+            const md   = editor.getMarkdown().trim();
+            const html = editor.getHTML().trim();
+
+            // 마크다운 실내용(문자) 추출 — 완전 빈 경우 판단용(선택)
+            const plain = md.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
+
+            // 전송값 세팅 — 정책에 따라 선택
+            document.getElementById('contentMd').value   = md || '';              // 비워도 OK
+            document.getElementById('contentHtml').value = plain ? html : '';     // 내용 없으면 HTML은 비움
+
+
+            const delete_existing_ids = $("#delete_existing_ids").val();
+            const image_order = $("#image_order").val();
+
+            const p_code = ($('#p_code').val() ?? '').toString();
+            const p_name = ($('#p_name').val() ?? '').toString();
+            const p_capacity = ($('#p_capacity').val() ?? '').toString();
+            const p_size = ($('#p_size').val() ?? '').toString();
+            const p_quality = ($('#p_quality').val() ?? '').toString();
+            const p_origin = ($('#p_origin').val() ?? '').toString();
+
+            if(!p_code.trim()){
+                alert('제품코드를 등록해주세요.');
+                return;
+            }
+
+            if(!p_name.trim()){
+                alert('제품명을 등록해주세요.');
+                return;
+            }
+
+            if(!p_capacity.trim()){
+                alert('제품용량을 등록해주세요.');
+                return;
+            }
+
+            if(!p_size.trim()){
+                alert('제품사이즈를 등록해주세요.');
+                return;
+            }
+
+            if(!p_quality.trim()){
+                alert('재질을 등록해주세요.');
+                return;
+            }
+
+            if(!p_origin.trim()){
+                alert('원산지를 선택해 주세요.');
+                return;
+            }
+
+
+           _FormData.append('p_code', p_code);
+           _FormData.append('p_name', p_name);
+           _FormData.append('p_capacity', p_capacity);
+           _FormData.append('p_size', p_size);
+           _FormData.append('p_quality', p_quality);
+           _FormData.append('p_origin', p_origin);
+           _FormData.append('delete_existing_ids', delete_existing_ids);
+           _FormData.append('image_order', image_order);
+           
+
+           const files = document.getElementById('file-keep').files;
+           for (let i = 0; i < files.length; i++) {
+             _FormData.append('files', files[i]); // ← HttpPostedFileBase[] files 에 매핑
+           }
+
+
+           $.ajax({
+                url: 'AjaxProductEdit', // 서버의 URL
+                type: 'POST',
+                data: _FormData,
+                processData: false, // processData 옵션을 false로 설정해야 FormData를 제대로 전송할 수 있음
+                contentType: false, // contentType을 false로 설정하여 jQuery가 Content-Type 헤더를 설정하지 않도록 함
+                success: function (response) {
+
+                    
+
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert('Error:', error);
+                    console.error('Error:', error);
+                }
+            });
+
+        }
 
         function catagorymodalopen(){
 

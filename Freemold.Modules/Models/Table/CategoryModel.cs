@@ -46,4 +46,10 @@ namespace Freemold.Modules.Models
 
         public string CheckYN { get; set; } = "N";  
     }
+
+    public sealed class CategoryFullnameModel
+    {
+        public string? Code { get; set; }     
+        public string? FullName { get; set; }  
+    }
 }

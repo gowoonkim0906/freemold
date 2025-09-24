@@ -1,5 +1,6 @@
 ﻿@using Freemold.Modules.Models;
 @using Freemold.Modules.Common;
+@using System.Globalization;
 @{
 
     var list = ViewBag.list as List<AdminProductModel> ?? new List<AdminProductModel>();
@@ -35,10 +36,7 @@
                             <th>원산지</th>
                             <th>조회</th>
                             <th>노출</th>
-                            <th>
-                                승인<br />
-                                상태
-                            </th>
+                            <th>승인</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +51,8 @@
                                     <td class ="text-center">@no</td>
                                     <td>@item.CompanyName</td>
                                     <td class="text-center">
-                                        <div class="imgcnt">1</div> <!--이미지수-->
-                                        <div class="viewcnt">2</div> <!--조회수-->
+                                        <div class="imgcnt">@item.ImgCnt</div> <!--이미지수-->
+                                        <div class="viewcnt">@item.Visit</div> <!--조회수-->
                                         <img src="https://freemold.net/data/Product/@(item.PImg1)" style="height:60px" />
                                     </td>
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PName</a></td>
@@ -65,7 +63,7 @@
                                     <td class="text-center">@item.PQuality</td>
                                     <td class="text-center">@item.POrigin</td>
                                     <td class="text-center">@item.PHit</td>
-                                    <td class="text-center"><input type="checkbox" name="gp" checked ="@(item.PUseSt == "Y" ? "checked" : "")" /></td>
+                                    <td class="text-center"><input type="checkbox" name="gp" checked="@(item.PUseSt == "Y" ? "checked" : "")" data-prod_uid="@(item.ProdUid)" onclick="stviewcheckchange(this)" /></td>
                                     <td>@item.PApproval</td>
                                 </tr>
                             }
@@ -89,6 +87,27 @@
 
       const frm = document.getElementById('frm');
       frm.submit();
+
+    }
+
+    function stviewcheckchange(el){
+    
+        const checked = $(el).is(':checked');
+        const PUseSt = checked ? "Y" : "N";
+
+        const prod_uid = $(el).data('prod_uid');
+
+        var param = {
+            ProdUid: prod_uid,
+            PUseSt: PUseSt
+        };
+
+        $.post('AjaxProductChangeViewBeauty', param, function (result) {
+            console.log(result);    
+        });
+
+        console.log(prod_uid);
+        
 
     }
 </script>

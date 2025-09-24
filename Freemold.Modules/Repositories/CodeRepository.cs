@@ -1,4 +1,5 @@
 ﻿using Freemold.Modules.Common;
+using Freemold.Modules.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace Freemold.Modules.Repositories
             }
         }
 
-        public async Task<string> GetCategoryFullname(string catagory)
+        public async Task<string> GetCategoryFullname(string category)
         {
 
             await using var db = await _factory.CreateDbContextAsync();
@@ -64,11 +65,30 @@ namespace Freemold.Modules.Repositories
             var result = await db.Database
             .SqlQuery<string>($@"
                 SELECT STRING_AGG(dbo.FN_NCATEGORY_FULLNAME(value), '|') AS Value
-                FROM STRING_SPLIT({catagory}, ',')
+                FROM STRING_SPLIT({category}, ',')
             ")
             .SingleOrDefaultAsync();
 
             return result ?? string.Empty;
+
+        }
+
+        public async Task<List<CategoryFullnameModel>> GetCategoryFullnameList(string category)
+        {
+            if (string.IsNullOrWhiteSpace(category))
+                return new List<CategoryFullnameModel>();
+
+            await using var db = await _factory.CreateDbContextAsync();
+
+
+            var list = await db.Database.SqlQuery<CategoryFullnameModel>($@"
+                SELECT 
+                    LTRIM(RTRIM(s.[value])) AS Code,
+                    dbo.FN_NCATEGORY_FULLNAME(LTRIM(RTRIM(s.[value]))) AS FullName
+                FROM STRING_SPLIT({category}, ',') AS s
+            ").ToListAsync();
+
+            return list;
 
         }
     }

@@ -228,4 +228,15 @@ namespace Freemold.Modules.Models
         public string ComType { get; set; } = null!;
 
     }
+
+    public class ProductSaveModel
+    {
+        public string p_code { get; set; } = "";
+        public string p_name { get; set; } = "";
+        public string p_capacity { get; set; } = "";
+        public string p_size { get; set; } = "";
+        public string p_quality { get; set; } = "";
+        public string p_origin { get; set; } = "";
+
+    }
 }

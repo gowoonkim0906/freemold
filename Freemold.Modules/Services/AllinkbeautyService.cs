@@ -2,6 +2,7 @@
 using Freemold.Modules.Models;
 using Freemold.Modules.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -200,29 +201,16 @@ namespace Freemold.Modules.Services
             return result ?? new ProductDetailModel();
         }
 
-        public async Task<string> GetCategoryFullname(string catagory)
-        {
 
-            if (string.IsNullOrWhiteSpace(catagory)) return string.Empty;
+        public async Task<string> ProductViewUpdate(long ProdUid, string PUseSt) { 
+        
+            string result = "OK";
 
-            string result = string.Empty;
+            result = await _productRepository.ProductViewUpdate(ProdUid, PUseSt);
 
-            catagory = catagory.Replace(";;", ",");
-            catagory = catagory.Replace(";", "");
-
-            var tokens =  Util.strSplit(catagory, ',');
-            if (tokens.Length == 0) return string.Empty;
-
-
-            var seen = new HashSet<string>();
-            var distinct = new List<string>(tokens.Length);
-            foreach (var t in tokens)
-                if (seen.Add(t)) distinct.Add(t);
-
-            var joined = string.Join(",", tokens); // "1,2,3"
-
-            return await _codeRepository.GetCategoryFullname(joined);
+            return result;
         }
+
 
         public bool BlockIp(string ip)
         {
@@ -242,7 +230,7 @@ namespace Freemold.Modules.Services
                     return false;
                 }
             }
-            catch {
+            catch(Exception ex) {
 
                 return true;
             }

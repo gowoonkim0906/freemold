@@ -19,8 +19,7 @@ namespace Freemold.Modules.Services
         List<AdminProductModel> KProductList();
         List<AdminProductModel> CProductList();
         ProductDetailModel ProductView(int ProdUid);
-        Task<string> GetCategoryFullname(string catagory);
-
+        Task<string> ProductViewUpdate(long ProdUid, string PUseSt);
         bool BlockIp(string ip);
     }
 }

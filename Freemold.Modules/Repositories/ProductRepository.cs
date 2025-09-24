@@ -1,12 +1,17 @@
 ﻿using Freemold.Modules.Common;
 using Freemold.Modules.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Freemold.Modules.Repositories
 {
     public class ProductRepository : BaseRepository
     {
-        public ProductRepository(AppDbContext _appdbcontext) : base(_appdbcontext)
-        {}
+        private readonly IDbContextFactory<AppDbContext> _factory;
+        public ProductRepository(AppDbContext _appdbcontext, IDbContextFactory<AppDbContext> factory) : base(_appdbcontext)
+        {
+            _factory = factory;
+        }
 
         //allinkbeauty 문의사항 상세내용
         public IQueryable<AdminProductDetailModel> GetInquiryProductView()
@@ -238,6 +243,32 @@ namespace Freemold.Modules.Repositories
             {
                 throw;
             }
+        }
+
+
+        public async Task<string> ProductViewUpdate(long ProdUid , string PUseSt)
+        {
+
+            string result = "OK";
+
+            try
+            {
+                var p = await _appdbcontext.ProductLists.FirstAsync(x => x.ProdUid == ProdUid);
+                p.PUseSt = PUseSt;
+
+                await _appdbcontext.SaveChangesAsync();
+            }
+            catch
+            {
+                result = "FAIL";    
+
+                // DB는 롤백됨. 하지만 트래커엔 변경 흔적이 남아있을 수 있어요.
+                _appdbcontext.ChangeTracker.Clear();      // 선택: 메모리 상태 초기화
+                throw;
+            }
+
+
+            return result;
         }
 
 

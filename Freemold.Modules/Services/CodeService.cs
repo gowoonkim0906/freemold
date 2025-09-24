@@ -1,4 +1,5 @@
-﻿using Freemold.Modules.Models;
+﻿using Freemold.Modules.Common;
+using Freemold.Modules.Models;
 using Freemold.Modules.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -153,6 +154,54 @@ namespace Freemold.Modules.Services
             {
                 throw;
             }
+        }
+
+        public async Task<string> GetCategoryFullname(string catagory)
+        {
+
+            if (string.IsNullOrWhiteSpace(catagory)) return string.Empty;
+
+            string result = string.Empty;
+
+            catagory = catagory.Replace(";;", ",");
+            catagory = catagory.Replace(";", "");
+
+            var tokens = Util.strSplit(catagory, ',');
+            if (tokens.Length == 0) return string.Empty;
+
+
+            var seen = new HashSet<string>();
+            var distinct = new List<string>(tokens.Length);
+            foreach (var t in tokens)
+                if (seen.Add(t)) distinct.Add(t);
+
+            var joined = string.Join(",", tokens); // "1,2,3"
+
+            return await _codeRepository.GetCategoryFullname(joined);
+        }
+
+        public async Task<List<CategoryFullnameModel>> GetCategoryFullnameLIst(string catagory)
+        {
+
+            if (string.IsNullOrWhiteSpace(catagory)) return new List<CategoryFullnameModel>();
+
+            string result = string.Empty;
+
+            catagory = catagory.Replace(";;", ",");
+            catagory = catagory.Replace(";", "");
+
+            var tokens = Util.strSplit(catagory, ',');
+            if (tokens.Length == 0) return new List<CategoryFullnameModel>();
+
+
+            var seen = new HashSet<string>();
+            var distinct = new List<string>(tokens.Length);
+            foreach (var t in tokens)
+                if (seen.Add(t)) distinct.Add(t);
+
+            var joined = string.Join(",", tokens); // "1,2,3"
+
+            return await _codeRepository.GetCategoryFullnameList(joined);
         }
     }
 }

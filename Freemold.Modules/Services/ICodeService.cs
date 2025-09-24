@@ -13,5 +13,7 @@ namespace Freemold.Modules.Services
         Task<List<TbCategory>> GetCategoryList(string UpCode, string StdMld = "");
         Task<List<VwNcategoryList>> GetVwNcategoryList(string[] ACode, string StdMld = "");
         Task<List<CategoryModel>> GetModalVwNcategoryList(string ACode, string StdMld = "", string[] Selectval = null);
+        Task<string> GetCategoryFullname(string catagory);
+        Task<List<CategoryFullnameModel>> GetCategoryFullnameLIst(string catagory);
     }
 }
