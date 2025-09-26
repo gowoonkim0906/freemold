@@ -10,9 +10,9 @@
 <div class="container-fluid px-4">
     <div class="mb-3 mt-4 d-flex align-items-center" role="search">
         <form class="d-flex align-items-center" role="search" id="searchform">
-            <input type="text" class="form-control form-control-sm datepicker me-2" style="max-width: 100px;" name="sDate" id="sDate">
+            <input type="text" class="form-control form-control-sm datepicker me-2" style="max-width: 100px;" name="sDate" id="sDate" value="@ViewBag.sDate">
             <span class="mx-2">~</span>
-            <input type="text" class="form-control form-control-sm datepicker me-2" style="max-width: 100px;" name="eDate" id="eDate">
+            <input type="text" class="form-control form-control-sm datepicker me-2" style="max-width: 100px;" name="eDate" id="eDate" value="@ViewBag.eDate">
             <button onclick="datesearch()" class="btn btn-sm btn-primary">검색</button>
         </form>
     </div>

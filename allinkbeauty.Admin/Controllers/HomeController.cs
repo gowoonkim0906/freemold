@@ -56,6 +56,9 @@ namespace standardmold.Admin.Controllers
             int datamobile = list1.Sum(x => x.Mobile);
             int datapc = datatotlacnt - datamobile;
 
+
+            ViewBag.sDate = sDate?.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd");
+            ViewBag.eDate = eDate?.ToString("yyyy-MM-dd") ?? DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.datatotlacnt = datatotlacnt;
             ViewBag.datamobile = datamobile;
             ViewBag.datapc = datatotlacnt - datamobile;
@@ -92,9 +95,9 @@ namespace standardmold.Admin.Controllers
             return View(list);
         }
 
-        public IActionResult KProductList(int page = 1)
+        public async Task<IActionResult> KProductList(int page = 1)
         {
-            int pagesize = 10;
+            int pagesize = 30;
             int pageno = (page - 1) * pagesize;
             int totalcount = 0;
             int pageblock = 10;
@@ -103,14 +106,36 @@ namespace standardmold.Admin.Controllers
             list = _allinkbeautyService.KProductList();
 
             totalcount = list == null ? 0 : list.Count;
-            list = list?.Skip(pageno).Take(pagesize).ToList();
+            var items = list?.Skip(pageno).Take(pagesize).ToList();
+
+            var keys = items.Select(x => x.PCategory ?? string.Empty)
+                    .Where(k => !string.IsNullOrWhiteSpace(k))
+                    .Distinct()
+                    .ToList();
+
+
+            var tasks = keys.ToDictionary(k => k, k => _codeService.GetCategoryFullname(k));
+            await Task.WhenAll(tasks.Values);
+
+            var catMap = tasks.ToDictionary(kv => kv.Key, kv => kv.Value.Result);
+
+            foreach (var it in items)
+            {
+                if (!string.IsNullOrEmpty(it.PCategory) &&
+                    catMap.TryGetValue(it.PCategory, out var fullName))
+                {
+                    it.PCategoryName = fullName;
+                }
+            }
 
 
             ViewBag.page = page;
-            ViewBag.pagesize = 10;
+            ViewBag.pagesize = pagesize;
             ViewBag.totalcount = totalcount;
             ViewBag.pageblock = pageblock;
-            ViewBag.list = list;
+            ViewBag.pageno = pageno;
+            ViewBag.list = items;
+            ViewBag.fileurl = _fileService.RootPath;
 
             return View();
         }

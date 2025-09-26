@@ -328,12 +328,27 @@
             const delete_existing_ids = $("#delete_existing_ids").val();
             const image_order = $("#image_order").val();
 
+            const vals = $('#selectcategory .text-break[data-val]')
+            .map((_, el) => $(el).data('val'))
+            .get();  // ['B001','B001','B001', ...]
+
+            const nonEmptyVals = vals.filter(v => v && String(v).trim() !== '');
+            const uniqueVals   = [...new Set(nonEmptyVals)];
+
             const p_code = ($('#p_code').val() ?? '').toString();
             const p_name = ($('#p_name').val() ?? '').toString();
             const p_capacity = ($('#p_capacity').val() ?? '').toString();
             const p_size = ($('#p_size').val() ?? '').toString();
             const p_quality = ($('#p_quality').val() ?? '').toString();
             const p_origin = ($('#p_origin').val() ?? '').toString();
+
+
+
+            if(uniqueVals.length <= 0){
+            
+                alert('카테고리를 선택해주세요');
+                return;
+            }
 
             if(!p_code.trim()){
                 alert('제품코드를 등록해주세요.');
@@ -365,7 +380,8 @@
                 return;
             }
 
-
+           _FormData.append('produid', "@(productinfo.ProdUid)");
+           _FormData.append('p_category', uniqueVals);
            _FormData.append('p_code', p_code);
            _FormData.append('p_name', p_name);
            _FormData.append('p_capacity', p_capacity);
@@ -391,7 +407,6 @@
                 success: function (response) {
 
                     
-
 
                 },
                 error: function (xhr, status, error) {

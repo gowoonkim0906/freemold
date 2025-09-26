@@ -5,81 +5,89 @@ namespace Freemold.Modules;
 
 public partial class ProductList
 {
-    public long ProdUid { get; set; }
+    public long PROD_UID { get; set; }
 
-    public string ItId { get; set; } = null!;
+    public string it_id { get; set; } = null!;
 
-    public string CoId { get; set; } = null!;
+    public string CO_ID { get; set; } = null!;
 
-    public string MemberGubun { get; set; } = null!;
+    public string MEMBER_GUBUN { get; set; } = null!;
 
-    public int MemberUid { get; set; }
+    public int MEMBER_UID { get; set; }
 
-    public string PCategory { get; set; } = null!;
+    public string P_CATEGORY { get; set; } = null!;
 
-    public string PName { get; set; } = null!;
+    public string P_NAME { get; set; } = null!;
 
-    public string PName2 { get; set; } = null!;
+    public string P_NAME2 { get; set; } = null!;
 
-    public string PCode { get; set; } = null!;
+    public string P_CODE { get; set; } = null!;
 
-    public int PMoq { get; set; }
+    public int P_MOQ { get; set; }
 
-    public string PMoqDeal { get; set; } = null!;
+    public string P_MOQ_DEAL { get; set; } = null!;
 
-    public string PImg1 { get; set; } = null!;
+    public string P_IMG1 { get; set; } = null!;
 
-    public string PImg2 { get; set; } = null!;
+    public string P_IMG2 { get; set; } = null!;
 
-    public string PImg3 { get; set; } = null!;
+    public string P_IMG3 { get; set; } = null!;
 
-    public string PImg4 { get; set; } = null!;
+    public string P_IMG4 { get; set; } = null!;
 
-    public string PImg5 { get; set; } = null!;
+    public string P_IMG5 { get; set; } = null!;
 
-    public string PImg6 { get; set; } = null!;
+    public string P_IMG6 { get; set; } = null!;
 
-    public double PCapacity { get; set; }
+    public double P_CAPACITY { get; set; }
 
-    public string PCapUnit { get; set; } = null!;
+    public string P_CAP_UNIT { get; set; } = null!;
 
-    public string PSize { get; set; } = null!;
+    public string P_SIZE { get; set; } = null!;
 
-    public string POrigin { get; set; } = null!;
+    public string P_ORIGIN { get; set; } = null!;
 
-    public string PMemo { get; set; } = null!;
+    public string P_MEMO { get; set; } = null!;
 
-    public string PMemo2 { get; set; } = null!;
+    public string P_MEMO2 { get; set; } = null!;
 
-    public DateTime PRegdate { get; set; }
+    public DateTime P_REGDATE { get; set; }
 
-    public DateTime? PModdate { get; set; }
+    public DateTime? P_MODDATE { get; set; }
 
-    public DateTime? PAppdate { get; set; }
+    public DateTime? P_APPDATE { get; set; }
 
-    public string PUse { get; set; } = null!;
+    public DateTime? P_APPDATE_BEFORE { get; set; }
 
-    public string PUseSt { get; set; } = null!;
+    public string P_USE { get; set; } = null!;
 
-    public string PNew { get; set; } = null!;
+    public string P_USE_ST { get; set; } = null!;
 
-    public string PHot { get; set; } = null!;
+    public string P_NEW { get; set; } = null!;
 
-    public string PQuality { get; set; } = null!;
+    public string P_HOT { get; set; } = null!;
 
-    public int PSeq { get; set; }
+    public string P_QUALITY { get; set; } = null!;
 
-    public int PHit { get; set; }
+    public int P_SEQ { get; set; }
 
-    public string IsRefill { get; set; } = null!;
+    public int P_HIT { get; set; }
 
-    public string IsPcr { get; set; } = null!;
+    public string isRefill { get; set; } = null!;
 
-    public string? IsMove { get; set; }
+    public string isPCR { get; set; } = null!;
+
+    public string? isMove { get; set; }
 
     public int Visit { get; set; }
 
-    public string PApproval { get; set; } = null!;
+    public string? P_APPROVAL_BEFORE { get; set; }
+
+    public string P_APPROVAL { get; set; } = null!;
+
+    public string? P_APPRUSER_BEFORE { get; set; }
+
+    public string? P_APPRUSER { get; set; }
 
     public string ProdType { get; set; } = null!;
 

@@ -5,235 +5,245 @@ namespace Freemold.Modules;
 
 public partial class BakMember1
 {
-    public int Uid { get; set; }
+    public int UID { get; set; }
 
-    public string CoId { get; set; } = null!;
+    public string CO_ID { get; set; } = null!;
 
-    public string CompanyName { get; set; } = null!;
+    public string COMPANY_NAME { get; set; } = null!;
 
-    public string CompanyNameE { get; set; } = null!;
+    public string COMPANY_NAME_E { get; set; } = null!;
 
-    public string CompanyNameC { get; set; } = null!;
+    public string COMPANY_NAME_C { get; set; } = null!;
 
-    public string Ceo { get; set; } = null!;
+    public string CEO { get; set; } = null!;
 
-    public string CompNo { get; set; } = null!;
+    public string COMP_NO { get; set; } = null!;
 
-    public string Tel { get; set; } = null!;
+    public string TEL { get; set; } = null!;
 
-    public string Fax { get; set; } = null!;
+    public string FAX { get; set; } = null!;
 
-    public string Mobile { get; set; } = null!;
+    public string MOBILE { get; set; } = null!;
 
-    public string Email { get; set; } = null!;
+    public string EMAIL { get; set; } = null!;
 
-    public string? Mainemail { get; set; }
+    public string? MAINEMAIL { get; set; }
 
-    public string Homepage { get; set; } = null!;
+    public string HOMEPAGE { get; set; } = null!;
 
-    public string Zipcode { get; set; } = null!;
+    public string ZIPCODE { get; set; } = null!;
 
-    public string Address1 { get; set; } = null!;
+    public string ADDRESS1 { get; set; } = null!;
 
-    public string Address2 { get; set; } = null!;
+    public string ADDRESS2 { get; set; } = null!;
 
-    public string Addtit1 { get; set; } = null!;
+    public string ADDTIT1 { get; set; } = null!;
 
-    public string Zipcode1 { get; set; } = null!;
+    public string ZIPCODE1 { get; set; } = null!;
 
-    public string Address11 { get; set; } = null!;
+    public string ADDRESS11 { get; set; } = null!;
 
-    public string Address12 { get; set; } = null!;
+    public string ADDRESS12 { get; set; } = null!;
 
-    public string Addtit2 { get; set; } = null!;
+    public string ADDTIT2 { get; set; } = null!;
 
-    public string Zipcode2 { get; set; } = null!;
+    public string ZIPCODE2 { get; set; } = null!;
 
-    public string Address21 { get; set; } = null!;
+    public string ADDRESS21 { get; set; } = null!;
 
-    public string Address22 { get; set; } = null!;
+    public string ADDRESS22 { get; set; } = null!;
 
-    public string Addtit3 { get; set; } = null!;
+    public string ADDTIT3 { get; set; } = null!;
 
-    public string Zipcode3 { get; set; } = null!;
+    public string ZIPCODE3 { get; set; } = null!;
 
-    public string Address31 { get; set; } = null!;
+    public string ADDRESS31 { get; set; } = null!;
 
-    public string Address32 { get; set; } = null!;
+    public string ADDRESS32 { get; set; } = null!;
 
-    public string Category { get; set; } = null!;
+    public string CATEGORY { get; set; } = null!;
 
-    public string Class { get; set; } = null!;
+    public string CLASS { get; set; } = null!;
 
-    public string Damdang { get; set; } = null!;
+    public string DAMDANG { get; set; } = null!;
 
-    public string DamdangTel { get; set; } = null!;
+    public string DAMDANG_TEL { get; set; } = null!;
 
-    public string? DamdangDep { get; set; }
+    public string? DAMDANG_DEP { get; set; }
 
-    public string? DamdangPos { get; set; }
+    public string? DAMDANG_POS { get; set; }
 
-    public string DamdangEmail { get; set; } = null!;
+    public string DAMDANG_EMAIL { get; set; } = null!;
 
-    public string AdminId { get; set; } = null!;
+    public string ADMIN_ID { get; set; } = null!;
 
-    public string CoRelation { get; set; } = null!;
+    public string CO_RELATION { get; set; } = null!;
 
-    public string CoExport { get; set; } = null!;
+    public string CO_EXPORT { get; set; } = null!;
 
-    public string CoClient { get; set; } = null!;
+    public string CO_CLIENT { get; set; } = null!;
 
-    public string CoCound1 { get; set; } = null!;
+    public string CO_COUND1 { get; set; } = null!;
 
-    public string CoCound2 { get; set; } = null!;
+    public string CO_COUND2 { get; set; } = null!;
 
-    public string CoStaff { get; set; } = null!;
+    public string CO_STAFF { get; set; } = null!;
 
-    public string CoCi { get; set; } = null!;
+    public string CO_CI { get; set; } = null!;
 
-    public string CoCi2 { get; set; } = null!;
+    public string CO_CI2 { get; set; } = null!;
 
-    public string CoLeftImg { get; set; } = null!;
+    public string CO_LEFT_IMG { get; set; } = null!;
 
-    public string CoTopImg1 { get; set; } = null!;
+    public string CO_TOP_IMG1 { get; set; } = null!;
 
-    public string CoTopImg2 { get; set; } = null!;
+    public string CO_TOP_IMG2 { get; set; } = null!;
 
-    public string CoTopImg3 { get; set; } = null!;
+    public string CO_TOP_IMG3 { get; set; } = null!;
 
-    public string CoBanner { get; set; } = null!;
+    public string CO_BANNER { get; set; } = null!;
 
-    public string CoBanner2 { get; set; } = null!;
+    public string CO_BANNER2 { get; set; } = null!;
 
-    public string CoBanner3 { get; set; } = null!;
+    public string CO_BANNER3 { get; set; } = null!;
 
-    public string CoMap { get; set; } = null!;
+    public string CO_MAP { get; set; } = null!;
 
-    public string CoXy { get; set; } = null!;
+    public string CO_XY { get; set; } = null!;
 
-    public string CoTitle1 { get; set; } = null!;
+    public string CO_TITLE1 { get; set; } = null!;
 
-    public string CoTitle2 { get; set; } = null!;
+    public string CO_TITLE2 { get; set; } = null!;
 
-    public string CoTitle3 { get; set; } = null!;
+    public string CO_TITLE3 { get; set; } = null!;
 
-    public string CoContent1 { get; set; } = null!;
+    public string CO_CONTENT1 { get; set; } = null!;
 
-    public string CoContent2 { get; set; } = null!;
+    public string CO_CONTENT2 { get; set; } = null!;
 
-    public string CoContent3 { get; set; } = null!;
+    public string CO_CONTENT3 { get; set; } = null!;
 
-    public string CoForeground { get; set; } = null!;
+    public string CO_FOREGROUND { get; set; } = null!;
 
-    public string Upfile1 { get; set; } = null!;
+    public string UPFILE1 { get; set; } = null!;
 
-    public string Upfile2 { get; set; } = null!;
+    public string UPFILE2 { get; set; } = null!;
 
-    public string Upfile3 { get; set; } = null!;
+    public string UPFILE3 { get; set; } = null!;
 
-    public string Upfile4 { get; set; } = null!;
+    public string UPFILE4 { get; set; } = null!;
 
-    public string Upfile5 { get; set; } = null!;
+    public string UPFILE5 { get; set; } = null!;
 
-    public string StaffId { get; set; } = null!;
+    public string STAFF_ID { get; set; } = null!;
 
-    public DateOnly? StartDate { get; set; }
+    public DateOnly? START_DATE { get; set; }
 
-    public DateOnly? EndDate { get; set; }
+    public DateOnly? END_DATE { get; set; }
 
-    public string CoUse { get; set; } = null!;
+    public string CO_USE { get; set; } = null!;
 
-    public string Memo { get; set; } = null!;
+    public string MEMO { get; set; } = null!;
 
-    public string Facility1 { get; set; } = null!;
+    public string FACILITY1 { get; set; } = null!;
 
-    public string Facility2 { get; set; } = null!;
+    public string FACILITY2 { get; set; } = null!;
 
-    public string Facility3 { get; set; } = null!;
+    public string FACILITY3 { get; set; } = null!;
 
-    public string Facility4 { get; set; } = null!;
+    public string FACILITY4 { get; set; } = null!;
 
-    public string Facility5 { get; set; } = null!;
+    public string FACILITY5 { get; set; } = null!;
 
-    public string Facility6 { get; set; } = null!;
+    public string FACILITY6 { get; set; } = null!;
 
-    public string Facility7 { get; set; } = null!;
+    public string FACILITY7 { get; set; } = null!;
 
-    public string Facility8 { get; set; } = null!;
+    public string FACILITY8 { get; set; } = null!;
 
-    public string Facility9 { get; set; } = null!;
+    public string FACILITY9 { get; set; } = null!;
 
-    public string FacilityMemo { get; set; } = null!;
+    public string FACILITY_MEMO { get; set; } = null!;
 
-    public string Approval { get; set; } = null!;
+    public string APPROVAL { get; set; } = null!;
 
-    public string ApprovalView { get; set; } = null!;
+    public string? APPROVAL_BEFORE { get; set; }
 
-    public string ListAllow { get; set; } = null!;
+    public DateTime? APPDATE { get; set; }
 
-    public DateTime? RegDate { get; set; }
+    public DateTime? APPDATE_BEFORE { get; set; }
 
-    public DateTime? ModDate { get; set; }
+    public string? APPRUSER_BEFORE { get; set; }
 
-    public string CategoryId1 { get; set; } = null!;
+    public string? APPRUSER { get; set; }
 
-    public string CategoryId2 { get; set; } = null!;
+    public string APPROVAL_VIEW { get; set; } = null!;
 
-    public string CategoryId3 { get; set; } = null!;
+    public string LIST_ALLOW { get; set; } = null!;
 
-    public string CoType { get; set; } = null!;
+    public DateTime? REG_DATE { get; set; }
 
-    public int CoHit { get; set; }
+    public DateTime? MOD_DATE { get; set; }
 
-    public int? CoHitOld { get; set; }
+    public string CATEGORY_ID1 { get; set; } = null!;
 
-    public string CoProfile { get; set; } = null!;
+    public string CATEGORY_ID2 { get; set; } = null!;
 
-    public string CoHitItem { get; set; } = null!;
+    public string CATEGORY_ID3 { get; set; } = null!;
 
-    public string CoUnusual { get; set; } = null!;
+    public string CO_TYPE { get; set; } = null!;
 
-    public string CoItemUse { get; set; } = null!;
+    public int CO_HIT { get; set; }
 
-    public string? CoRemove { get; set; }
+    public int? CO_HIT_OLD { get; set; }
 
-    public DateTime? CoRemoveDate { get; set; }
+    public string CO_PROFILE { get; set; } = null!;
 
-    public string LeaveDate { get; set; } = null!;
+    public string CO_HIT_ITEM { get; set; } = null!;
 
-    public string InterceptDate { get; set; } = null!;
+    public string CO_UNUSUAL { get; set; } = null!;
 
-    public string CeoAdd { get; set; } = null!;
+    public string CO_ITEM_USE { get; set; } = null!;
 
-    public string QnaUse { get; set; } = null!;
+    public string? CO_REMOVE { get; set; }
 
-    public string FacilityUse { get; set; } = null!;
+    public DateTime? CO_REMOVE_DATE { get; set; }
 
-    public DateTime? EndLoginDate { get; set; }
+    public string LEAVE_DATE { get; set; } = null!;
 
-    public string EndLoginIp { get; set; } = null!;
+    public string INTERCEPT_DATE { get; set; } = null!;
 
-    public int? VisitCnt { get; set; }
+    public string CEO_ADD { get; set; } = null!;
 
-    public string IpGubun { get; set; } = null!;
+    public string QNA_USE { get; set; } = null!;
 
-    public string BannerLogin { get; set; } = null!;
+    public string FACILITY_USE { get; set; } = null!;
 
-    public string BannerFree { get; set; } = null!;
+    public DateTime? END_LOGIN_DATE { get; set; }
 
-    public string BannerOem { get; set; } = null!;
+    public string END_LOGIN_IP { get; set; } = null!;
 
-    public string BannerSubFree { get; set; } = null!;
+    public int? VISIT_CNT { get; set; }
 
-    public string BannerSubCompany { get; set; } = null!;
+    public string IP_GUBUN { get; set; } = null!;
 
-    public string BannerSubCommunity { get; set; } = null!;
+    public string BANNER_LOGIN { get; set; } = null!;
 
-    public string BannerSubNewprod { get; set; } = null!;
+    public string BANNER_FREE { get; set; } = null!;
 
-    public string BannerSubListing { get; set; } = null!;
+    public string BANNER_OEM { get; set; } = null!;
 
-    public string BannerSubSearch { get; set; } = null!;
+    public string BANNER_SUB_FREE { get; set; } = null!;
+
+    public string BANNER_SUB_COMPANY { get; set; } = null!;
+
+    public string BANNER_SUB_COMMUNITY { get; set; } = null!;
+
+    public string BANNER_SUB_NEWPROD { get; set; } = null!;
+
+    public string BANNER_SUB_LISTING { get; set; } = null!;
+
+    public string BANNER_SUB_SEARCH { get; set; } = null!;
 
     public string? BannerWish { get; set; }
 
@@ -253,13 +263,13 @@ public partial class BakMember1
 
     public string Deleted { get; set; } = null!;
 
-    public string BregType { get; set; } = null!;
+    public string BRegType { get; set; } = null!;
 
-    public string BregId { get; set; } = null!;
+    public string BRegID { get; set; } = null!;
 
-    public string BregIp { get; set; } = null!;
+    public string BRegIP { get; set; } = null!;
 
-    public DateTime BregDate { get; set; }
+    public DateTime BRegDate { get; set; }
 
-    public int Bidx { get; set; }
+    public int BIdx { get; set; }
 }

@@ -231,9 +231,11 @@ namespace Freemold.Modules.Models
 
     public class ProductSaveModel
     {
+        public long produid { get; set; }
+        public string p_category { get; set; } = "";
         public string p_code { get; set; } = "";
         public string p_name { get; set; } = "";
-        public string p_capacity { get; set; } = "";
+        public double p_capacity { get; set; }
         public string p_size { get; set; } = "";
         public string p_quality { get; set; } = "";
         public string p_origin { get; set; } = "";

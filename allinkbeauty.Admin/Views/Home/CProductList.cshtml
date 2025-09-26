@@ -58,12 +58,12 @@
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PName</a></td>
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PCode</a></td>
                                     <td>@Html.Raw(item.PCategoryName?.Replace("|", "<br/>"))</td>
-                                    <td>@item.PCapacity+" "+@item.PCapUnit</td>
+                                    <td>@(item.PCapacity+" "+item.PCapUnit)</td>
                                     <td>@item.PSize</td>
                                     <td class="text-center">@item.PQuality</td>
                                     <td class="text-center">@item.POrigin</td>
                                     <td class="text-center">@item.PHit</td>
-                                    <td class="text-center"><input type="checkbox" name="gp" checked="@(item.PUseSt == "Y" ? "checked" : "")" data-prod_uid="@(item.ProdUid)" onclick="stviewcheckchange(this)" /></td>
+                                    <td class="text-center"><input type="checkbox" name="gp" @(item.PUseSt == "Y" ? "checked" : "") data-prod_uid="@(item.ProdUid)" onclick="stviewcheckchange(this)" /></td>
                                     <td>@item.PApproval</td>
                                 </tr>
                             }

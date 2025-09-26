@@ -1,6 +1,5 @@
-﻿
+﻿using Freemold.Modules.Models.EntityConfigs;
 using Freemold.Modules.Models;
-using Freemold.Modules.Models.EntityConfigs;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -48,7 +47,7 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<Httpreferer> Httpreferers { get; set; }
 
-        public virtual DbSet<Member1> Member1s { get; set; }
+        public virtual DbSet<Member1> Member1 { get; set; }
 
         public virtual DbSet<Member4> Member4s { get; set; }
 

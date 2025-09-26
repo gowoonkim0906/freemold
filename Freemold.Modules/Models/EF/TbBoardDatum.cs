@@ -5,86 +5,88 @@ namespace Freemold.Modules;
 
 public partial class TbBoardDatum
 {
-    public long Uid { get; set; }
+    public long UID { get; set; }
 
-    public long Grp { get; set; }
+    public long GRP { get; set; }
 
-    public string BoardCode { get; set; } = null!;
+    public string BOARD_CODE { get; set; } = null!;
 
-    public int Seq { get; set; }
+    public int SEQ { get; set; }
 
-    public int Depth { get; set; }
+    public int DEPTH { get; set; }
 
-    public string Notice { get; set; } = null!;
+    public string NOTICE { get; set; } = null!;
 
-    public string NDate1 { get; set; } = null!;
+    public string N_DATE1 { get; set; } = null!;
 
-    public string NDate2 { get; set; } = null!;
+    public string N_DATE2 { get; set; } = null!;
 
-    public string RegId { get; set; } = null!;
+    public string REG_ID { get; set; } = null!;
 
-    public string RegName { get; set; } = null!;
+    public string REG_NAME { get; set; } = null!;
 
-    public string RegEmail { get; set; } = null!;
+    public string REG_EMAIL { get; set; } = null!;
 
-    public string RegHp { get; set; } = null!;
+    public string REG_HP { get; set; } = null!;
 
-    public string RegPw { get; set; } = null!;
+    public string REG_PW { get; set; } = null!;
 
-    public string RegSubject { get; set; } = null!;
+    public string REG_SUBJECT { get; set; } = null!;
 
-    public string RegContent { get; set; } = null!;
+    public string REG_CONTENT { get; set; } = null!;
 
-    public string RegFileName { get; set; } = null!;
+    public string REG_FILE_NAME { get; set; } = null!;
 
-    public string RegFileRename { get; set; } = null!;
+    public string REG_FILE_RENAME { get; set; } = null!;
 
-    public string ListImageName { get; set; } = null!;
+    public string LIST_IMAGE_NAME { get; set; } = null!;
 
-    public string ListImageRename { get; set; } = null!;
+    public string LIST_IMAGE_RENAME { get; set; } = null!;
 
-    public int HitCounts { get; set; }
+    public int HIT_COUNTS { get; set; }
 
-    public string Secret { get; set; } = null!;
+    public string SECRET { get; set; } = null!;
 
-    public DateTime? RegDate { get; set; }
+    public DateTime? REG_DATE { get; set; }
 
-    public string Link1 { get; set; } = null!;
+    public string LINK1 { get; set; } = null!;
 
-    public string Link2 { get; set; } = null!;
+    public string LINK2 { get; set; } = null!;
 
-    public int Link1Hit { get; set; }
+    public int LINK1_HIT { get; set; }
 
-    public int Link2Hit { get; set; }
+    public int LINK2_HIT { get; set; }
 
-    public string YoutubeUrl { get; set; } = null!;
+    public string YOUTUBE_URL { get; set; } = null!;
 
-    public DateTime? ModDate { get; set; }
+    public DateTime? MOD_DATE { get; set; }
 
-    public string RegIp { get; set; } = null!;
+    public string? MOD_ID { get; set; }
 
-    public string Appr { get; set; } = null!;
+    public string REG_IP { get; set; } = null!;
 
-    public string FirstWord { get; set; } = null!;
+    public string APPR { get; set; } = null!;
 
-    public int? PIdx { get; set; }
+    public string FIRST_WORD { get; set; } = null!;
+
+    public int? pIdx { get; set; }
 
     /// <summary>
     /// 리플_담당자이름
     /// </summary>
-    public string? DName { get; set; }
+    public string? dName { get; set; }
 
     /// <summary>
     /// 리플_담당자연락처
     /// </summary>
-    public string? DPhone { get; set; }
+    public string? dPhone { get; set; }
 
     /// <summary>
     /// 리플_담당자이메일
     /// </summary>
-    public string? DEmail { get; set; }
+    public string? dEmail { get; set; }
 
-    public string? ReadId { get; set; }
+    public string? Read_ID { get; set; }
 
     public string Deleted { get; set; } = null!;
 
@@ -92,15 +94,15 @@ public partial class TbBoardDatum
 
     public string? Cat { get; set; }
 
-    public string? WName { get; set; }
+    public string? wName { get; set; }
 
-    public string? WPhone { get; set; }
+    public string? wPhone { get; set; }
 
-    public string? WEmail { get; set; }
+    public string? wEmail { get; set; }
 
-    public string? WKakaoId { get; set; }
+    public string? wKakaoID { get; set; }
 
-    public string WType { get; set; } = null!;
+    public string wType { get; set; } = null!;
 
     public string Tag0 { get; set; } = null!;
 
