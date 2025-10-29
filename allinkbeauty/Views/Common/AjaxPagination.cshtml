@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+
+    int page = Convert.ToInt32(ViewBag.page);
+    int pagesize = Convert.ToInt32(ViewBag.pagesize);
+    int totalcount = Convert.ToInt32(ViewBag.totalcount);
+    int totalpage = Convert.ToInt32(Math.Truncate((decimal)(totalcount - 1) / pagesize)) + 1;
+
+
+    int pagesperblock = ViewBag.pageblock;
+    int currentBlock = (int)Math.Ceiling((decimal)page / pagesperblock);
+    int startPage = (currentBlock - 1) * pagesperblock + 1;
+    int endPage = Math.Min(startPage + pagesperblock - 1, totalpage);
+
+}
+
+<ul class="pagination__list">
+    <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="first">Go to the first page</a></li>
+    <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="prev">Go to the previous page</a></li>
+
+    <!-- 페이지 번호 리스트 -->
+    @for (int i = startPage; i <= endPage; i++)
+    {
+        <li class="pagination__item"><a href="#" onclick="productlist(@i)" class="pagination__btn" aria-current="@(i == page ? "page" : null)">@i</a></li>
+    }
+
+    <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="next">Go to the next page</a></li>
+    <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="last">Go to the first page</a></li>
+</ul>

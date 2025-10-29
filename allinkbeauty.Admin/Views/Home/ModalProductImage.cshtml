@@ -1,0 +1,211 @@
+﻿@using System.IO;
+@using Freemold.Modules.Models;
+@{
+    Layout = null;
+
+    var productinfo = ViewBag.productinfo as ProductDetailModel ?? new ProductDetailModel();
+}
+<style>
+    
+    /* 썸네일 바 (상단) */
+    .thumb-strip {
+        display: flex;
+        gap: 12px;
+        padding: 14px 18px 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        border-bottom: 1px solid #eee;
+    }
+
+    .thumb {
+        width: 74px;
+        height: 74px;
+        flex: 0 0 auto;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0,0,0,.06);
+        border: 2px solid transparent;
+        cursor: pointer;
+        position: relative;
+        background: #f8f9fa;
+    }
+
+    .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .thumb.active {
+        border-color: #0d6efd;
+    }
+
+    .thumb:hover {
+        filter: brightness(0.97);
+    }
+
+    /* 메인 이미지 (하단) */
+    .main-wrap {
+        padding: 18px;
+    }
+
+    .main-img {
+        width: 100%;
+        height: auto;
+        max-height: 66vh;
+        object-fit: contain;
+        border-radius: 6px;
+    }
+
+
+</style>
+<div class="modal-content">
+    <div class="modal-header border-0 pb-4">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+    </div>
+
+    <!-- 썸네일 바 -->
+    <div class="thumb-strip" id="thumbStrip" role="tablist" aria-label="이미지 썸네일 목록">
+        
+        @{
+            var src = "";
+
+            if (productinfo.PImg1 != "")
+            {
+                src = "https://freemold.net/data/Product/" + productinfo.PImg1;
+
+                <button type="button" class="thumb active" data-index="0" data-src="@src" aria-label="썸네일0">
+                    <img src="@src" alt="thumbnail0" loading="lazy" />
+                </button>
+            }
+
+            if (productinfo.PImg2 != "")
+            {
+                src = "https://freemold.net/data/Product/" + productinfo.PImg2;
+
+                <button type="button" class="thumb" data-index="1" data-src="@src" aria-label="썸네일1">
+                    <img src="@src" alt="thumbnail1" loading="lazy" />
+                </button>
+            }
+
+            if (productinfo.PImg3 != "")
+            {
+                src = "https://freemold.net/data/Product/" + productinfo.PImg3;
+
+                <button type="button" class="thumb" data-index="2" data-src="@src" aria-label="썸네일2">
+                    <img src="@src" alt="thumbnail2" loading="lazy" />
+                </button>
+            }
+
+            if (productinfo.PImg4 != "")
+            {
+                src = "https://freemold.net/data/Product/" + productinfo.PImg4;
+
+                <button type="button" class="thumb" data-index="3" data-src="@src" aria-label="썸네일3">
+                    <img src="@src" alt="thumbnail3" loading="lazy" />
+                </button>
+            }
+
+            if (productinfo.PImg5 != "")
+            {
+                src = "https://freemold.net/data/Product/" + productinfo.PImg5;
+
+                <button type="button" class="thumb" data-index="4" data-src="@src" aria-label="썸네일4">
+                    <img src="@src" alt="thumbnail4" loading="lazy" />
+                </button>
+            }
+
+            if (productinfo.PImg6 != "")
+            {
+                src = "https://freemold.net/data/Product/" + productinfo.PImg6;
+
+                <button type="button" class="thumb" data-index="5" data-src="@src" aria-label="썸네일5">
+                    <img src="@src" alt="thumbnail5" loading="lazy" />
+                </button>
+            }
+        }
+
+    </div>
+
+    <!-- 메인 이미지 -->
+    <div class="main-wrap">
+        <img id="mainImage" class="main-img" src="" alt="Gallery main image" />
+    </div>
+</div>
+
+
+<!-- ...위의 HTML들... -->
+
+<script>
+    (function () {
+      const strip = document.getElementById('thumbStrip');
+      const main  = document.getElementById('mainImage');
+      if (!strip || !main) return;
+
+      const thumbs = Array.from(strip.querySelectorAll('.thumb'));
+      const canHover = window.matchMedia('(hover: hover)').matches;
+
+      // 현재 이미지 변경 (scrollIntoView 여부 옵션)
+      function setCurrent(index, opts = { scroll: true }) {
+        if (index < 0 || index >= thumbs.length) return;
+
+        thumbs.forEach((btn, i) => btn.classList.toggle('active', i === index));
+
+        const btn = thumbs[index];
+        const src = btn.dataset.src || (btn.querySelector('img') && btn.querySelector('img').src);
+        if (src) {
+          main.src = src;
+          main.setAttribute('data-index', index);
+          // (선택) 부드럽게 전환하고 싶으면 CSS transition을 main-img에 추가하면 됨
+        }
+
+        if (opts.scroll) {
+          btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+        }
+      }
+
+      // 초기 세팅
+      let start = thumbs.findIndex(b => b.classList.contains('active'));
+      if (start === -1) start = 0;
+      setCurrent(start, { scroll: false });
+
+      // 이벤트 연결
+      thumbs.forEach((btn, i) => {
+        btn.type = 'button';
+        btn.tabIndex = 0;
+
+        // 1) 클릭 시
+        btn.addEventListener('click', () => setCurrent(i));
+
+        // 2) 키보드 접근성
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setCurrent(i);
+          }
+        });
+
+        // 3) 마우스 오버(hover 지원 기기에서만) → 스크롤은 매번 하지 않도록 옵션 false
+        if (canHover) {
+          btn.addEventListener('mouseenter', () => setCurrent(i, { scroll: false }));
+          // 포커스 진입 시에도 변경(탭 이동으로 미리보기)
+          btn.addEventListener('focus', () => setCurrent(i, { scroll: false }));
+        }
+      });
+
+      // 좌/우 방향키 이동 (옵션)
+      document.addEventListener('keydown', (e) => {
+        if (!thumbs.length) return;
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+
+        const cur = parseInt(main.getAttribute('data-index') || '0', 10);
+        const next = (e.key === 'ArrowRight')
+          ? (cur + 1) % thumbs.length
+          : (cur - 1 + thumbs.length) % thumbs.length;
+
+        setCurrent(next);
+      });
+    })();
+</script>

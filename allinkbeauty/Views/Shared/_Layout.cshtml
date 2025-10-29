@@ -1,50 +1,58 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - standardmold</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/standardmold.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allin K Beauty</title>
+    <link rel="stylesheet" href="@Url.Content("~/styles/font.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/global.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/layout.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/main.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/swiper.css")">
+    <link rel="stylesheet" href="@Url.Content("~/css/site.css")">
+
+    <script src="@Url.Content("~/js/lib/gsap.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/ScrollTrigger.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/SplitText.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/ScrollSmoother.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/swiper.js")"></script>
+    <script src="@Url.Content("~/js/utils/async-utils.js")" async></script>
+    <script src="@Url.Content("~/js/utils/defer-utils.js")" defer></script>
+    <script src="@Url.Content("/js/layout/common/view.js")" defer></script>
+    <script src="@Url.Content("~/js/jquery/jquery.min.js")"></script>
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">standardmold</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div id="container">
+        <div id="wrapper">
+            <header id="header" class="header header--sub" role="banner" data-skip>
+                @Html.Partial(Url.Content("_Header"))
+            </header>
+            <script src="~/js/layout/common/header.js"></script>
+            <div id="smooth-wrapper">
+                <div id="smooth-content">
+                    @RenderBody()
+                    @Html.Partial(Url.Content("_Footer"))
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
+    </div>
+    
+    <script src="@Url.Content("~/js/site.js")"></script>
+    @RenderSection("Scripts", required: false)
+
+    <div id="loading-overlay" style="display:none" aria-live="polite" aria-busy="true" role="status">
+        <!-- GIF/APNG/SVG 파일 경로로 교체 -->
+        <img id="loading-img" src="@Url.Content("~/images/loading/LoadingOne.gif")" alt="로딩 중…" />
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - standardmold - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2X2Z0F5LZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-T2X2Z0F5LZ');
+    </script>
 </body>
 </html>

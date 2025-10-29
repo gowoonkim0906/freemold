@@ -205,7 +205,7 @@ public partial class Member1
 
     public string CO_ITEM_USE { get; set; } = null!;
 
-    public string? CO_REMOVE { get; set; }
+    public string? CO_REMOVE { get; set; } = null;
 
     public DateTime? CO_REMOVE_DATE { get; set; }
 

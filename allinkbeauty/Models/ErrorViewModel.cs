@@ -1,4 +1,4 @@
-namespace standardmold.Models
+namespace allinkbeauty.Models
 {
     public class ErrorViewModel
     {

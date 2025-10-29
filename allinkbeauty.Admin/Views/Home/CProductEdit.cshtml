@@ -404,15 +404,23 @@
                 data: _FormData,
                 processData: false, // processData 옵션을 false로 설정해야 FormData를 제대로 전송할 수 있음
                 contentType: false, // contentType을 false로 설정하여 jQuery가 Content-Type 헤더를 설정하지 않도록 함
+                beforeSend: function () {
+                    showLoading();
+                },
                 success: function (response) {
 
-                    
+                   if(response.item1 == "sucess"){
+                        alert('제품이 수정되었습니다.');
+                   }
 
                 },
                 error: function (xhr, status, error) {
 
                     alert('Error:', error);
                     console.error('Error:', error);
+                },
+                complete: function () {
+                    hideLoading();
                 }
             });
 
@@ -440,7 +448,7 @@
 
              var param = {ACode : val , selectcode : uniqueVals}
 
-             $.post("/Home/CategoryModal", param, function (html) {
+             $.post("/Home/ModalCategory", param, function (html) {
 
                  $('#categorymodalDialog').html(html);
 

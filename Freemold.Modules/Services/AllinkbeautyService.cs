@@ -1,11 +1,14 @@
 ﻿using Freemold.Modules.Common;
 using Freemold.Modules.Models;
 using Freemold.Modules.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using ImageMagick;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +23,15 @@ namespace Freemold.Modules.Services
         private readonly CommunityRepository _communityRepository;
         private readonly ProductRepository _productRepository;
         private readonly CodeRepository _codeRepository;
+        private readonly IFileService _fileService;
 
         public AllinkbeautyService(
             MemberRepository memberRepository, 
             StatisticsRepository statisticsRepository, 
             CommunityRepository communityRepository, 
             ProductRepository productRepository,
-            CodeRepository codeRepository)
+            CodeRepository codeRepository,
+            IFileService fileService)
         {
             this._memberRepository = memberRepository;
             this._statisticsRepository = statisticsRepository;
@@ -34,6 +39,7 @@ namespace Freemold.Modules.Services
             this._communityRepository = communityRepository;
             this._productRepository = productRepository;
             this._codeRepository = codeRepository;
+            this._fileService = fileService;
         }
 
         public List<StatisticsModel> StatisticsList(DateTime? sDate = null , DateTime? eDate = null) {
@@ -178,6 +184,15 @@ namespace Freemold.Modules.Services
             return result ?? new AdminProductDetailModel();
         }
 
+        public List<AdminProductModel> ProductList()
+        {
+            var result = _productRepository.GetProductList()
+                        //.Where(m => m.Deleted == "N" && m.PayUse == "Y" && m.Approval == "Y" && m.POrigin == "대한민국" && m.ProdType == "")
+                        .Where(m => m.Deleted == "N" && m.PayUse == "Y" && m.Approval == "Y")
+                        .OrderByDescending(m => m.PModdate).ToList();
+            return result;
+        }
+
         public List<AdminProductModel> KProductList()
         {
             var result = _productRepository.GetKProductList()
@@ -201,6 +216,114 @@ namespace Freemold.Modules.Services
             return result ?? new ProductDetailModel();
         }
 
+        public async Task<string> ProductUpdate(ProductSaveModel productSaveModel, string delete_existing_ids, string image_order, List<IFormFile> files)
+        {
+            string result = "sucess";
+
+            string[] arrfilename = new[] { "", "", "", "", "", "" };
+
+            var arrimgorder = (image_order ?? "")
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)  // 빈 항목 제거
+                .Select(x => x.Trim())                              // 앞뒤 공백 제거
+                .Select(x => {
+                    var parts = x.Split(':', 2);                    // 2차: 콜론(최대 2조각)
+                    return (Key: parts[0].Trim(), Value: (parts.Length > 1 ? parts[1].Trim() : ""));
+                })
+                .ToList();
+
+            string fnFolderDate = DateTime.Now.Year.ToString("D4") + "-" + DateTime.Now.Month.ToString("D2");
+
+            string path = Path.GetFullPath(Path.Combine(_fileService.RootPath, "Product", fnFolderDate));
+
+            if (!Directory.Exists(path))
+            {
+                // 폴더가 없으면 생성
+                Directory.CreateDirectory(path);
+            }
+
+            string logoPath = Path.Combine(_fileService.WebRoot, "images", "freemold_watermark.png");
+            if (!System.IO.File.Exists(logoPath))
+            {
+                result = "fail";
+
+                return result;
+            }
+
+            int arri = 0;
+            int arrfi = 0;
+            string savefilename = "";
+
+            string[] strImage = new[] { "jpg", "jpeg", "png", "webp", "bmp", "tif", "tiff", "gif" };
+
+
+            foreach (var (key, value) in arrimgorder)
+            {
+                if (key == "new")
+                {
+                    var f = files[arrfi++];
+                    var ext = Path.GetExtension(f.FileName).TrimStart('.').ToLowerInvariant();
+                    var savedName = string.Empty;
+
+                    savefilename = DateTime.Now.ToOADate().ToString(CultureInfo.InvariantCulture).Replace('.', '_');
+
+
+                    for (int i = 0; ; i++)
+                    {
+                        var name = i == 0 ? $"{savefilename}.{ext}" : $"{savefilename} ({i}).{ext}";
+                        var candidate = Path.Combine(path, name);
+
+                        try
+                        {
+                            using var fs = new FileStream(candidate, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+
+                            if (strImage.Contains(ext))
+                            {
+
+                                await _fileService.SaveWithWatermarkAsync(f, fs, logoPath, ext);
+                            }
+                            else
+                            {
+                                // 이미지가 아니면 그대로 저장
+                                await f.CopyToAsync(fs);
+                            }
+
+
+                            //f.CopyToAsync(fs);
+                            savedName = name;               // 최종 파일명
+                            arrfilename[arri] = savedName;
+                            break;
+                        }
+                        catch (IOException)
+                        {
+                            continue;
+                        }
+                    }
+
+
+                }
+                else if (key == "existing")
+                {
+                    arrfilename[arri] = value;
+                }
+
+                arri++;
+            }
+
+
+            productSaveModel.p_category = ";"+productSaveModel.p_category.Replace(",",";;")+";";
+
+            productSaveModel.p_img1 = arrfilename[0];
+            productSaveModel.p_img2 = arrfilename[1];
+            productSaveModel.p_img3 = arrfilename[2];
+            productSaveModel.p_img4 = arrfilename[3];
+            productSaveModel.p_img5 = arrfilename[4];
+            productSaveModel.p_img6 = arrfilename[5];
+
+
+            result = await _productRepository.ProductUpdate(productSaveModel);
+
+            return result;
+        }
 
         public async Task<string> ProductViewUpdate(long ProdUid, string PUseSt) { 
         
@@ -211,6 +334,61 @@ namespace Freemold.Modules.Services
             return result;
         }
 
+        
+
+        public async Task<List<KbeautyProductModel>>  KbeautyProductList(string category1, string category2, string category3,string volume1,string volume2, CancellationToken ct = default)
+        {
+
+            DateOnly datefrom = DateOnly.FromDateTime(DateTime.Today);
+            DateOnly dateto = DateOnly.FromDateTime(DateTime.Today.AddDays(-10));
+
+
+            IQueryable<KbeautyProductModel> query = _productRepository.GetKbeautyProductList()
+            .Where(m => m.Deleted == "N"
+                        && (m.PApprovalBefore ?? "") == "Y" //제폼승인1
+                        && m.PApproval == "Y"               //제폼승인2
+                        && m.PUse == "1"
+                        && m.PUseST == "Y"
+                        && m.Approval == "Y"                //기업승인1
+                        && (m.PApprovalBefore ?? "") == "Y" //기업승인2
+                        && m.ApprovalView == "Y"
+                        && m.StartDate <= datefrom
+                        && m.EndDate >= dateto);
+
+            if (!string.IsNullOrWhiteSpace(category3)) //2차카테고리 선택시
+            {
+                query = query.Where(m => m.UpCat == ";" + category1 + ";" && EF.Functions.Like(";" + (m.PCategory) + ";", "%;" + category3 + ";%"));
+            }else if (!string.IsNullOrWhiteSpace(category2)) //1차카테고리 선택시
+            {
+                query = query.Where(m => m.UpCat == ";"+ category1 + ";" && EF.Functions.Like(";"+(m.PCategory)+";" , "%;" + category2 + ";%"));
+            }
+
+            //용량 검색
+            if (!string.IsNullOrWhiteSpace(volume1) && !string.IsNullOrWhiteSpace(volume2))
+            {
+                if (double.TryParse(volume1, out double vol1) && double.TryParse(volume2, out double vol2))
+                {
+                    query = query.Where(m => m.PCapacity >= vol1 && m.PCapacity <= vol2);
+                }
+            }
+
+
+            var result = query
+                        .OrderByDescending(m => m.PRegDate).AsNoTracking(); 
+
+            return await result.ToListAsync(ct);
+        }
+
+        public async Task<KbeautyProductModel> KbeautyProductView(long produid, CancellationToken ct = default)
+        {
+
+            var result = await _productRepository
+                           .GetKbeautyProductView()
+                           .Where(m => m.ProdUid == produid)
+                           .FirstOrDefaultAsync(ct);
+
+            return result ?? new KbeautyProductModel();
+        }
 
         public bool BlockIp(string ip)
         {

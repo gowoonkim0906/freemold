@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Freemold.Modules.Models.EF;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace Freemold.Modules;
 
@@ -162,6 +163,8 @@ public partial class FreemoldContext : DbContext
     public virtual DbSet<VwProductList> VwProductLists { get; set; }
 
     public virtual DbSet<VwProductListSm> VwProductListSms { get; set; }
+
+    public DbSet<FnSplit> FnSplit => Set<FnSplit>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -914,11 +917,8 @@ public partial class FreemoldContext : DbContext
 
         modelBuilder.Entity<BakProductList>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_product_list");
+            entity.HasKey(e => e.BIdx);
 
-            entity.Property(e => e.BIdx).ValueGeneratedOnAdd();
             entity.Property(e => e.BRegDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -1000,6 +1000,7 @@ public partial class FreemoldContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.it_id).HasMaxLength(20);
         });
+
 
         modelBuilder.Entity<BakProductUser>(entity =>
         {
@@ -4270,6 +4271,16 @@ public partial class FreemoldContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
         });
+
+
+        modelBuilder.Entity<FnSplit>().HasNoKey();
+
+        // TVF 매핑: dbo.FN_SPLIT(@text, @sep) -> TABLE(Val nvarchar)
+        modelBuilder
+            .HasDbFunction(typeof(FreemoldContext)
+                .GetMethod(nameof(FnSplit), new[] { typeof(string), typeof(string) })!)
+            .HasSchema("dbo")
+            .HasName("FN_SPLIT");
 
         OnModelCreatingPartial(modelBuilder);
     }

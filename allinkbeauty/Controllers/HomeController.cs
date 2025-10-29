@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using standardmold.Models;
+using allinkbeauty.Models;
 using System.Diagnostics;
 
-namespace standardmold.Controllers
+namespace allinkbeauty.Controllers
 {
     public class HomeController : Controller
     {
@@ -20,6 +20,22 @@ namespace standardmold.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+
+        [Route("blocked")]
+        public IActionResult Blocked()
+        {
+            string block = HttpContext.Session.GetString("block") ?? "false";
+            ViewBag.ip = HttpContext.Session.GetString("ClientIp");
+
+
+            if (block.ToLower() == "false")
+            {
+                return Redirect("/");
+            }
+
             return View();
         }
 

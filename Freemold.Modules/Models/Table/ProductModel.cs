@@ -93,6 +93,39 @@ namespace Freemold.Modules.Models
         public int ImgCnt { get; set; }
     }
 
+    public class KbeautyProductModel()
+    {
+        public long ProdUid { get; set; }
+        public string PCode { get; set; } = null!;
+        public string UpCat { get; set; } = null!;
+        public string PImg1 { get; set; } = null!;
+        public string PImg2 { get; set; } = null!;
+        public string PImg3 { get; set; } = null!;
+        public string PImg4 { get; set; } = null!;
+        public string PImg5 { get; set; } = null!;
+        public string PImg6 { get; set; } = null!;
+        public string PSize { get; set; } = null!;
+        public string PQuality { get; set; } = null!;
+        public double PCapacity { get; set; }
+        public string PCapUnit { get; set; } = null!;
+        public string ProdType { get; set; } = null!;
+        public string PCategory { get; set; } = null!;
+        public string Deleted { get; set; } = null!;
+        public string PayUse { get; set; } = null!;
+        public string PUse { get; set; } = null!;
+
+        public string PUseST { get; set; } = null!;
+        public string CompanyName { get; set; } = null!;
+        public string Approval { get; set; } = null!;
+        public string ApprovalView { get; set; } = null!;
+        public string PApproval { get; set; } = null!;
+        public string? PApprovalBefore { get; set; }
+        public DateTime PRegDate { get; set; }
+        public DateOnly? StartDate { get; set; }
+        public DateOnly? EndDate { get; set; }
+    }
+
+
     public class ProductDetailModel {
 
         public long ProdUid { get; set; }
@@ -239,6 +272,12 @@ namespace Freemold.Modules.Models
         public string p_size { get; set; } = "";
         public string p_quality { get; set; } = "";
         public string p_origin { get; set; } = "";
+        public string p_img1 { get; set; } = null!;
+        public string p_img2 { get; set; } = null!;
+        public string p_img3 { get; set; } = null!;
+        public string p_img4 { get; set; } = null!;
+        public string p_img5 { get; set; } = null!;
+        public string p_img6 { get; set; } = null!;
 
     }
 }

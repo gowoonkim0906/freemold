@@ -90,8 +90,16 @@
  
 
     <script src="~/js/common.js"></script>
+
     @RenderSection("Scripts", required: false)
 
+
+    <div id="loading-overlay" style="display:none" aria-live="polite" aria-busy="true" role="status">
+        <!-- GIF/APNG/SVG 파일 경로로 교체 -->
+        <img id="loading-img" src="@Url.Content("~/images/loading/LoadingOne.gif")" alt="로딩 중…" />
+        <!-- (선택) 텍스트 -->
+        <p class="loading-text">업로드 중…</p>
+    </div>
 
 </body>
 </html>

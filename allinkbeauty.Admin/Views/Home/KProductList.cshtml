@@ -53,7 +53,7 @@
                                     <td class="text-center">
                                         <div class="imgcnt">@item.ImgCnt</div> <!--이미지수-->
                                         <div class="viewcnt">@item.Visit</div> <!--조회수-->
-                                        <img src="https://freemold.net/data/Product/@(item.PImg1)" style="height:60px" />
+                                        <img src="https://freemold.net/data/Product/@(item.PImg1)" style="height:60px;cursor:pointer" onclick="productimg(@item.ProdUid)"  />
                                     </td>
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PName</a></td>
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PCode</a></td>
@@ -78,4 +78,63 @@
     </div>
 
 </div>
+<!-- ===== Modal ===== -->
+<div class="modal fade" id="imagegallerymodal" tabindex="-1" aria-labelledby="imagegallerymodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" id="imagegallerymodalDialog">
+        <!-- 여기에 서버에서 내려준 .modal-content가 들어감 -->
+    </div>
+</div>
 
+
+<form name="frm" id="frm" method="post" action="/Home/ProductEdit">
+    <input type="hidden" id="produid" name="produid" />
+</form>
+<script>
+    function productview(puid){
+
+      $("#produid").val(puid);
+
+      const frm = document.getElementById('frm');
+      frm.submit();
+
+    }
+
+    function stviewcheckchange(el){
+
+        const checked = $(el).is(':checked');
+        const PUseSt = checked ? "Y" : "N";
+
+        const prod_uid = $(el).data('prod_uid');
+
+        var param = {
+            ProdUid: prod_uid,
+            PUseSt: PUseSt
+        };
+
+        $.post('AjaxProductChangeViewBeauty', param, function (result) {
+            console.log(result);
+        });
+
+
+    }
+
+    function productimg(puid){
+    
+        // console.log('test');
+
+        $("#imagegallerymodalDialog").html("");
+
+        
+
+        var param = {produid : puid}
+
+        $.post("/Home/ModalProductImage", param, function (html) {
+
+            $('#imagegallerymodalDialog').html(html);
+
+            $("#imagegallerymodal").modal('show');
+
+        });
+    }
+
+</script>

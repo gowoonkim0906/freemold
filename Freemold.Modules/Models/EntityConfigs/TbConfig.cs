@@ -1,4 +1,5 @@
 ﻿using Freemold.Modules.Models;
+using Freemold.Modules.Models.EF;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -758,8 +759,9 @@ namespace Freemold.Modules.Models.EntityConfigs
             modelBuilder.Entity<BakProductList>(entity =>
             {
                 entity
-                    .HasNoKey()
                     .ToTable("BAK_product_list");
+
+                entity.HasKey(e => e.BIdx);
 
                 entity.Property(e => e.BIdx).ValueGeneratedOnAdd();
                 entity.Property(e => e.BRegDate)

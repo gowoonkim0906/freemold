@@ -1,0 +1,121 @@
+﻿@using Freemold.Modules;
+@{
+    var countrylist = ViewBag.countrylist as List<TbCode> ?? new List<TbCode>();
+}
+<main id="main" class="page" role="main">
+    <div class="inner">
+        <div id="contact" class="contact contact--sub" data-skip>
+            <div class="contact__container">
+                <div class="contact__text">
+                    <h2 class="main-tit">Let’s Start <br>the Conversation</h2>
+                    <p class="main-desc contact__desc contact__desc--sub">
+                        Tell us what you're looking for. <br>
+                        The more details you share, the better we can but <br>
+                        don’t worry if you’re not sure yet.
+                    </p>
+                    <iframe class="contact__map"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3169.9381756364755!2d126.9703952764245!3d37.39129433415647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b5e157540a801%3A0x1f51defd8e39c673!2z6rK96riw64-EIOyViOyWkeyLnCDrj5nslYjqtawg7Z2l7JWI64yA66GcIDQxNQ!5e0!3m2!1sko!2skr!4v1760423213568!5m2!1sko!2skr" width="600" height="450" style="border:0;" allowfullscreen=""  referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <form class="contact__form" action="">
+                    <fieldset class="contact__fieldset">
+                        <legend class="contact__legend">QUICK CONTACT</legend>
+                        <label class="contact__field">
+                            <p class="contact__label">Full Name</p>
+                            <input type="text" class="contact__input">
+                        </label>
+                        <label class="contact__field">
+                            <p class="contact__label">Email Address</p>
+                            <input type="text" class="contact__input">
+                        </label>
+                        <div class="contact__field">
+                            <p class="contact__label">Country</p>
+                            <select name="" id="" class="contact__input contact__input--select">
+                                <option hidden>Choose one</option>
+                                @foreach (var country in countrylist)
+                                {
+                                    <option value="@country.Code">@country.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <label class="contact__field">
+                            <p class="contact__label">Company Name</p>
+                            <input type="text" class="contact__input">
+                        </label>
+                        <div class="contact__field">
+                            <p class="contact__label">Type of Service</p>
+                            <div class="contact__group contact__group--radio">
+                                <label class="contact__radio">
+                                    <input type="radio" class="contact__hidden" name="contactType" value="OEM" hidden />
+                                    <div class="contact__type" aria-hidden="true"></div>
+                                    <p class="contact__msg">OEM</p>
+                                </label>
+                                <label class="contact__radio">
+                                    <input type="radio" class="contact__hidden" name="contactType" value="ODM" hidden />
+                                    <div class="contact__type" aria-hidden="true"></div>
+                                    <p class="contact__msg">ODM</p>
+                                </label>
+                                <label class="contact__radio">
+                                    <input type="radio" class="contact__hidden" name="contactType" value="OBM" hidden/>
+                                    <div class="contact__type" aria-hidden="true"></div>
+                                    <p class="contact__msg">OBM</p> 
+                                </label>
+                                <label class="contact__radio">
+                                    <input type="radio" class="contact__hidden" name="contactType" value="NotSure" hidden>
+                                    <div class="contact__type" aria-hidden="true"></div>
+                                    <p class="contact__msg">Not sure yet</p>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="contact__fieldset">
+                        <legend class="contact__legend">TELL US MORE</legend>
+                        <div class="contact__field">
+                            <p class="contact__label">Product Category</p>
+                            <select name="" id="" class="contact__input contact__input--select">
+                                <option hidden>Choose one</option>
+                            </select>
+                        </div>
+                        <div class="contact__field">
+                            <p class="contact__label">Target Launch Timeline</p>
+                            <select name="" id="" class="contact__input contact__input--select">
+                                <option hidden>Choose one</option>
+                            </select>
+                        </div>
+                        <div class="contact__field">
+                            <p class="contact__label">Estimated Order Quantity</p>
+                            <select name="" id="" class="contact__input contact__input--select">
+                                <option hidden>Choose one</option>
+                            </select>
+                        </div>
+                        <div class="contact__field">
+                            <p class="contact__label">Budget Range</p>
+                            <select name="" id="" class="contact__input contact__input--select">
+                                <option hidden>Choose one</option>
+                            </select>
+                        </div>
+                        <label class="contact__field">
+                            <p class="contact__label">Formula Requirements</p>
+                            <input type="text" class="contact__input">
+                        </label>
+                        <label class="contact__field">
+                            <p class="contact__label">Packaging Preferences</p>
+                            <input type="text" class="contact__input">
+                        </label>
+                        <label class="contact__field">
+                            <p class="contact__label">Other Notes / Questions</p>
+                            <textarea class="contact__input contact__input--textarea"></textarea>
+                        </label>
+                    </fieldset>
+                    <fieldset class="contact__validate">
+                        <label class="contact__chk">
+                            <input type="checkbox" class="contact__hidden" hidden>
+                            <div class="contact__value"></div>
+                            <p class="contact__msg">Personal Information Processing Policy Agreement</p>
+                        </label>
+                        <button type="submit" class="contact__btn contact__btn--wide">Contact us</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script src="~/js/layout/common/contact.js"></script>
+    </div>
+</main>

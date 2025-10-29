@@ -1,8 +1,272 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allin K Beauty</title>
+    <link rel="stylesheet" href="~/styles/font.css">
+    <link rel="stylesheet" href="~/styles/global.css">
+    <link rel="stylesheet" href="~/styles/layout.css">
+    <link rel="stylesheet" href="~/styles/swiper.css">
+    <link rel="stylesheet" href="~/styles/main.css">
+    <script src="~/js/lib/gsap.min.js"></script>
+    <script src="~/js/lib/ScrollTrigger.min.js"></script>
+    <script src="~/js/lib/SplitText.min.js"></script>
+    <script src="~/js/lib/ScrollSmoother.min.js"></script>
+    <script src="~/js/lib/swiper.js"></script>
+    <script src="~/js/utils/async-utils.js" async></script>
+    <script src="~/js/utils/defer-utils.js" defer></script>
+</head>
+<body>
+    <div id="container">
+        <div id="wrapper">
+            <header id="header" class="header" role="banner" data-skip>
+                @Html.Partial(Url.Content("_Header"))
+            </header>
+            <script src="~/js/layout/common/header.js"></script>
+            <div id="smooth-wrapper">
+                <div id="smooth-content">
+                    <main id="main" class="main" role="main">
+                        <div id="intro" class="intro">
+                            <figure class="intro__bg" aria-hidden="true">
+                                <img src="~/images/visual_bg01.jpg">
+                            </figure>
+                            <section id="visual" class="visual" aria-labelledby="visual-tit" data-skip>
+                                <div class="inner">
+                                    <h2 id="visual-tit" class="visual__title">
+                                        <span class="visual__text">All in</span>
+                                        <span class="visual__word">
+                                            <img src="~/images/k_text.svg" alt="K" class="visual__k">
+                                        </span>
+                                        <span class="visual__text">Beauty</span>
+                                    </h2>
+                                </div>
+                            </section>
+                            <section id="greet" class="greet" aria-labelledby="greet-tit" data-skip>
+                                <div class="inner">
+                                    <div class="greet__ment">
+                                        <h2 id="greet-tit" class="greet__title">
+                                            <span class="greet__text">K<span class="hyphen">-</span>Beauty Starts Here.</span>
+                                            <span class="greet__text">Your All<span class="hyphen">-</span>in<span class="hyphen">-</span>One Partner.</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </section>
+                            <script src="~/js/layout/main/intro.js"></script>
+                        </div>
+                        <div id="overview" class="overview">
+                            <section id="vision" class="vision" aria-labelledby="vision-tit" data-skip>
+                                <div class="inner">
+                                    <h2 id="vision-tit" class="main-tit">Which model fits your brand vision?</h2>
+                                    <div class="vision__container">
+                                        <section class="vision__panel">
+                                            <div class="vision__info">
+                                                <div class="vision__text">
+                                                    <h3 class="vision__cate">OEM</h3>
+                                                    <strong class="vision__ment">
+                                                        You have your own formula and packaging. <br>
+                                                        We manufacture it under your brand.
+                                                    </strong>
+                                                    <p class="main-desc vision__desc">This model is ideal if you already have a complete product concept and need a reliable manufacturing partner. We ensure high<span class="hyphen">-</span>quality, efficient production tailored to your specifications.</p>
+                                                </div>
+                                                <ul class="vision__list">
+                                                    <li class="vision__item">Ready-to-Produce</li>
+                                                    <li class="vision__item">Contract Manufacturing</li>
+                                                    <li class="vision__item">Under Your Brand</li>
+                                                    <li class="vision__item">Specification-Based Production</li>
+                                                    <li class="vision__item">Trusted Partner</li>
+                                                </ul>
+                                            </div>
+                                            <figure class="vision__frame" aria-hidden="true">
+                                                <img src="~/images/vision_img01.jpg" class="vision__img">
+                                            </figure>
+                                        </section>
+                                        <section class="vision__panel">
+                                            <div class="vision__info">
+                                                <div class="vision__text">
+                                                    <h3 class="vision__cate">ODM</h3>
+                                                    <strong class="vision__ment">
+                                                        You have a product idea. <br>
+                                                        We help develop, design, and produce it.
+                                                    </strong>
+                                                    <p class="main-desc vision__desc">Whether you're starting from scratch or need customization, we provide end-to-end support. From formula selection to packaging design, we turn your ideas into ready-to-launch products.</p>
+                                                </div>
+                                                <ul class="vision__list">
+                                                    <li class="vision__item">Customization</li>
+                                                    <li class="vision__item">End-to-End Support</li>
+                                                    <li class="vision__item">Turnkey Solution</li>
+                                                    <li class="vision__item">Brand Launch Support</li>
+                                                    <li class="vision__item">Your Innovation, Our Expertise</li>
+                                                </ul>
+                                            </div>
+                                            <figure class="vision__frame" aria-hidden="true">
+                                                <img src="~/images/vision_img02.jpg" class="vision__img">
+                                            </figure>
+                                        </section>
+                                        <section class="vision__panel">
+                                            <div class="vision__info">
+                                                <div class="vision__text">
+                                                    <h3 class="vision__cate">OBM</h3>
+                                                    <strong class="vision__ment">
+                                                        You have a product idea. <br>
+                                                        We help develop, design, and produce it.
+                                                    </strong>
+                                                    <p class="main-desc vision__desc">Our full-service solution covers product development, branding, packaging, and even marketing consultation. Perfect for entrepreneurs or businesses seeking a turnkey beauty brand solution.</p>
+                                                </div>
+                                                <ul class="vision__list">
+                                                    <li class="vision__item">Full Brand Management</li>
+                                                    <li class="vision__item">Product Development</li>
+                                                    <li class="vision__item">Branding & Marketing</li>
+                                                    <li class="vision__item">Trusted Brand Partner</li>
+                                                    <li class="vision__item">We Build Your Success</li>
+                                                </ul>
+                                            </div>
+                                            <figure class="vision__frame" aria-hidden="true">
+                                                <img src="~/images/vision_img03.jpg" class="vision__img">
+                                            </figure>
+                                        </section>
+                                    </div>
+                                </div>
+                            </section>
+                            <script src="~/js/layout/main/vision.js"></script>
+                            <section id="life" class="life" aria-labelledby="life-tit" data-skip>
+                                <div class="life__container">
+                                    <h2 id="life-tit" class="life__tit main-tit">How Your K<span class="hyphen">-</span>Beauty Brand Comes to Life?</h2>
+                                    <div class="life__slide">
+                                        <ol class="swiper-wrapper life__wrapper">
+                                            <li class="swiper-slide life__item">
+                                                <span class="life__index">01</span>
+                                                <h3 class="life__tit">Concept <br>& Planning</h3>
+                                                <p class="main-desc life__desc">Market research, product planning, and brand consultation to ensure your product meets market demands and fits your brand’s vision.</p>
+                                            </li>
+                                            <li class="swiper-slide life__item">
+                                                <span class="life__index">02</span>
+                                                <h3 class="life__tit">Formula <br>Development</h3>
+                                                <p class="main-desc life__desc">Custom formulations developed with experienced formulators, tailored to your target audience and compliant with safety standards.</p>
+                                            </li>
+                                            <li class="swiper-slide life__item">
+                                                <span class="life__index">03</span>
+                                                <h3 class="life__tit">Packaging <br>& Design</h3>
+                                                <p class="main-desc life__desc">Complete packaging sourcing and brand design services that enhance your product’s appeal and align with your brand identity.</p>
+                                            </li>
+                                            <li class="swiper-slide life__item">
+                                                <span class="life__index">04</span>
+                                                <h3 class="life__tit">Manufacturing <br>& Quality Control</h3>
+                                                <p class="main-desc life__desc">ISO and GMP-certified manufacturing facilities guarantee consistent quality and strict adherence to safety regulations.</p>
+                                            </li>
+                                            <li class="swiper-slide life__item">
+                                                <span class="life__index">05</span>
+                                                <h3 class="life__tit">Logistics <br>& Delivery</h3>
+                                                <p class="main-desc life__desc">Global logistics support, including export documentation and careful handling, ensures your products reach customers smoothly and on time.</p>
+                                            </li>
+                                            <li class="swiper-slide life__item">
+                                                <span class="life__index">06</span>
+                                                <h3 class="life__tit">Launch <br>& Beyond</h3>
+                                                <p class="main-desc life__desc">Ongoing support available for marketing strategies, scaling operations, and managing reorders to sustain your brand’s growth.</p>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </section>
+                            <script src="~/js/layout/main/life.js"></script>
+                        </div>
+                        <div id="brand" class="brand" data-skip>
+                            <section class="brand__panel">
+                                <figure class="brand__frame" aria-hidden="true">
+                                    <img src="~/images/brand_img01.jpg" class="brand__img">
+                                </figure>
+                                <div class="brand__text">
+                                    <h2 class="main-tit">Formula that feel <br>like Your Brand</h2>
+                                    <p class="main-desc brand__desc">Each formula is more than just texture — it's how your customers experience your brand. We offer a wide spectrum of K-beauty formulations, crafted with advanced science and deep skin sensibility.</p>
+                                    <nav class="brand__nav">
+                                        <a href="./pages/formula.html" class="brand__btn">View More</a>
+                                    </nav>
+                                </div>
+                            </section>
+                            <section class="brand__panel">
+                                <figure class="brand__frame" aria-hidden="true">
+                                    <img src="~/images/brand_img02.jpg" class="brand__img">
+                                </figure>
+                                <div class="brand__text">
+                                    <h2 class="main-tit">Packaging That Speaks Your Brand Language</h2>
+                                    <p class="main-desc brand__desc">Packaging is the first conversation your customer has with your brand. We source and customize everything — from timeless silhouettes to eco-forward innovations.</p>
+                                    <nav class="brand__nav">
+                                        <a href="./pages/packaging.html" class="brand__btn">View More</a>
+                                    </nav>
+                                </div>
+                            </section>
+                        </div>
+                        <script src="~/js/layout/main/brand.js"></script>
+                        <section id="contact" class="contact" data-skip>
+                            <div class="inner">
+                                <div class="contact__container">
+                                    <div class="contact__text">
+                                        <h2 class="main-tit">Where K<span class="hyphen">-</span>Beauty <br>Becomes Your Brand.</h2>
+                                        <address class="contact__way">
+                                            <p class="main-desc contact__desc">
+                                                #809 West Wing, 415, Heungan-daero, Dongan-gu,<br>
+                                                Anyang-si, Gyeonggi-do KOREA (14059)
+                                            </p>
+                                            <p class="main-desc contact__desc">
+                                                <a href="tel:+82314783018" class="contact__link">+82-31-478-3018</a>
+                                            </p>
+                                            <p class="main-desc contact__desc">
+                                                <a href="mailto:planet17@dplanet.co.kr" class="contact__link">planet17@dplanet.co.kr</a>
+                                            </p>
+                                        </address>
+                                    </div>
+                                    <form class="contact__form" action="">
+                                        <fieldset class="contact__fieldset">
+                                            <legend class="contact__legend">CONTACT US</legend>
+                                            <label class="contact__field">
+                                                <p class="contact__label">Name</p>
+                                                <input type="text" class="contact__input">
+                                            </label>
+                                            <label class="contact__field">
+                                                <p class="contact__label">E-mail</p>
+                                                <input type="text" class="contact__input">
+                                            </label>
+                                            <label class="contact__field">
+                                                <p class="contact__label">Number</p>
+                                                <input type="text" class="contact__input">
+                                            </label>
+                                            <label class="contact__field">
+                                                <p class="contact__label">Detail</p>
+                                                <textarea class="contact__input contact__input--textarea">3333</textarea>
+                                            </label>
+                                        </fieldset>
+                                        <fieldset class="contact__validate">
+                                            <label class="contact__chk">
+                                                <input type="checkbox" class="contact__hidden" hidden>
+                                                <div class="contact__value"></div>
+                                                <p class="contact__msg">Personal Information Processing Policy Agreement</p>
+                                            </label>
+                                            <button type="submit" class="contact__btn">Contact us</button>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                        <script src="~/js/layout/common/contact.js"></script>
+                    </main>
+                    @Html.Partial(Url.Content("_Footer"))
+                </div>
+            </div>
+        </div>
+    </div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2X2Z0F5LZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        gtag('config', 'G-T2X2Z0F5LZ');
+    </script>
+</body>
+</html>

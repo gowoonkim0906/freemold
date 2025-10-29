@@ -1,6 +1,8 @@
-﻿using Freemold.Modules.Models.EntityConfigs;
-using Freemold.Modules.Models;
+﻿using Freemold.Modules.Models;
+using Freemold.Modules.Models.EF;
+using Freemold.Modules.Models.EntityConfigs;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Freemold.Modules.Common
@@ -156,12 +158,32 @@ namespace Freemold.Modules.Common
         public virtual DbSet<VwNcategoryList> VwNcategoryLists { get; set; }
 
         public virtual DbSet<VwProductList> VwProductLists { get; set; }
-
         public virtual DbSet<VwProductListSm> VwProductListSms { get; set; }
+
+        public IQueryable<FnSplit> FnSplit(string text, string sep)
+        => FromExpression(() => FnSplit(text, sep));
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             TbConfig.Configure(builder);
+
+
+            // TVF 반환 타입은 Keyless
+            builder.Entity<FnSplit>().HasNoKey();
+
+            // 메서드 정확히 찾기
+            var mi = typeof(AppDbContext).GetMethod(
+                nameof(AppDbContext.FnSplit),
+                BindingFlags.Public | BindingFlags.Instance,
+                binder: null,
+                types: new[] { typeof(string), typeof(string) },   // 파라미터 둘 다 string
+                modifiers: null
+            ) ?? throw new InvalidOperationException("FnSplit(string,string) 메서드를 찾을 수 없습니다.");
+
+            builder
+                .HasDbFunction(mi)
+                .HasSchema("dbo")
+                .HasName("FN_SPLIT");
         }
     }
 }

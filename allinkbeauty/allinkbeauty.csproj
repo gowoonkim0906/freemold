@@ -1,10 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <!-- 게시 완료 후 Views/Pages의 .cshtml을 publish 폴더로 강제 복사 -->
+  <Target Name="CopyViewsOnPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <_ViewFiles Include="$(ProjectDir)Views\**\*.cshtml" />
+      <_PageFiles Include="$(ProjectDir)Pages\**\*.cshtml" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_ViewFiles)"
+          DestinationFolder="$(PublishDir)Views\%(RecursiveDir)" />
+    <Copy SourceFiles="@(_PageFiles)"
+          DestinationFolder="$(PublishDir)Pages\%(RecursiveDir)" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.7" />
@@ -13,5 +25,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Freemold.Modules\Freemold.Modules.csproj" />
   </ItemGroup>
-
 </Project>

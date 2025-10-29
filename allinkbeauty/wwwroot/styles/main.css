@@ -1,0 +1,311 @@
+.intro {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.intro__bg {
+  position: absolute;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.greet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100svh;
+}
+
+.greet__ment {
+  padding:0 7.5rem;
+}
+
+.greet__text {
+  font-size: clamp(1.5rem, 6.25vw, 120px);
+  display: block;
+  font-family: var(--gothic);
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+}
+
+.greet__text:last-child {
+  font-style:italic;
+  text-align:right;
+  transform:translateX(0.01em);
+  letter-spacing: -0.0225em;
+}
+
+@media(max-width:500px){
+  .greet__ment {
+    padding-right: 3rem; 
+    padding-left: 3rem;
+  }
+}
+
+.overview {
+  background-color: #000;
+  color: #fff;
+}
+
+.vision {
+  padding-top: 16.4rem;
+}
+
+.vision__tit {
+  overflow: hidden;
+}
+
+.vision__container {
+  margin-top: 3.95rem;  
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+.vision__panel {
+  display: flex;
+  gap:5rem;
+  padding: 1.8rem 0;
+  border-top:1px solid rgba(255,255,255,0.2);
+}
+
+.vision__info {
+  flex:1;
+  padding-top: 2rem;
+}
+
+.vision__cate {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.vision__ment {
+  display: block;
+  margin-top: 0.45em;
+  font-size: 1.75rem; 
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.011em;
+}
+
+.vision__desc {
+  margin-top: 0.8em;  
+}
+
+.vision__frame {
+  width: 43.0233%;
+}
+
+.vision__list {
+  display: flex;
+  flex-wrap:wrap;
+  gap:1rem 0.5rem;
+  margin-top: 2.9rem;
+}
+
+.vision__item {
+  padding:0.3461em 0.9607em;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border:1px solid #fff;
+  border-radius:2.5em;
+}
+
+@media(max-width:1024px){
+  .vision__panel {
+    gap:2rem;
+  }
+}
+
+@media(max-width: 768px){
+  .vision {
+    padding-top: 8rem;
+  }
+  .vision__panel {
+    flex-direction:column;
+  }
+  .vision__frame {
+    width: 100%;
+  }
+}
+
+@media(max-width:500px){
+  .vision__cate {
+    font-size: 2rem;
+  }
+  .vision__ment {
+    font-size: 1.5rem;
+  }
+  .vision__item {
+    font-size: 1.125rem;
+  }
+}
+
+.life {
+  padding: 10.75rem 0 10.95rem;
+}
+
+.life__container {
+  padding: var(--hd-height) calc((100% - 1720px) / 2);
+  overflow: hidden;
+  display: flex;
+  flex-direction:column;
+  height:100svh;
+  --opacity: 1;
+  transition:.3s ease opacity;
+}
+
+.life__tit {
+  flex-shrink: 0;
+}
+
+.life__slide {
+  flex: 1;
+  min-height: 0;
+  height: 0;
+}
+
+
+.life__item {
+  width: 34.884%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction:column;
+  border-left:1px solid rgba(255,255,255,0.2);
+  padding:0.7rem 0 1.8rem 2.4rem;
+}
+
+.life__index {
+  display: inline-block;
+  font-size: 6.25vw;
+  font-weight: 700;
+  line-height: 1.18;
+  
+}
+
+.life__tit {
+  font-size: 2.5rem;
+  line-height: 1.3;
+  padding-bottom: 1em;
+}
+
+.life__desc {
+  margin-top: auto;
+}
+
+@media(max-width:1760px){
+  .life__container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media(max-width:1024px){
+  .life {
+    padding:2.5rem 0;
+  }
+  .life__item {
+    width: 50%;
+  }
+}
+
+@media(max-width:500px){
+  .life__item {
+    width: 66.667%;
+  }
+}
+
+.brand__panel {
+  display: flex;
+  align-items: center;
+  height: 100svh;
+  padding:1.5625rem 1.875rem;
+}
+
+.brand__panel:nth-child(2n){
+  flex-direction: row-reverse;
+}
+
+.brand__frame {
+  width: 50%;
+  height: 100%;
+}
+
+.brand__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand__text {
+  width: 50%;
+  padding: 0 10.5rem 0 10.3rem;
+}
+
+.brand__desc {
+  margin-top: 2.25em;
+}
+
+.brand__nav {
+  margin-top: 4rem;
+}
+.brand__btn {
+    
+    display: inline-block;
+    padding: 0.3461em 0.9607em;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 1px solid #000;
+    border-radius: 2.5em;
+    transition: .3s ease all;
+}
+
+@media(hover:hover){
+  .brand__btn:hover {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+@media(max-width: 1760px){
+  .brand__text {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
+}
+
+@media(max-width: 1280px){
+  .brand__text {
+    padding-right: 2.5rem;
+    padding-left: 2.5rem;
+  }
+}
+
+@media(max-width: 1760px){
+  .brand__panel {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media(max-width: 1024px){  
+  .brand__panel {
+    display: block;
+    height: auto;
+  }
+
+  .brand__frame {
+    width: 100%;
+    height: 50svh;
+  }
+
+  .brand__text {
+    margin-top: 2rem;
+    padding-right: 0;
+    padding-left: 0;
+    width: 100%;
+  }
+}
