@@ -1,5 +1,6 @@
 ﻿using Freemold.Modules.Models;
 using Freemold.Modules.Models.EF;
+using Freemold.Modules.Models.Table;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -2627,6 +2628,36 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.UserAgent).IsUnicode(false);
             });
 
+            modelBuilder.Entity<TB_CONNECTION_ALLINKBEAUTY>(entity =>
+            {
+                entity.HasKey(e => e.Idx);
+
+                entity.HasIndex(e => e.cCode, "IX_TB_CONNECTION_ALLINKBEAUTY");
+
+                entity.HasIndex(e => e.Idx, "IX_TB_CONNECTION_ALLINKBEAUTY_1").IsDescending();
+
+                entity.HasIndex(e => e.InDate, "IX_TB_CONNECTION_ALLINKBEAUTY_2").IsDescending();
+
+                entity.HasIndex(e => e.RegDate, "IX_TB_CONNECTION_ALLINKBEAUTY_3").IsDescending();
+
+                entity.Property(e => e.Domain).HasMaxLength(50);
+                entity.Property(e => e.HttpReferer).IsUnicode(false);
+                entity.Property(e => e.InDate)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasColumnType("datetime");
+                entity.Property(e => e.RegDate)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasColumnType("datetime");
+                entity.Property(e => e.RegIP)
+                    .HasMaxLength(23)
+                    .IsUnicode(false);
+                entity.Property(e => e.UserAgent).IsUnicode(false);
+                entity.Property(e => e.cCode)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+            });
+
             modelBuilder.Entity<TbCount>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
@@ -3620,6 +3651,40 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.WorkDate).HasColumnType("smalldatetime");
             });
 
+            modelBuilder.Entity<TB_ALLINKBEAUTY_CONTACT>(entity =>
+            {
+                entity.HasKey(e => e.Idx);
+
+                entity.Property(e => e.BudgetRange).HasMaxLength(50);
+                entity.Property(e => e.CompanyName).HasMaxLength(200);
+                entity.Property(e => e.Country).HasMaxLength(2);
+                entity.Property(e => e.Email).HasMaxLength(200);
+                entity.Property(e => e.EstimatedOrderQuantity).HasMaxLength(50);
+                entity.Property(e => e.Notes).HasColumnType("text");
+                entity.Property(e => e.FormulaRequirements).HasMaxLength(50);
+                entity.Property(e => e.FullName).HasMaxLength(150);
+                entity.Property(e => e.PackagingPreferences).HasMaxLength(50);
+                entity.Property(e => e.ProductCategory).HasMaxLength(50);
+                entity.Property(e => e.RegDate).HasColumnType("datetime");
+                entity.Property(e => e.RegIp).HasMaxLength(100);
+                entity.Property(e => e.TargetLaunchTimeline).HasMaxLength(50);
+                entity.Property(e => e.TypeofService).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<TB_ALLINKBEAUTY_CONTACT_US>(entity =>
+            {
+                entity.HasKey(e => e.idx);
+
+                entity.Property(e => e.Detail).IsUnicode(false);
+                entity.Property(e => e.Email).HasMaxLength(200);
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Number).HasMaxLength(200);
+                entity.Property(e => e.RegDate)
+                    .HasDefaultValueSql("(getdate())")
+                    .HasColumnType("datetime");
+                entity.Property(e => e.RegIp).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<VwCategory>(entity =>
             {
                 entity
@@ -3942,6 +4007,7 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .HasColumnName("P_IMG6");
                 entity.Property(e => e.PMemo).HasColumnName("P_MEMO");
                 entity.Property(e => e.PMemo2).HasColumnName("P_MEMO2");
+                entity.Property(e => e.PMemoEng).HasColumnName("P_MEMO_ENG");
                 entity.Property(e => e.PModdate)
                     .HasColumnType("smalldatetime")
                     .HasColumnName("P_MODDATE");
@@ -4066,6 +4132,7 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .HasColumnName("P_IMG6");
                 entity.Property(e => e.PMemo).HasColumnName("P_MEMO");
                 entity.Property(e => e.PMemo2).HasColumnName("P_MEMO2");
+                entity.Property(e => e.PMemoEng).HasColumnName("P_MEMO_ENG");
                 entity.Property(e => e.PModdate)
                     .HasColumnType("smalldatetime")
                     .HasColumnName("P_MODDATE");
@@ -4115,6 +4182,13 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .IsUnicode(false);
             });
 
+
+            //Stored Procedure 결과 매핑용 DTO 등록
+            modelBuilder.Entity<UspconnectionModel>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView(null); 
+            });
         }
     }
 }

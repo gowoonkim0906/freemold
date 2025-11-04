@@ -60,6 +60,20 @@ namespace Middlewares
                     context.Response.Redirect("/blocked");
                     return;
                 }
+                else
+                {
+
+                    var connect = await allinkbeautyService.AllinKVisitorInsert(clientIp ?? "");
+
+                    if(connect.Idx <= 0)
+                    {
+                        context.Session.SetString("block", "false");
+                        context.Response.Redirect("/blocked");
+                        return;
+                    }
+
+
+                }
 
                 // (선택) 4) 지오IP가 필요하면 비차단 보조 로직으로
                 // _ = EnrichGeoAsync(context, httpFactory); // fire-and-forget, 실패 무시

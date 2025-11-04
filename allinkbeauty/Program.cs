@@ -44,6 +44,8 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = ".MySessionStartDemo.Session";
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; // 동의 없이도 필수 쿠키로 사용
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 builder.Services
@@ -99,6 +101,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 {
 
     builder.Services.AddHttpClient();
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IAllinkbeautyService, AllinkbeautyService>();
     builder.Services.AddScoped<ICodeService, CodeService>();
     builder.Services.AddScoped<IFileService, FileService>();
@@ -109,5 +112,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<CommunityRepository>();
     builder.Services.AddScoped<ProductRepository>();
     builder.Services.AddScoped<CodeRepository>();
+    builder.Services.AddScoped<CommonRepository>();
+    builder.Services.AddScoped<BeautyRepository>();
 
 }

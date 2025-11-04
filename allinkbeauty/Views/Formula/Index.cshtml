@@ -1,7 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Freemold.Modules;
 @{
+
+    var categorylist = ViewBag.categorylist as List<TbCategory> ?? new List<TbCategory>();
+    var categorylist2 = ViewBag.categorylist2 as List<TbCategory> ?? new List<TbCategory>();
+
+    string filepath = ViewBag.filepath as string ?? "";
+
+    var page = (int)ViewBag.page;
+    var code1 = (string)ViewBag.code1;
+    var code2 = (string)ViewBag.code2;
+
+
 }
 <div class="prd-list">
     <div class="inner">
@@ -12,153 +21,240 @@
             <div class="prd-nav__panel">
                 <h2 class="prd-nav__cate">1th depth</h2>
                 <ul class="prd-nav__list">
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn" aria-current="page">ALL</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Series</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Applicator/Ceramic Ball</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Make up</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Tube</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Stick/Sunstick</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Bottle</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Jar</a></li>
+                    <li class="prd-nav__item"><a href="#" onclick="return scategory('all', this, event)" class="prd-nav__btn" data-code="" aria-current="@(code1 == "" ? "page" : "")">ALL</a></li>
+                    @if (categorylist.Any())
+                    {
+                        foreach (var item in categorylist)
+                        {
+                            <li class="prd-nav__item"><a href="#" onclick="return scategory('@item.Code', this, event)" class="prd-nav__btn" data-code="@item.Code" aria-current="@(code1 == item.Code ? "page" : "")">@item.NameEng</a></li>
+                        }
+                    }
                 </ul>
             </div>
-            <div class="prd-nav__panel">
+            <div class="prd-nav__panel" id="category2">
                 <h2 class="prd-nav__cate">2nd depth</h2>
-                <ul class="prd-nav__list">
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Select 1st Depth</a></li>
-                </ul>
-            </div>
-            <div class="prd-nav__panel">
-                <h2 class="prd-nav__cate">Volume</h2>
-                <ul class="prd-nav__list">
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn" aria-current="page">ALL</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Mini(Below 10)</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">11~15</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">16~30</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">31~50</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">51~100</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">101~200</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">201~300</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">301~500</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">501~1000</a></li>
-                    <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">1001 over</a></li>
+                <ul class="prd-nav__list" id="prd-nav">
+                    @if (categorylist2.Any())
+                    {
+                        <li class="prd-nav__item"><a href="#" onclick="return scategory2(this, event)" class="prd-nav__btn" data-code="" aria-current="@(code2 == "" ? "page" : "")">ALL</a></li>
+                        foreach (var item in categorylist2)
+                        {
+                            <li class="prd-nav__item"><a href="#" onclick="return scategory2(this, event)" class="prd-nav__btn" data-code="@item.Code" aria-current="@(code2 == item.Code ? "page" : "")">@item.NameEng</a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Select 1st Depth</a></li>
+                    }
+
                 </ul>
             </div>
         </nav>
         <main id="main" role="main">
             <h3 class="sr-only">Product list</h3>
-            <ul class="prd-gall">
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
-                <li class="prd-gall__item">
-                    <a href="FormualInfo" class="prd-gall__link">
-                        <figure class="prd-gall__frame"><img src="~/images/prd_thumb01.jpg" alt="Product thumbnail" class="prd-gall__img"></figure>
-                        <h4 class="prd-gall__name">Title</h4>
-                    </a>
-                </li>
+            <ul class="prd-gall" id="productlist">
+                <!--제품리스트-->
             </ul>
         </main>
-        <nav class="pagination">
-            <ul class="pagination__list">
-                <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="first">Go to the first page</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="prev">Go to the previous page</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn" aria-current="page">1</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn">2</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn">3</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn">4</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn">5</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="next">Go to the next page</a></li>
-                <li class="pagination__item"><a href="#null" class="pagination__btn" data-anchor="last">Go to the first page</a></li>
-            </ul>
+        <nav class="pagination" id="pagination">
+            <!--페이징-->
         </nav>
 
     </div>
 </div>
+
+<form id="FormulaInfo" action="/Formula/FormulaInfo" method="POST" style="display:none;">
+    <input type="hidden" id="produid" name="produid" value="" />
+    <input type="hidden" id="page" name="page" value="@(page)" />
+    <input type="hidden" id="code1" name="code1" value="@(code1)" />
+    <input type="hidden" id="code2" name="code2" value="@(code2)" />
+</form>
+
+
+<script>
+    $(function () {
+
+        const $page  = "@(page)";
+
+
+        productlist($page);
+
+    });
+
+
+    function scategory(a,el,e){
+
+        if (e) e.preventDefault();
+
+        if (el) {
+          const $list = $(el).closest('.prd-nav__list');
+          $list.find('.prd-nav__btn[aria-current="page"]').removeAttr('aria-current');
+          el.setAttribute('aria-current', 'page');
+        }
+
+        $("#volume").find('.prd-nav__btn[aria-current="page"]').removeAttr('aria-current');
+        $("#volume").find('.prd-nav__btn[data-code1=""]').attr('aria-current', 'page');
+
+
+        const $nav = $("#prd-nav").empty();
+
+        if(a == "all"){
+
+            $nav.html('<li class="prd-nav__item"><a href="#null" class="prd-nav__btn">Select 1st Depth</a></li>');
+
+            productlist(1); //리스트
+            return;
+
+        }else{
+
+            $.ajax({
+                url: "/Common/CategoryList",
+                type: "POST",
+                data: { ACode: a },
+                dataType: "json" // ← 서버가 JSON이면 꼭 지정(또는 서버에서 Content-Type: application/json)
+            })
+            .done(function(data){
+
+            const items = Array.isArray(data.item2) ? data.item2 : [];
+
+            const escape = (s) => String(s)
+                .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+
+            if (!items.length) {
+                $nav.html('<li class="prd-nav__item"><a href="#null" class="prd-nav__btn">No 2nd Depth</a></li>');
+
+            }else
+            {
+                const html = [
+                `<li class="prd-nav__item">
+                    <a href="#" onclick="return scategory2(this, event)" class="prd-nav__btn" aria-current="page">ALL</a>
+                    </li>`,
+                ...items.map(x => `
+                    <li class="prd-nav__item">
+                    <a href="#"  onclick="return scategory2(this, event)" class="prd-nav__btn" data-code="${escape(x.code ?? x.code)}">
+                        ${escape(x.nameEng ?? x.namekor)}
+                    </a>
+                    </li>
+                `)
+                ].join("");
+
+                $nav.html(html);
+            }
+
+            productlist(1); //리스트
+
+
+            })
+            .fail(function(xhr){
+                console.error("POST 실패:", xhr);
+                //$nav.html('<li class="prd-nav__item is-error">불러오기에 실패했습니다</li>');
+            });
+
+            return;
+
+        }
+
+    }
+
+    function scategory2(el,e){
+
+        if (e) e.preventDefault();
+
+        if (el) {
+          const $list = $(el).closest('.prd-nav__list');
+          $list.find('.prd-nav__btn[aria-current="page"]').removeAttr('aria-current');
+          el.setAttribute('aria-current', 'page');
+        }
+
+        productlist(1); //리스트
+
+        return;
+    }
+
+    function productlist(pagenum){
+
+        const $nav = $("#productlist").empty();
+
+        const acode = 'A002'; //A002 OEM/ODM
+        
+        //카테고리1
+        const active1 = document.querySelector('#category1 .prd-nav__btn[aria-current="page"]');
+        const code1 = (active1?.dataset.code?.trim() || '');
+
+        //카테고리2
+        const active2 = document.querySelector('#category2 .prd-nav__btn[aria-current="page"]');
+        const code2 = (active2?.dataset.code?.trim() || '');
+
+
+        $.ajax({
+            url: "/Common/ProductList",
+            type: "POST",
+            data: {page:pagenum, acode:acode, category1:code1, category2:code2 },  
+            dataType: "json",
+            beforeSend: showLoading
+        })
+        .done(function(data){
+
+
+            pagenation(data.item3, data.item4, data.item5); //페이징 처리 부분
+
+            const items = Array.isArray(data.item2) ? data.item2 : [];
+
+            const escape = (s) => String(s)
+                .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+
+            const html = [
+                ...items.map(x => `
+                    <li class="prd-gall__item">
+                        <a href="#" class="prd-gall__link" onclick="finfo(${x.prodUid})">
+                            <figure class="prd-gall__frame"><img src="@(filepath)/Product/${escape(x.pImg1)}" alt="Product thumbnail" class="prd-gall__img"></figure>
+                            <h4 class="prd-gall__name">${escape(x.pCode)}</h4>
+                        </a>
+                    </li>
+                `)
+                ].join("");
+
+            $nav.html(html);
+
+            $("#page").val(pagenum);
+            $("#code1").val(code1);
+            $("#code2").val(code2);
+
+        })
+        .fail(function(xhr){
+            console.error("POST 실패:", xhr);
+        })
+        .always(function(){                 // 성공/실패 상관없이 마지막에
+          hideLoading();
+        });
+
+    }
+
+    function pagenation(page, pagesize ,totalcount ){
+
+        $.ajax({
+            url: "/Common/AjaxPagination",
+            type: "POST",
+            data: { page: page, pagesize:pagesize, totalcount:totalcount, pageblock:5 },
+            dataType: "html"
+        })
+        .done(function (html) {
+          $('#pagination').html(html);
+        })
+        .fail(function (xhr, status, err) {
+          console.error('로드 실패:', status, err, xhr);
+        });
+
+    }
+
+    function finfo(produid){
+
+
+        $("#produid").val(produid);
+        $('#FormulaInfo').submit();
+
+    }
+
+</script>

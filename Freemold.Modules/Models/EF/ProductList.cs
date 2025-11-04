@@ -50,6 +50,7 @@ public partial class ProductList
     public string P_MEMO { get; set; } = null!;
 
     public string P_MEMO2 { get; set; } = null!;
+    public string? P_MEMO_ENG { get; set; }
 
     public DateTime P_REGDATE { get; set; }
 

@@ -58,5 +58,71 @@ namespace Freemold.Modules.Repositories
                 throw;
             }
         }
+
+
+        public async Task<string> ContactInsert(TB_ALLINKBEAUTY_CONTACT input, CancellationToken ct = default)
+        {
+            try
+            {
+
+                var entity = new TB_ALLINKBEAUTY_CONTACT
+                {
+                    FullName = input.FullName,
+                    Email = input.Email,
+                    Country = input.Country,
+                    CompanyName = input.CompanyName,
+                    TypeofService = input.TypeofService,
+                    ProductCategory = input.ProductCategory,
+                    TargetLaunchTimeline = input.TargetLaunchTimeline,
+                    EstimatedOrderQuantity = input.EstimatedOrderQuantity,
+                    BudgetRange = input.BudgetRange,
+                    FormulaRequirements = input.FormulaRequirements,
+                    PackagingPreferences = input.PackagingPreferences,
+                    Notes = input.Notes,
+                    RegDate = DateTime.Now,
+                    RegIp = input.RegIp                                                         
+                };
+
+                await _appdbcontext.TB_ALLINKBEAUTY_CONTACT.AddAsync(entity, ct);
+                var rows = await _appdbcontext.SaveChangesAsync(ct);
+
+                return rows > 0 ? "success" : "fail";
+            }
+            catch (Exception ex)
+            {
+                _appdbcontext.ChangeTracker.Clear();
+                return "fail";
+            }
+
+        }
+
+
+        public async Task<string> ContactUsInsert(TB_ALLINKBEAUTY_CONTACT_US input, CancellationToken ct = default)
+        {
+            try
+            {
+
+                var entity = new TB_ALLINKBEAUTY_CONTACT_US
+                {
+                    Name = input.Name,
+                    Email = input.Email,
+                    Number = input.Number,
+                    Detail = input.Detail,
+                    RegDate = DateTime.Now,
+                    RegIp = input.RegIp
+                };
+
+                await _appdbcontext.TB_ALLINKBEAUTY_CONTACT_US.AddAsync(entity, ct);
+                var rows = await _appdbcontext.SaveChangesAsync(ct);
+
+                return rows > 0 ? "success" : "fail";
+            }
+            catch (Exception ex)
+            {
+                _appdbcontext.ChangeTracker.Clear();
+                return "fail";
+            }
+
+        }
     }
 }

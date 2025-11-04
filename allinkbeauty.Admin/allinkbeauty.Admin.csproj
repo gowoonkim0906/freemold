@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-x64" Version="14.8.2" />
+    <PackageReference Include="Magick.NET-Q16-x64" Version="14.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.7" />
   </ItemGroup>
 

@@ -10,18 +10,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allin K Beauty</title>
-    <link rel="stylesheet" href="~/styles/font.css">
-    <link rel="stylesheet" href="~/styles/global.css">
-    <link rel="stylesheet" href="~/styles/layout.css">
-    <link rel="stylesheet" href="~/styles/swiper.css">
-    <link rel="stylesheet" href="~/styles/main.css">
-    <script src="~/js/lib/gsap.min.js"></script>
-    <script src="~/js/lib/ScrollTrigger.min.js"></script>
-    <script src="~/js/lib/SplitText.min.js"></script>
-    <script src="~/js/lib/ScrollSmoother.min.js"></script>
-    <script src="~/js/lib/swiper.js"></script>
-    <script src="~/js/utils/async-utils.js" async></script>
-    <script src="~/js/utils/defer-utils.js" defer></script>
+    <link rel="stylesheet" href="@Url.Content("~/styles/font.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/global.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/layout.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/swiper.css")">
+    <link rel="stylesheet" href="@Url.Content("~/styles/main.css")">
+    <script src="@Url.Content("~/js/lib/gsap.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/ScrollTrigger.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/SplitText.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/ScrollSmoother.min.js")"></script>
+    <script src="@Url.Content("~/js/lib/swiper.js")"></script>
+    <script src="@Url.Content("~/js/utils/async-utils.js")" async></script>
+    <script src="@Url.Content("~/js/utils/defer-utils.js")" defer></script>
+    <script src="@Url.Content("~/js/jquery/jquery.min.js")"></script>
 </head>
 <body>
     <div id="container">
@@ -226,28 +227,28 @@
                                             <legend class="contact__legend">CONTACT US</legend>
                                             <label class="contact__field">
                                                 <p class="contact__label">Name</p>
-                                                <input type="text" class="contact__input">
+                                                <input type="text" class="contact__input" id="contact_name" name="contact_name">
                                             </label>
                                             <label class="contact__field">
                                                 <p class="contact__label">E-mail</p>
-                                                <input type="text" class="contact__input">
+                                                <input type="text" class="contact__input" id="contact_email" name="contact_email">
                                             </label>
                                             <label class="contact__field">
                                                 <p class="contact__label">Number</p>
-                                                <input type="text" class="contact__input">
+                                                <input type="text" class="contact__input" id="contact_number" name="contact_number">
                                             </label>
                                             <label class="contact__field">
                                                 <p class="contact__label">Detail</p>
-                                                <textarea class="contact__input contact__input--textarea">3333</textarea>
+                                                <textarea class="contact__input contact__input--textarea" id="contact_detail" name="contact_detail"></textarea>
                                             </label>
                                         </fieldset>
                                         <fieldset class="contact__validate">
                                             <label class="contact__chk">
-                                                <input type="checkbox" class="contact__hidden" hidden>
+                                                <input type="checkbox" class="contact__hidden" id="contactuschk" hidden>
                                                 <div class="contact__value"></div>
                                                 <p class="contact__msg">Personal Information Processing Policy Agreement</p>
                                             </label>
-                                            <button type="submit" class="contact__btn">Contact us</button>
+                                            <button type="button" class="contact__btn" onclick="contactusinsert()">Contact us</button>
                                         </fieldset>
                                     </form>
                                 </div>
@@ -261,12 +262,88 @@
         </div>
     </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T2X2Z0F5LZ"></script>
+    <script src="@Url.Content("~/js/site.js")"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-T2X2Z0F5LZ');
+
+        function contactusinsert(){
+        
+            const contactuschk      = $('#contactuschk').is(':checked');
+            const contact_name      = $("#contact_name").val() || "" ;
+            const contact_email     = $("#contact_email").val()    || "" ;
+            const contact_number    = $("#contact_number").val()  || "" ;
+            const contact_detail    = $("#contact_detail").val()  || "" ;
+
+
+            if(contact_name.trim() === ""){
+                alert('Please register your Name');
+                $("#contact_name").focus();
+                return false;
+            }
+
+            if(contact_email.trim() === ""){
+                alert('Please register your E-mail address');
+                $("#contact_email").focus();
+                return false;
+            }
+
+            if(contact_number.trim() === ""){
+                alert('Please register your Number');
+                $("#contact_number").focus();
+                return false;
+            }
+
+            if(contact_detail.trim() === ""){
+                alert('Please register Detail');
+                $("#contact_detail").focus();
+                return false;
+            }
+
+            if(!contactuschk){
+               alert('Please agree to the Personal Information Processing Policy');
+               $("#contactuschk").focus();
+               return false;
+            }
+
+            const param = {
+             Name: contact_name,
+             Email: contact_email,
+             Number: contact_number,
+             Detail : contact_detail
+            };
+
+            $.ajax({
+                 url: "/Home/ContactUsInsert",
+                 type: "POST",
+                 data: param,
+                 dataType: "json",
+                 beforeSend: showLoading
+             })
+             .done(function(data){
+
+                  if(data.item1 == "success"){
+
+                       alert('It has been received.');
+                       location.reload();
+
+                  }else{
+                       alert('Reception failed.');
+                       location.reload();
+                  }
+
+             })
+             .fail(function(xhr){
+                 console.error("POST 실패:", xhr);
+             })
+             .always(function(){                 // 성공/실패 상관없이 마지막에
+               hideLoading();
+              });
+
+        }
     </script>
 </body>
 </html>

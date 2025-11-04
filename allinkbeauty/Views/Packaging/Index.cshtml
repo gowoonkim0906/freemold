@@ -125,7 +125,7 @@
         }else{
 
             $.ajax({
-                url: "/Packaging/CategoryList",
+                url: "/Common/CategoryList",
                 type: "POST",
                 data: { ACode: a },
                 dataType: "json" // ← 서버가 JSON이면 꼭 지정(또는 서버에서 Content-Type: application/json)
@@ -211,6 +211,8 @@
     
         const $nav = $("#productlist").empty();
 
+        const acode = 'A001'; //A001 프리몰드
+
         //카테고리1
         const active1 = document.querySelector('#category1 .prd-nav__btn[aria-current="page"]');
         const code1 = (active1?.dataset.code?.trim() || ''); 
@@ -226,9 +228,9 @@
 
 
         $.ajax({
-            url: "/Packaging/PackagingList",
+            url: "/Common/ProductList",
             type: "POST",
-            data: {page:pagenum, category1:code1, category2:code2, volume1:volume1, volume2:volume2 },
+            data: {page:pagenum, acode:acode , category1:code1, category2:code2, volume1:volume1, volume2:volume2 },  
             dataType: "json",
             beforeSend: showLoading
         })

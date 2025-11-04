@@ -52,6 +52,7 @@ public partial class BakProductList
     public string? P_MEMO { get; set; }
 
     public string? P_MEMO2 { get; set; }
+    public string? P_MEMO_ENG { get; set; }
 
     public DateTime? P_REGDATE { get; set; }
 

@@ -1,6 +1,10 @@
 ﻿@using Freemold.Modules;
 @{
     var countrylist = ViewBag.countrylist as List<TbCode> ?? new List<TbCode>();
+    var productcategory = ViewBag.productcategory as List<TbCode> ?? new List<TbCode>();
+    var timeline = ViewBag.timeline as List<TbCode> ?? new List<TbCode>();
+    var budgetrange = ViewBag.budgetrange as List<TbCode> ?? new List<TbCode>();
+    var orderquantity = ViewBag.orderquantity as List<TbCode> ?? new List<TbCode>();
 }
 <main id="main" class="page" role="main">
     <div class="inner">
@@ -20,16 +24,16 @@
                         <legend class="contact__legend">QUICK CONTACT</legend>
                         <label class="contact__field">
                             <p class="contact__label">Full Name</p>
-                            <input type="text" class="contact__input">
+                            <input type="text" class="contact__input" name="fullname" id="fullname">
                         </label>
                         <label class="contact__field">
                             <p class="contact__label">Email Address</p>
-                            <input type="text" class="contact__input">
+                            <input type="text" class="contact__input" name="email" id="email">
                         </label>
                         <div class="contact__field">
                             <p class="contact__label">Country</p>
-                            <select name="" id="" class="contact__input contact__input--select">
-                                <option hidden>Choose one</option>
+                            <select class="contact__input contact__input--select" name="country" id="country">
+                                <option value="">Choose one</option>
                                 @foreach (var country in countrylist)
                                 {
                                     <option value="@country.Code">@country.Name</option>
@@ -37,29 +41,31 @@
                             </select>
                         </div>
                         <label class="contact__field">
-                            <p class="contact__label">Company Name</p>
-                            <input type="text" class="contact__input">
+                            <p class="contact__label">
+                                Company Name / Dept. / Position
+                            </p>
+                            <input type="text" class="contact__input" name="company" id="company">
                         </label>
                         <div class="contact__field">
                             <p class="contact__label">Type of Service</p>
                             <div class="contact__group contact__group--radio">
                                 <label class="contact__radio">
-                                    <input type="radio" class="contact__hidden" name="contactType" value="OEM" hidden />
+                                    <input type="radio" class="contact__hidden" name="contactType" id="contactType1" value="OEM" hidden  checked/>
                                     <div class="contact__type" aria-hidden="true"></div>
                                     <p class="contact__msg">OEM</p>
                                 </label>
                                 <label class="contact__radio">
-                                    <input type="radio" class="contact__hidden" name="contactType" value="ODM" hidden />
+                                    <input type="radio" class="contact__hidden" name="contactType" id="contactType2" value="ODM" hidden />
                                     <div class="contact__type" aria-hidden="true"></div>
                                     <p class="contact__msg">ODM</p>
                                 </label>
                                 <label class="contact__radio">
-                                    <input type="radio" class="contact__hidden" name="contactType" value="OBM" hidden/>
+                                    <input type="radio" class="contact__hidden" name="contactType" id="contactType3" value="OBM" hidden />
                                     <div class="contact__type" aria-hidden="true"></div>
                                     <p class="contact__msg">OBM</p> 
                                 </label>
                                 <label class="contact__radio">
-                                    <input type="radio" class="contact__hidden" name="contactType" value="NotSure" hidden>
+                                    <input type="radio" class="contact__hidden" name="contactType" id="contactType4" value="NotSure" hidden>
                                     <div class="contact__type" aria-hidden="true"></div>
                                     <p class="contact__msg">Not sure yet</p>
                                 </label>
@@ -70,48 +76,64 @@
                         <legend class="contact__legend">TELL US MORE</legend>
                         <div class="contact__field">
                             <p class="contact__label">Product Category</p>
-                            <select name="" id="" class="contact__input contact__input--select">
-                                <option hidden>Choose one</option>
+                            <select class="contact__input contact__input--select" name="category" id="category">
+                                <option value="">Choose one</option>
+                                @foreach (var item in productcategory)
+                                {
+                                    <option value="@item.Code">@item.Name</option>
+                                }
                             </select>
                         </div>
                         <div class="contact__field">
                             <p class="contact__label">Target Launch Timeline</p>
-                            <select name="" id="" class="contact__input contact__input--select">
-                                <option hidden>Choose one</option>
+                            <select class="contact__input contact__input--select" name="timeline" id="timeline">
+                                <option value="">Choose one</option>
+                                @foreach (var item in timeline)
+                                {
+                                    <option value="@item.Code">@item.Name</option>
+                                }
                             </select>
                         </div>
                         <div class="contact__field">
                             <p class="contact__label">Estimated Order Quantity</p>
-                            <select name="" id="" class="contact__input contact__input--select">
-                                <option hidden>Choose one</option>
+                            <select class="contact__input contact__input--select" name="quantity" id="quantity">
+                                <option value="">Choose one</option>
+                                @foreach (var item in orderquantity)
+                                {
+                                    <option value="@item.Code">@item.Name</option>
+                                }
                             </select>
                         </div>
                         <div class="contact__field">
                             <p class="contact__label">Budget Range</p>
-                            <select name="" id="" class="contact__input contact__input--select">
-                                <option hidden>Choose one</option>
+                            <select class="contact__input contact__input--select" name="budgetrange" id="budgetrange">
+                                <option value="">Choose one</option>
+                                @foreach (var item in budgetrange)
+                                {
+                                    <option value="@item.Code">@item.Name</option>
+                                }
                             </select>
                         </div>
                         <label class="contact__field">
                             <p class="contact__label">Formula Requirements</p>
-                            <input type="text" class="contact__input">
+                            <input type="text" class="contact__input" placeholder="(e.g. vegan, fragrance-free, functional claims, etc.)" name="formula" id="formula">
                         </label>
                         <label class="contact__field">
                             <p class="contact__label">Packaging Preferences</p>
-                            <input type="text" class="contact__input">
+                            <input type="text" class="contact__input" placeholder="(e.g. tube, jar, eco-material, etc.)" name="packaging" id="packaging">
                         </label>
                         <label class="contact__field">
                             <p class="contact__label">Other Notes / Questions</p>
-                            <textarea class="contact__input contact__input--textarea"></textarea>
+                            <textarea class="contact__input contact__input--textarea" name="notes" id="notes" placeholder="Anything else you'd like to tell us?"></textarea>
                         </label>
                     </fieldset>
                     <fieldset class="contact__validate">
                         <label class="contact__chk">
-                            <input type="checkbox" class="contact__hidden" hidden>
+                            <input type="checkbox" class="contact__hidden" id="contactchk" hidden>
                             <div class="contact__value"></div>
                             <p class="contact__msg">Personal Information Processing Policy Agreement</p>
                         </label>
-                        <button type="submit" class="contact__btn contact__btn--wide">Contact us</button>
+                        <button type="button" class="contact__btn contact__btn--wide" onclick="contactinsert()">Contact us</button>
                     </fieldset>
                 </form>
             </div>
@@ -119,3 +141,134 @@
         <script src="~/js/layout/common/contact.js"></script>
     </div>
 </main>
+<script>
+   function contactinsert(){
+
+        const contactchk = $('#contactchk').is(':checked');
+        const fullname = $("#fullname").val() || "" ;
+        const email    = $("#email").val()    || "" ;
+        const country  = $("#country").val()  || "" ;
+        const company  = $("#company").val()  || "" ;
+        const productcategory = $("#category").val() || "";
+        const targetlaunchtimeline = $("#timeline").val() || "";
+        const estimatedorderquantity = $("#quantity").val() || "";
+        const budgetrange = $("#budgetrange").val() || "";
+        const formula = $("#formula").val() || "";
+        const packaging = $("#packaging").val() || "";
+        const notes = $("#notes").val() || "";
+        const typeofservice  =  $("input:radio[name=contactType]:checked").val( ) ;
+
+
+        
+
+       if(fullname.trim() === ""){
+            alert('Please register your full name');
+            $("#fullname").focus();
+            return false; 
+        }
+
+        if(email.trim() === ""){
+            alert('Please register your email address');
+            $("#email").focus();
+            return false; 
+        }
+
+        if(country.trim() === ""){
+            alert('Please select a country');
+            $("#country").focus();
+            return false; 
+        }
+
+        if(company.trim() === ""){
+            alert('Please register your company name / dept. / position');
+            $("#company").focus();
+            return false; 
+        }
+
+        if(productcategory.trim() === ""){
+            alert('Please select a Product Category');
+            $("#productcategory").focus();
+            return false;
+        }
+
+        if(targetlaunchtimeline.trim() === ""){
+            alert('Please select a Target Launch Timeline');
+            $("#timeline").focus();
+            return false;
+        }
+
+        if(targetlaunchtimeline.trim() === ""){
+            alert('Please select a Target Launch Timeline');
+            $("#timeline").focus();
+            return false;
+        }
+
+        if(estimatedorderquantity.trim() === ""){
+            alert('Please select a Estimated Order Quantity');
+            $("#timeline").focus();
+            return false;
+        }
+
+        if(budgetrange.trim() === ""){
+            alert('Please select a Budget Range');
+            $("#timeline").focus();
+            return false;
+        }
+
+        if(notes.trim() === ""){
+           alert('Please register Other Notes / Questions');
+           $("#timeline").focus();
+           return false;
+        }
+
+        if(!contactchk){
+           alert('Please agree to the Personal Information Processing Policy');
+           $("#contactchk").focus();
+           return false;
+        }
+
+
+          const param = {
+             FullName: fullname,
+             Email: email,
+             Country: country,
+             CompanyName : company,
+             TypeofService : typeofservice,
+             ProductCategory : productcategory,
+             TargetLaunchTimeline : targetlaunchtimeline,
+             EstimatedOrderQuantity : estimatedorderquantity,
+             BudgetRange : budgetrange,
+             FormulaRequirements : formula,
+             PackagingPreferences : packaging,
+             Notes : notes
+          };
+
+         
+         $.ajax({
+             url: "/Contact/ContactInsert",
+             type: "POST",
+             data: param,
+             dataType: "json",
+             beforeSend: showLoading
+         })
+         .done(function(data){
+
+              if(data.item1 == "success"){
+
+                   alert('It has been received.');
+                   location.reload();
+                  
+              }else{
+                   alert('Reception failed.');
+                   location.reload();
+              }
+
+         })
+         .fail(function(xhr){
+             console.error("POST 실패:", xhr);
+         })
+         .always(function(){                 // 성공/실패 상관없이 마지막에
+           hideLoading();
+          });
+    }
+</script>

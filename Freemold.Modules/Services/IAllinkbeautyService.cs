@@ -1,4 +1,5 @@
 ﻿using Freemold.Modules.Models;
+using Freemold.Modules.Models.Table;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Freemold.Modules.Services
         Task<string> ProductViewUpdate(long ProdUid, string PUseSt);
         Task<List<KbeautyProductModel>> KbeautyProductList(string category1, string category2, string category3, string volume1, string volume2, CancellationToken ct = default);
         Task<KbeautyProductModel> KbeautyProductView(long produid, CancellationToken ct = default);
+        Task<string> ContactInsert(TB_ALLINKBEAUTY_CONTACT input, CancellationToken ct = default);
+        Task<string> ContactUsInsert(TB_ALLINKBEAUTY_CONTACT_US input, CancellationToken ct = default);
+        Task<UspconnectionModel> AllinKVisitorInsert(string regip);
+
+        
         bool BlockIp(string ip);
     }
 }

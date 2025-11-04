@@ -12,17 +12,6 @@ namespace Freemold.Modules.Repositories
         public MemberRepository(AppDbContext _appdbcontext) : base(_appdbcontext)
         {}
 
-        //차단아이피 목록
-        public IQueryable<TbBlockIp> GetBlockIp()
-        {
-            try
-            {
-                return _appdbcontext.TbBlockIps;
-            }
-            catch 
-            {
-                throw;
-            }
-        }
+        
     }
 }

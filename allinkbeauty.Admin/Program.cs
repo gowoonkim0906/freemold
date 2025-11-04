@@ -95,6 +95,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 {
 
     builder.Services.AddHttpClient();
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddScoped<IAllinkbeautyService, AllinkbeautyService>();
     builder.Services.AddScoped<ICodeService, CodeService>();
     builder.Services.AddScoped<IFileService, FileService>();

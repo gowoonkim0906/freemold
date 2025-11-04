@@ -50,7 +50,7 @@ public partial class VwProductList
     public string PMemo { get; set; } = null!;
 
     public string PMemo2 { get; set; } = null!;
-
+    public string PMemoEng { get; set; } = null!;   
     public DateTime PRegdate { get; set; }
 
     public DateTime? PModdate { get; set; }

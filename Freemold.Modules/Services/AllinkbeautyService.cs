@@ -1,9 +1,10 @@
 ﻿using Freemold.Modules.Common;
 using Freemold.Modules.Models;
+using Freemold.Modules.Models.Table;
 using Freemold.Modules.Repositories;
+using ImageMagick;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using ImageMagick;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,33 +13,39 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Dapper.SqlMapper;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Freemold.Modules.Services
 {
     public class AllinkbeautyService : IAllinkbeautyService
     {
-        private readonly MemberRepository _memberRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly CommonRepository _commonRepository;
         private readonly StatisticsRepository _statisticsRepository;
         private readonly CommunityRepository _communityRepository;
         private readonly ProductRepository _productRepository;
         private readonly CodeRepository _codeRepository;
+        private readonly BeautyRepository _beautyRepository;
         private readonly IFileService _fileService;
 
         public AllinkbeautyService(
-            MemberRepository memberRepository, 
+            IHttpContextAccessor httpContextAccessor,
+            CommonRepository commonRepository, 
             StatisticsRepository statisticsRepository, 
             CommunityRepository communityRepository, 
             ProductRepository productRepository,
             CodeRepository codeRepository,
+            BeautyRepository beautyRepository,
             IFileService fileService)
         {
-            this._memberRepository = memberRepository;
+            this._httpContextAccessor = httpContextAccessor;
+            this._commonRepository = commonRepository;
             this._statisticsRepository = statisticsRepository;
             this._communityRepository = communityRepository;
             this._communityRepository = communityRepository;
             this._productRepository = productRepository;
             this._codeRepository = codeRepository;
+            this._beautyRepository = beautyRepository;
             this._fileService = fileService;
         }
 
@@ -353,14 +360,16 @@ namespace Freemold.Modules.Services
                         && (m.PApprovalBefore ?? "") == "Y" //기업승인2
                         && m.ApprovalView == "Y"
                         && m.StartDate <= datefrom
-                        && m.EndDate >= dateto);
+                        && m.EndDate >= dateto
+                        && m.UpCat == ";" + category1 + ";");
 
             if (!string.IsNullOrWhiteSpace(category3)) //2차카테고리 선택시
             {
-                query = query.Where(m => m.UpCat == ";" + category1 + ";" && EF.Functions.Like(";" + (m.PCategory) + ";", "%;" + category3 + ";%"));
-            }else if (!string.IsNullOrWhiteSpace(category2)) //1차카테고리 선택시
+                query = query.Where(m => EF.Functions.Like(";" + (m.PCategory) + ";", "%;" + category3 + ";%"));
+            }
+            else if (!string.IsNullOrWhiteSpace(category2)) //1차카테고리 선택시
             {
-                query = query.Where(m => m.UpCat == ";"+ category1 + ";" && EF.Functions.Like(";"+(m.PCategory)+";" , "%;" + category2 + ";%"));
+                query = query.Where(m => EF.Functions.Like(";" + (m.PCategory) + ";", "%;" + category2 + ";%"));
             }
 
             //용량 검색
@@ -389,14 +398,79 @@ namespace Freemold.Modules.Services
 
             return result ?? new KbeautyProductModel();
         }
+        public async Task<string> ContactInsert(TB_ALLINKBEAUTY_CONTACT input, CancellationToken ct = default)
+        {
 
+            try
+            {
+                var result = await _beautyRepository.ContactInsert(input, ct);
+
+                return result;
+            }
+            catch
+            {
+                return "fail";
+            }
+        }
+
+        public async Task<string> ContactUsInsert(TB_ALLINKBEAUTY_CONTACT_US input, CancellationToken ct = default)
+        {
+
+            try
+            {
+                var result = await _beautyRepository.ContactUsInsert(input, ct);
+
+                return result;
+            }
+            catch
+            {
+                return "fail";
+            }
+        }
+
+
+        public async Task<UspconnectionModel> AllinKVisitorInsert(string regip) {
+
+       
+
+            var httpContext = _httpContextAccessor.HttpContext;
+
+            string Domain = httpContext.Request.Host.Host ?? "";
+            string userAgent = httpContext.Request.Headers["User-Agent"].ToString() ?? "";
+            string HttpReferer = httpContext.Request.Headers["Referer"].ToString() ?? "";
+
+            string[] blockkeywords = { "bot", "bytespider", "go-http-client", "bingbot", "googlebot", "daum", "facebook", "yeti", "node-fetch", "python-requests" };
+
+            bool containsAny = blockkeywords.Any(k => userAgent.Contains(k, StringComparison.OrdinalIgnoreCase));
+
+            TB_CONNECTION_ALLINKBEAUTY connection = new TB_CONNECTION_ALLINKBEAUTY();
+
+            connection.Domain = Domain;
+            connection.UserAgent = userAgent;
+            connection.HttpReferer = HttpReferer;
+            connection.RegIP = regip;
+
+            if (containsAny)
+            {
+                var result = new UspconnectionModel();
+                return result;
+            }
+            else {
+
+                var result = _commonRepository.AllinKVisitorInsert(connection);
+                return await result;
+            }
+
+        }
+
+        
         public bool BlockIp(string ip)
         {
             var result = false;
 
             try
             {
-                var cnt = _memberRepository.GetBlockIp().AsNoTracking()
+                var cnt = _commonRepository.GetBlockIp().AsNoTracking()
                           .Where(m => m.BlockIp == ip).Count();
 
                 if (cnt > 0)

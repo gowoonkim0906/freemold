@@ -12,17 +12,20 @@
       <_PageFiles Include="$(ProjectDir)Pages\**\*.cshtml" />
     </ItemGroup>
 
-    <Copy SourceFiles="@(_ViewFiles)"
-          DestinationFolder="$(PublishDir)Views\%(RecursiveDir)" />
-    <Copy SourceFiles="@(_PageFiles)"
-          DestinationFolder="$(PublishDir)Pages\%(RecursiveDir)" />
+    <Copy SourceFiles="@(_ViewFiles)" DestinationFolder="$(PublishDir)Views\%(RecursiveDir)" />
+    <Copy SourceFiles="@(_PageFiles)" DestinationFolder="$(PublishDir)Pages\%(RecursiveDir)" />
   </Target>
 
   <ItemGroup>
+    <PackageReference Include="Magick.NET-Q16-x64" Version="14.9.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Freemold.Modules\Freemold.Modules.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\companylogo\" />
   </ItemGroup>
 </Project>

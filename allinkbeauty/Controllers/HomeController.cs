@@ -1,5 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using allinkbeauty.Models;
+using Freemold.Modules;
+using Freemold.Modules.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace allinkbeauty.Controllers
@@ -7,10 +9,12 @@ namespace allinkbeauty.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAllinkbeautyService _allinkbeautyService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAllinkbeautyService allinkbeautyService)
         {
             _logger = logger;
+            _allinkbeautyService = allinkbeautyService;
         }
 
         public IActionResult Index()
@@ -21,6 +25,16 @@ namespace allinkbeauty.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public async Task<JsonResult> ContactUsInsert(TB_ALLINKBEAUTY_CONTACT_US item)
+        {
+
+            item.RegIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "";
+
+            string result = await _allinkbeautyService.ContactUsInsert(item);
+            return Json(new { Item1 = result });
+
         }
 
 

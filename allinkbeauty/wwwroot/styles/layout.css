@@ -1075,9 +1075,21 @@ label.contact__field {
         padding-bottom: 5rem;
     }
 
-.contact__hidden:checked + .contact__type {
-    background-color: #000;
-}
+    .contact__hidden:checked + .contact__type {
+        background-color: #000;
+    }
+
+    .contact__hidden:checked + .contact__value {
+        background-color: #000;
+    }
+
+
+    /* ¸Þ½ÃÁö */
+    .contact__msg {
+        color: #000;
+        font-size: 15px;
+    }
+
 
 @media(hover:hover) {
     .contact__btn::after {

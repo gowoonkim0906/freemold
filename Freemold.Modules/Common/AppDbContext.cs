@@ -1,9 +1,11 @@
 ﻿using Freemold.Modules.Models;
 using Freemold.Modules.Models.EF;
 using Freemold.Modules.Models.EntityConfigs;
+using Freemold.Modules.Models.Table;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace Freemold.Modules.Common
 {
@@ -91,6 +93,8 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<TbConnectionSm> TbConnectionSms { get; set; }
 
+        public virtual DbSet<TB_CONNECTION_ALLINKBEAUTY> TB_CONNECTION_ALLINKBEAUTY { get; set; }
+
         public virtual DbSet<TbCount> TbCounts { get; set; }
 
         public virtual DbSet<TbError> TbErrors { get; set; }
@@ -143,6 +147,10 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<TmpAm> TmpAms { get; set; }
 
+        public virtual DbSet<TB_ALLINKBEAUTY_CONTACT> TB_ALLINKBEAUTY_CONTACT { get; set; }
+
+        public virtual DbSet<TB_ALLINKBEAUTY_CONTACT_US> TB_ALLINKBEAUTY_CONTACT_US { get; set; }
+
         public virtual DbSet<VwCategory> VwCategories { get; set; }
 
         public virtual DbSet<VwCategoryList> VwCategoryLists { get; set; }
@@ -167,6 +175,7 @@ namespace Freemold.Modules.Common
         {
             TbConfig.Configure(builder);
 
+            
 
             // TVF 반환 타입은 Keyless
             builder.Entity<FnSplit>().HasNoKey();

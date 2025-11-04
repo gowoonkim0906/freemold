@@ -48,10 +48,11 @@ namespace Freemold.Modules.Repositories
             try
             {
                 var prodUids = (from i in _appdbcontext.ProductLists
-                            let catNorm = i.Cat.Replace(";;", ",").Replace(";", "")
-                            from s in _appdbcontext.FnSplit(catNorm, ",")
-                            join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
-                            where c.StdMld == "Y" select i.PROD_UID).Distinct() ;
+                                let catNorm = i.Cat.Replace(";;", ",").Replace(";", "")
+                                from s in _appdbcontext.FnSplit(catNorm, ",")
+                                join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
+                                where c.StdMld == "Y"
+                                select i.PROD_UID).Distinct();
 
 
                 var query = from i in _appdbcontext.ProductLists
@@ -70,7 +71,7 @@ namespace Freemold.Modules.Repositories
                                 PCategory = i.P_CATEGORY,
                                 PImg1 = i.P_IMG1,
                                 PApproval = i.P_APPROVAL,
-                                PApprovalBefore =i.P_APPROVAL_BEFORE,
+                                PApprovalBefore = i.P_APPROVAL_BEFORE,
                                 Deleted = i.Deleted,
                                 PUse = i.P_USE,
                                 PUseST = i.P_USE_ST,
@@ -95,12 +96,12 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                
+
                 var query = from i in _appdbcontext.ProductLists
                             join p in _appdbcontext.Member1 on i.MEMBER_UID equals p.UID
-                            where   i.Deleted == "N" && 
-                                    i.P_APPROVAL == "Y" && 
-                                    (i.P_APPROVAL_BEFORE ?? "") == "Y" && 
+                            where i.Deleted == "N" &&
+                                    i.P_APPROVAL == "Y" &&
+                                    (i.P_APPROVAL_BEFORE ?? "") == "Y" &&
                                     (p.CO_REMOVE ?? "N") != "Y" //탈퇴회원 제외
                             select new KbeautyProductModel
                             {
@@ -115,7 +116,8 @@ namespace Freemold.Modules.Repositories
                                 PImg3 = i.P_IMG3,
                                 PImg4 = i.P_IMG4,
                                 PImg5 = i.P_IMG5,
-                                PImg6 = i.P_IMG6
+                                PImg6 = i.P_IMG6,
+                                PMemoEng = i.P_MEMO_ENG
                             };
 
                 return query;
@@ -206,12 +208,12 @@ namespace Freemold.Modules.Repositories
                                 PRegdate = i.PRegdate,
                                 PModdate = i.PModdate,
                                 PAppdate = i.PAppdate,
-                                PSize   = i.PSize,
-                                PHit    = i.PHit,
-                                PQuality    = i.PQuality,
+                                PSize = i.PSize,
+                                PHit = i.PHit,
+                                PQuality = i.PQuality,
                                 POrigin = i.POrigin,
-                                ProdType  = i.ProdType,
-                                Visit  = i.Visit,
+                                ProdType = i.ProdType,
+                                Visit = i.Visit,
                                 PImg1 = i.PImg1,
                                 PImg2 = i.PImg2,
                                 PImg3 = i.PImg3,
@@ -326,6 +328,7 @@ namespace Freemold.Modules.Repositories
                                 POrigin = i.P_ORIGIN,
                                 PMemo = i.P_MEMO,
                                 PMemo2 = i.P_MEMO2,
+                                PMemoEng = i.P_MEMO_ENG,
                                 PRegdate = i.P_REGDATE,
                                 PModdate = i.P_MODDATE,
                                 PAppdate = i.P_APPDATE,
@@ -380,7 +383,8 @@ namespace Freemold.Modules.Repositories
             }
         }
 
-        public async Task<string> ProductUpdate(ProductSaveModel productSaveModel) {
+        public async Task<string> ProductUpdate(ProductSaveModel productSaveModel)
+        {
 
             string result = "sucess";
 
@@ -460,7 +464,7 @@ namespace Freemold.Modules.Repositories
                 p.P_CATEGORY = productSaveModel.p_category;
                 p.P_CODE = productSaveModel.p_code;
                 p.P_NAME = productSaveModel.p_name;
-                p.P_CAPACITY = productSaveModel.p_capacity; 
+                p.P_CAPACITY = productSaveModel.p_capacity;
                 p.P_SIZE = productSaveModel.p_size;
                 p.P_QUALITY = productSaveModel.p_quality;
                 p.P_ORIGIN = productSaveModel.p_origin;
@@ -474,9 +478,9 @@ namespace Freemold.Modules.Repositories
 
                 var rows = await _appdbcontext.SaveChangesAsync();
 
-                if(rows <= 0) result = "fail";
+                if (rows <= 0) result = "fail";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = "fail";
 
@@ -489,7 +493,7 @@ namespace Freemold.Modules.Repositories
         }
 
 
-        public async Task<string> ProductViewUpdate(long ProdUid , string PUseSt)
+        public async Task<string> ProductViewUpdate(long ProdUid, string PUseSt)
         {
 
             string result = "OK";
@@ -503,7 +507,7 @@ namespace Freemold.Modules.Repositories
             }
             catch
             {
-                result = "FAIL";    
+                result = "FAIL";
 
                 // DB는 롤백됨. 하지만 트래커엔 변경 흔적이 남아있을 수 있어요.
                 _appdbcontext.ChangeTracker.Clear();      // 선택: 메모리 상태 초기화
@@ -514,6 +518,6 @@ namespace Freemold.Modules.Repositories
             return result;
         }
 
-
+        
     }
 }

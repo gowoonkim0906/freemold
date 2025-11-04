@@ -110,10 +110,10 @@ namespace Freemold.Modules.Models
         public string PCapUnit { get; set; } = null!;
         public string ProdType { get; set; } = null!;
         public string PCategory { get; set; } = null!;
+        public string PMemoEng { get; set; } = null!;
         public string Deleted { get; set; } = null!;
         public string PayUse { get; set; } = null!;
         public string PUse { get; set; } = null!;
-
         public string PUseST { get; set; } = null!;
         public string CompanyName { get; set; } = null!;
         public string Approval { get; set; } = null!;
@@ -173,6 +173,7 @@ namespace Freemold.Modules.Models
         public string PMemo { get; set; } = null!;
 
         public string PMemo2 { get; set; } = null!;
+        public string? PMemoEng { get; set; }
 
         public DateTime PRegdate { get; set; }
 
