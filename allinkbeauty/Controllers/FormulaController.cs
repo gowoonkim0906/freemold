@@ -50,6 +50,7 @@ namespace allinkbeauty.Controllers
             productinfo = await _allinkbeautyService.KbeautyProductView(produid);
 
 
+            ViewBag.filepath = _fileService.RootPath;
             ViewBag.productinfo = productinfo;
             ViewBag.page = page;
             ViewBag.code1 = code1;

@@ -61,7 +61,8 @@ namespace allinkbeauty.Controllers
             ViewBag.code1 = code1;
             ViewBag.code2 = code2;    
             ViewBag.volume1 = volume1;  
-            ViewBag.volume2 = volume2;  
+            ViewBag.volume2 = volume2;
+            ViewBag.filepath = _fileService.RootPath;
 
             return View();
         }

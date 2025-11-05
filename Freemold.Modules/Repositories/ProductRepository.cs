@@ -43,21 +43,28 @@ namespace Freemold.Modules.Repositories
             }
         }
 
-        public IQueryable<KbeautyProductModel> GetKbeautyProductList()
+        public IQueryable<KbeautyProductModel> GetKbeautyProductList(string Acode = "A001")
         {
             try
             {
                 var prodUids = (from i in _appdbcontext.ProductLists
-                                let catNorm = i.Cat.Replace(";;", ",").Replace(";", "")
+                                let catNorm = i.Cat.Replace(";"+ Acode+";", "").Replace(";;", ",").Replace(";", "")
                                 from s in _appdbcontext.FnSplit(catNorm, ",")
                                 join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
-                                where c.StdMld == "Y"
+                                where c.StdMld == "Y" && EF.Functions.Like(i.UpCat, "%" + Acode + "%")
                                 select i.PROD_UID).Distinct();
 
 
                 var query = from i in _appdbcontext.ProductLists
                             join p in _appdbcontext.Member1 on i.MEMBER_UID equals p.UID
                             where prodUids.Contains(i.PROD_UID) && (p.CO_REMOVE ?? "N") != "Y" //탈퇴회원 제외
+                            && i.Deleted == "N"
+                            && i.P_APPROVAL == "Y"                  //제폼승인1
+                            && (i.P_APPROVAL_BEFORE ?? "") == "Y"   //제폼승인2
+                            && i.P_USE_ST == "Y"
+                            && p.APPROVAL == "Y"                    //기업승인1
+                            && (p.APPROVAL_BEFORE ?? "") == "Y"     //기업승인2
+                            && p.APPROVAL_VIEW == "Y"
                             select new KbeautyProductModel
                             {
                                 ProdUid = i.PROD_UID,
@@ -79,6 +86,7 @@ namespace Freemold.Modules.Repositories
                                 CompanyName = p.COMPANY_NAME,
                                 PayUse = p.PayUse,
                                 Approval = p.APPROVAL,
+                                ApprovalBefore = p.APPROVAL_BEFORE,
                                 ApprovalView = p.APPROVAL_VIEW,
                                 StartDate = p.START_DATE,
                                 EndDate = p.END_DATE

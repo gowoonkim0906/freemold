@@ -2,6 +2,8 @@
 @{
     var productinfo = ViewBag.productinfo as KbeautyProductModel ?? new KbeautyProductModel();
 
+    string filepath = ViewBag.filepath as string ?? "";
+
 }
 
 
@@ -75,7 +77,7 @@
                 </div>
                 <div class="view-info__footer">
                     <a href="#" class="view-info__contact" onclick="flist()">List</a>
-                    <a href="#" class="view-info__contact">Contact us</a>
+                    <a href="#" class="view-info__contact" onclick="contactlink()">Contact us</a>
                 </div>
             </div>
         </div>
@@ -86,10 +88,18 @@
     <input type="hidden" id="code1" name="code1" value="@ViewBag.code1" />
     <input type="hidden" id="code2" name="code2" value="@ViewBag.code2" />
 </form>
+<form id="contactlink" action="/Contact/" method="POST" style="display:none;">
+    <input type="hidden" id="PCode" name="PCode" value="@productinfo.PCode" />
+    <input type="hidden" id="type" name="type" value="Formula" />
+</form>
 <script>
     function flist(){
 
         $('#Formulalist').submit();
 
+    }
+
+    function contactlink(){
+        $('#contactlink').submit();
     }
 </script>

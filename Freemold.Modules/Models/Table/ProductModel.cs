@@ -117,6 +117,7 @@ namespace Freemold.Modules.Models
         public string PUseST { get; set; } = null!;
         public string CompanyName { get; set; } = null!;
         public string Approval { get; set; } = null!;
+        public string ApprovalBefore { get; set; } = null!;
         public string ApprovalView { get; set; } = null!;
         public string PApproval { get; set; } = null!;
         public string? PApprovalBefore { get; set; }

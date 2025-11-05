@@ -18,7 +18,7 @@ namespace allinkbeauty.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string PCode = "", string type = "")
         {
             List<TbCode> countrylist = new List<TbCode>();
             countrylist = await _codeService.GetCodeList("국가코드_영문");
@@ -35,12 +35,20 @@ namespace allinkbeauty.Controllers
             List<TbCode> order_quantity = new List<TbCode>();
             order_quantity = await _codeService.GetCodeList("o_quantity");
 
+            string FormulaPCoe = "";
+            string PackagingPCoe = "";
+
+            if (type == "Formula") FormulaPCoe = PCode;
+            if (type == "Packaging") PackagingPCoe = PCode;
+
 
             ViewBag.countrylist = countrylist;
             ViewBag.productcategory = product_category;
             ViewBag.timeline = timeline;
             ViewBag.budgetrange = budget_range;
             ViewBag.orderquantity = order_quantity;
+            ViewBag.formulapcoe = FormulaPCoe;
+            ViewBag.packagingpcoe = PackagingPCoe;
 
             return View();
         }

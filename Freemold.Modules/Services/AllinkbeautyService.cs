@@ -350,7 +350,7 @@ namespace Freemold.Modules.Services
             DateOnly dateto = DateOnly.FromDateTime(DateTime.Today.AddDays(-10));
 
 
-            IQueryable<KbeautyProductModel> query = _productRepository.GetKbeautyProductList()
+            IQueryable<KbeautyProductModel> query = _productRepository.GetKbeautyProductList(category1)
             .Where(m => m.Deleted == "N"
                         && (m.PApprovalBefore ?? "") == "Y" //제폼승인1
                         && m.PApproval == "Y"               //제폼승인2

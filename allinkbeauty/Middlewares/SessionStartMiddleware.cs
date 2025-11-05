@@ -68,7 +68,10 @@ namespace Middlewares
                     if(connect.Idx <= 0)
                     {
                         context.Session.SetString("block", "false");
-                        context.Response.Redirect("/blocked");
+                        context.Response.Clear(); // 혹시 이전에 쓴 바디가 있으면 제거
+                        context.Response.StatusCode = StatusCodes.Status302Found;
+                        context.Response.Headers["Location"] = "/blocked";
+                        await context.Response.CompleteAsync();
                         return;
                     }
 
