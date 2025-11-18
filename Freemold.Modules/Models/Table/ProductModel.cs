@@ -13,6 +13,7 @@ namespace Freemold.Modules.Models
         public string CompanyName { get; set; } = null!;
         public string CompanyNameE { get; set; } = null!;
         public string PCode { get; set; } = null!;
+        public string? PCodeEn { get; set; }
         public string PSize { get; set; } = null!;
         public int PHit { get; set; }
         public double PCapacity { get; set; }
@@ -44,6 +45,7 @@ namespace Freemold.Modules.Models
         public string? pname { get; set; }
 
         public string? pcode { get; set; }
+        public string? pcodeen { get; set; }
 
         public double pcapacity { get; set; }
 
@@ -64,6 +66,7 @@ namespace Freemold.Modules.Models
         public string PCategory { get; set; } = null!;
         public string PCategoryName { get; set; } = null!;
         public string PCode { get; set; } = null!;
+        public string? PCodeEn { get; set; }
         public double PCapacity { get; set; }
         public string PCapUnit { get; set; } = null!;
         public string PApproval { get; set; } = null!;
@@ -97,7 +100,9 @@ namespace Freemold.Modules.Models
     {
         public long ProdUid { get; set; }
         public string PCode { get; set; } = null!;
+        public string? PCodeEn { get; set; }
         public string UpCat { get; set; } = null!;
+        public string PName { get; set; } = null!;
         public string PImg1 { get; set; } = null!;
         public string PImg2 { get; set; } = null!;
         public string PImg3 { get; set; } = null!;
@@ -106,10 +111,13 @@ namespace Freemold.Modules.Models
         public string PImg6 { get; set; } = null!;
         public string PSize { get; set; } = null!;
         public string PQuality { get; set; } = null!;
+        public string POrigin { get; set; } = null!;
+        public int PHit { get; set; }
         public double PCapacity { get; set; }
         public string PCapUnit { get; set; } = null!;
         public string ProdType { get; set; } = null!;
         public string PCategory { get; set; } = null!;
+        public string PCategoryName { get; set; } = null!;
         public string PMemoEng { get; set; } = null!;
         public string Deleted { get; set; } = null!;
         public string PayUse { get; set; } = null!;
@@ -117,15 +125,16 @@ namespace Freemold.Modules.Models
         public string PUseST { get; set; } = null!;
         public string CompanyName { get; set; } = null!;
         public string Approval { get; set; } = null!;
-        public string ApprovalBefore { get; set; } = null!;
+        public string? ApprovalBefore { get; set; } = null!;
         public string ApprovalView { get; set; } = null!;
         public string PApproval { get; set; } = null!;
         public string? PApprovalBefore { get; set; }
         public DateTime PRegDate { get; set; }
         public DateOnly? StartDate { get; set; }
         public DateOnly? EndDate { get; set; }
+        public int Visit { get; set; }
+        public int ImgCnt { get; set; }
     }
-
 
     public class ProductDetailModel {
 
@@ -146,6 +155,7 @@ namespace Freemold.Modules.Models
         public string PName2 { get; set; } = null!;
 
         public string PCode { get; set; } = null!;
+        public string? PCodeEn { get; set; }
 
         public int PMoq { get; set; }
 
@@ -269,11 +279,14 @@ namespace Freemold.Modules.Models
         public long produid { get; set; }
         public string p_category { get; set; } = "";
         public string p_code { get; set; } = "";
+        public string p_code_en { get; set; } = "";
         public string p_name { get; set; } = "";
         public double p_capacity { get; set; }
         public string p_size { get; set; } = "";
         public string p_quality { get; set; } = "";
         public string p_origin { get; set; } = "";
+        public string p_memo { get; set; } = "";
+        public string p_memo_en { get; set; } = "";
         public string p_img1 { get; set; } = null!;
         public string p_img2 { get; set; } = null!;
         public string p_img3 { get; set; } = null!;
@@ -282,4 +295,49 @@ namespace Freemold.Modules.Models
         public string p_img6 { get; set; } = null!;
 
     }
+
+    public class ProductSearchModel {
+        public string category1 { get; set; } = "";
+        public string category2 { get; set; } = "";
+        public string category3 { get; set; } = "";
+        public string volume1 { get; set; } = "";
+        public string volume2 { get; set; } = "";
+        public string kview { get; set; } = "";
+        public string searchval { get; set; } = "";
+        public string approval { get; set; } = ""; 
+
+    }
+
+    public class UspKbeautyProductModel
+    {
+        public long PROD_UID { get; set; }
+        public string? P_CODE { get; set; } 
+        public string? P_CODE_EN { get; set; }
+        public string? UpCat { get; set; } 
+        public string? P_NAME { get; set; }
+        public string? P_CATEGORY { get; set; }
+        public double P_CAPACITY { get; set; }
+        public string? P_CAP_UNIT { get; set; }
+        public string? P_SIZE { get; set; }
+        public int P_HIT { get; set; }
+        public string P_QUALITY { get; set; } = null!;
+        public string P_ORIGIN { get; set; } = null!;
+        public string ProdType { get; set; } = null!;
+        public string P_IMG1 { get; set; } = null!;
+        public string? P_APPROVAL_BEFORE { get; set; }
+        public string P_APPROVAL { get; set; } = null!;
+        public string Deleted { get; set; } = null!;
+        public string P_USE { get; set; } = null!;
+        public string P_USE_ST { get; set; } = null!;
+        public DateTime P_REGDATE { get; set; }
+        public int Visit { get; set; }
+        public string COMPANY_NAME { get; set; } = null!;
+        public string PayUse { get; set; } = null!;
+        public string APPROVAL { get; set; } = null!;
+        public string? APPROVAL_BEFORE { get; set; }
+        public string APPROVAL_VIEW { get; set; } = null!;
+        public DateOnly? START_DATE { get; set; }
+        public DateOnly? END_DATE { get; set; }
+        public int ImgCnt { get; set; }
+        }
 }

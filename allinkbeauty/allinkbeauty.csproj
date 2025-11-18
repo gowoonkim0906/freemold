@@ -24,8 +24,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Freemold.Modules\Freemold.Modules.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\companylogo\" />
-  </ItemGroup>
 </Project>

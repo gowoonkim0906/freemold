@@ -22,6 +22,7 @@ public partial class VwProductList
     public string PName2 { get; set; } = null!;
 
     public string PCode { get; set; } = null!;
+    public string? PCodeEn { get; set; }
 
     public int PMoq { get; set; }
 

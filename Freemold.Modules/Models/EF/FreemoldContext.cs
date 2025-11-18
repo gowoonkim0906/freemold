@@ -946,6 +946,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.P_CAP_UNIT).HasMaxLength(10);
             entity.Property(e => e.P_CATEGORY).HasMaxLength(100);
             entity.Property(e => e.P_CODE).HasMaxLength(100);
+            entity.Property(e => e.P_CODE_EN).HasMaxLength(100);
             entity.Property(e => e.P_HOT).HasMaxLength(1);
             entity.Property(e => e.P_IMG1).HasMaxLength(100);
             entity.Property(e => e.P_IMG2).HasMaxLength(100);
@@ -1807,6 +1808,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.P_CAP_UNIT).HasMaxLength(10);
             entity.Property(e => e.P_CATEGORY).HasMaxLength(100);
             entity.Property(e => e.P_CODE).HasMaxLength(100);
+            entity.Property(e => e.P_CODE_EN).HasMaxLength(100);
             entity.Property(e => e.P_HOT)
                 .HasMaxLength(1)
                 .HasDefaultValue("0");
@@ -4075,6 +4077,9 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.PCode)
                 .HasMaxLength(100)
                 .HasColumnName("P_CODE");
+            entity.Property(e => e.PCodeEn)
+                .HasMaxLength(100)
+                .HasColumnName("P_CODE_EN");
             entity.Property(e => e.PHit).HasColumnName("P_HIT");
             entity.Property(e => e.PHot)
                 .HasMaxLength(1)
@@ -4199,6 +4204,9 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.PCode)
                 .HasMaxLength(100)
                 .HasColumnName("P_CODE");
+            entity.Property(e => e.PCodeEn)
+                .HasMaxLength(100)
+                .HasColumnName("P_CODE_EN");
             entity.Property(e => e.PHit).HasColumnName("P_HIT");
             entity.Property(e => e.PHot)
                 .HasMaxLength(1)

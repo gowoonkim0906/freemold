@@ -8,7 +8,7 @@ namespace Freemold.Modules.Models
 {
     public class StatisticsModel
     {
-        public DateOnly? InDate { get; set; }
+        public string InDate { get; set; }
         public int TotalCnt { get; set; }
         public int PC { get; set; } = 0;
         public int Mobile { get; set; }
@@ -34,7 +34,7 @@ namespace Freemold.Modules.Models
         public string? CCode { get; set; }
         public string? CName { get; set; }
 
-        public DateOnly? InDate { get; set; }
+        public DateTime? InDate { get; set; }
         public int TotalCnt { get; set; }
 
     }

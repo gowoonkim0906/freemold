@@ -18,7 +18,7 @@
             <h1 class="prd-int__tit">Discover Formulations Tailored <br><span>for Your Brand.</span></h1>
         </section>
         <nav class="prd-nav">
-            <div class="prd-nav__panel">
+            <div class="prd-nav__panel" id="category1">
                 <h2 class="prd-nav__cate">1th depth</h2>
                 <ul class="prd-nav__list">
                     <li class="prd-nav__item"><a href="#" onclick="return scategory('all', this, event)" class="prd-nav__btn" data-code="" aria-current="@(code1 == "" ? "page" : "")">ALL</a></li>
@@ -196,7 +196,7 @@
         })
         .done(function(data){
 
-
+       
             pagenation(data.item3, data.item4, data.item5); //페이징 처리 부분
 
             const items = Array.isArray(data.item2) ? data.item2 : [];
@@ -210,7 +210,6 @@
                     <li class="prd-gall__item">
                         <a href="#" class="prd-gall__link" onclick="finfo(${x.prodUid})">
                             <figure class="prd-gall__frame"><img src="@(filepath)/Product/${escape(x.pImg1)}" alt="Product thumbnail" class="prd-gall__img"></figure>
-                            <h4 class="prd-gall__name">${escape(x.pCode)}</h4>
                         </a>
                     </li>
                 `)

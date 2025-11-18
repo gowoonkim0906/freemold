@@ -106,5 +106,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<CommunityRepository>();
     builder.Services.AddScoped<ProductRepository>();
     builder.Services.AddScoped<CodeRepository>();
+    builder.Services.AddScoped<CommonRepository>();
+    builder.Services.AddScoped<BeautyRepository>();
 
 }

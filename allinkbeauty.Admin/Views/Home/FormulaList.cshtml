@@ -1,0 +1,184 @@
+﻿
+
+<div class="container-fluid px-4">
+    <div class="mb-3 mt-4">
+        <form class="d-flex align-items-center" role="search">
+            <input type="text" class="form-control form-control-sm me-2" placeholder="검색어를 입력하세요" style="max-width:160px;" name="searchval" id="searchval">
+            <button type="button" class="btn btn-sm btn-primary me-3" onclick="loadList(1)">검색</button>
+            <input class="form-check-input ms-1" type="radio" name="approval" id="approvalall" value="" onchange="loadList(1)" checked>
+            <label class="form-check-label ms-1" for="approvalall">
+                승인 전체
+            </label>
+            <input class="form-check-input ms-1" type="radio" name="approval" id="approval1" value="Y" onchange="loadList(1)">
+            <label class="form-check-label ms-1" for="approval1">
+                승인
+            </label>
+            <input class="form-check-input ms-1" type="radio" name="approval" id="approval2" value="N" onchange="loadList(1)">
+            <label class="form-check-label ms-1" for="approval2">
+                미승인
+            </label>
+
+            <input class="form-check-input ms-5" type="radio" name="allinview" id="viewall" value="" onchange="loadList(1)" checked>
+            <label class="form-check-label ms-1" for="viewall">
+                노출 전체
+            </label>
+            <input class="form-check-input ms-1" type="radio" name="allinview" id="view1" value="Y" onchange="loadList(1)">
+            <label class="form-check-label ms-1" for="view1">
+                노출
+            </label>
+            <input class="form-check-input ms-1" type="radio" name="allinview" id="view2" value="N" onchange="loadList(1)">
+            <label class="form-check-label ms-1" for="view2">
+                미노출
+            </label>
+        </form>
+    </div>
+    <div class="row mt-4">
+        <div class="col-xl-12">
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr class="text-center">
+                            <th></th>
+                            <th>번호</th>
+                            <th>업체명</th>
+                            <th>이미지</th>
+                            <th>제품명</th>
+                            <th>제품코드</th>
+                            <th>카테고리</th>
+                            <th>용량</th>
+                            <th>사이즈</th>
+                            <th>재질</th>
+                            <th>원산지</th>
+                            <th>조회</th>
+                            <th>노출</th>
+                            <th>승인</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productlist">
+                    </tbody>
+                </table>
+
+                <div id="productpage"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<form name="frm" id="frm" method="post" action="/Home/ProductEdit">
+    <input type="hidden" id="produid" name="produid" />
+</form>
+
+<script>
+
+    var vpage = 1;
+
+    $(function () {
+
+        loadList(1); // 초기 페이지 로드
+
+    });
+
+
+    function loadList(page) {
+
+        vpage = page;
+
+        const searchval = $("#searchval").val();
+        const approval = $('input[name="approval"]:checked').val();
+        const allinview = $('input[name="allinview"]:checked').val();
+
+        $("#loading").show();
+        $("#formula-list").hide();
+
+        
+
+        const param = {
+            page : page,
+            acode : 'A002',
+            searchval : searchval,
+            approval : approval,
+            kview : allinview
+        };
+
+        $.ajax({
+            url: '/Home/ProductListData',
+            type: "POST",
+            data: param,
+            beforeSend: function () {
+                showLoading();
+            },
+            success: function (data) {
+                $("#productlist").html(data);
+                pageview();
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            },
+            complete: function () {
+                hideLoading();
+            }
+        });
+    }
+
+
+    function pageview(){
+
+        const param = {
+            page: $("#page").val(),
+            pagesize: $("#pagesize").val(),
+            totalcount: $("#totalcount").val(),
+            pageblock: $("#pageblock").val()
+        };
+
+
+        $.ajax({
+            url: '/Home/ProductPageData',
+            type: "POST",
+            data: param,
+            success: function (data) {
+                $("#productpage").html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+
+    }
+
+
+    function productview(puid){
+
+      $("#produid").val(puid);
+
+      const frm = document.getElementById('frm');
+      frm.submit();
+
+    }
+
+    function stviewcheckchange(el){
+
+        const checked = $(el).is(':checked');
+        const PUseSt = checked ? "Y" : "N";
+
+        const prod_uid = $(el).data('prod_uid');
+
+        var param = {
+            ProdUid: prod_uid,
+            PUseSt: PUseSt
+        };
+
+        $.post('AjaxProductChangeViewBeauty', param, function (result) {
+
+            if(result.item1 == "OK"){
+
+                alert('수정되었습니다.');
+                loadList(vpage);
+
+            }else{
+                alert('수정에 실패하였습니다.')
+            }
+        });
+
+
+
+    }
+</script>

@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Freemold.Modules.Models;
+@model List<KbeautyProductModel>
 @{
+    int pageno = (int)ViewBag.pageno;
+    string filepath = ViewBag.filepath as string ?? "";
+}
+
+<input type="hidden" id="page" value="@ViewBag.page" />
+<input type="hidden" id="pagesize" value="@ViewBag.pagesize" />
+<input type="hidden" id="totalcount" value="@ViewBag.totalcount" />
+<input type="hidden" id="pageblock" value="@ViewBag.pageblock" />
+
+@if (Model.Any())
+{
+    int no = pageno;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td><input type="checkbox" name="produid" value="@item.ProdUid" /></td>
+            <td class="text-center">@no</td>
+            <td>@item.CompanyName</td>
+            <td class="text-center">
+                <div class="imgcnt">@item.ImgCnt</div> <!--이미지수-->
+                <div class="viewcnt">@item.Visit</div> <!--조회수-->
+                <img src="@(filepath)/Product/@(item.PImg1)" style="height:60px" />
+            </td>
+            <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PName</a></td>
+            <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PCodeEn</a></td>
+            <td>@Html.Raw(item.PCategoryName?.Replace("|", "<br/>"))</td>
+            <td>@(item.PCapacity + " " + item.PCapUnit)</td>
+            <td>@item.PSize</td>
+            <td class="text-center">@item.PQuality</td>
+            <td class="text-center">@item.POrigin</td>
+            <td class="text-center">@item.PHit</td>
+            <td class="text-center"><input type="checkbox" name="gp" @(item.PUseST == "Y" ? "checked" : "") data-prod_uid="@(item.ProdUid)" onclick="stviewcheckchange(this)" /></td>
+            <td>@((item.PApproval ?? "Y") == "Y" && (item.ApprovalBefore ?? "Y") == "Y" ? "Y" : "N")</td>
+        </tr>
+        --no;
+    }
 }

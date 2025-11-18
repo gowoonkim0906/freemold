@@ -1,5 +1,6 @@
 ﻿using Freemold.Modules.Common;
 using Freemold.Modules.Models;
+using Freemold.Modules.Models.Table;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace Freemold.Modules.Repositories
                                 CompanyName = c.COMPANY_NAME,
                                 CompanyNameE = c.COMPANY_NAME_E,
                                 PCode = p.P_CODE,
+                                PCodeEn = p.P_CODE_EN,
                                 PHit = p.P_HIT,
                                 PCapacity = p.P_CAPACITY,
                                 PCapUnit = p.P_CAP_UNIT,
@@ -123,6 +125,76 @@ namespace Freemold.Modules.Repositories
                 return "fail";
             }
 
+        }
+
+        public IQueryable<TB_ALLINKBEAUTY_CONTACT_US> GetContactUsList()
+        {
+            try
+            {
+                var query = from c in _appdbcontext.TB_ALLINKBEAUTY_CONTACT_US
+                            select c;
+
+
+                return query;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public IQueryable<ContactModel> GetContactList()
+        {
+            try
+            {
+                var query =
+                    from a in _appdbcontext.TB_ALLINKBEAUTY_CONTACT
+                    join b in _appdbcontext.TbCodes
+                        on a.Country equals b.Code
+                    join c0 in _appdbcontext.TbCodes
+                        on a.ProductCategory equals c0.Code into cJoin
+                    from c in cJoin.DefaultIfEmpty()
+                    join d0 in _appdbcontext.TbCodes
+                        on a.TargetLaunchTimeline equals d0.Code into dJoin
+                    from d in dJoin.DefaultIfEmpty()
+                    join e0 in _appdbcontext.TbCodes
+                        on a.EstimatedOrderQuantity equals e0.Code into eJoin
+                    from e in eJoin.DefaultIfEmpty()
+                    join f0 in _appdbcontext.TbCodes
+                        on a.BudgetRange equals f0.Code into fJoin
+                    from f in fJoin.DefaultIfEmpty()
+                    where b.Sort == "국가코드_영문" && b.IsUse == "Y"
+                       && (c == null || (c.Sort == "p_category" && c.IsUse == "Y"))
+                       && (d == null || (d.Sort == "timeline" && d.IsUse == "Y"))
+                       && (e == null || (e.Sort == "o_quantity" && e.IsUse == "Y"))
+                       && (f == null || (f.Sort == "b_range" && f.IsUse == "Y"))
+                    orderby a.Idx descending
+                    select new ContactModel
+                    {
+                        idx = a.Idx,
+                        fullname = a.FullName,
+                        email = a.Email,
+                        country = b != null ? b.Name : "",
+                        companyname = a.CompanyName,
+                        typeofservice = a.TypeofService,
+                        productcategory = c != null ? c.Name : "",
+                        targetlaunchtimeline = d != null ? d.Name : "",
+                        estimatedorderquantity = e != null ? e.Name : "",
+                        budgetrange = f != null ? f.Name : "",
+                        formularequirements = a.FormulaRequirements,
+                        packagingpreferences = a.PackagingPreferences,
+                        notes = a.Notes,
+                        regdate = a.RegDate
+                    };
+
+
+                return query;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

@@ -168,6 +168,8 @@ namespace Freemold.Modules.Common
         public virtual DbSet<VwProductList> VwProductLists { get; set; }
         public virtual DbSet<VwProductListSm> VwProductListSms { get; set; }
 
+        public DbSet<UspKbeautyProductModel> UspKbeautyProductList { get; set; } = null!;
+
         public IQueryable<FnSplit> FnSplit(string text, string sep)
         => FromExpression(() => FnSplit(text, sep));
 

@@ -217,6 +217,9 @@
         const active1 = document.querySelector('#category1 .prd-nav__btn[aria-current="page"]');
         const code1 = (active1?.dataset.code?.trim() || ''); 
 
+
+        
+
         //카테고리2
         const active2 = document.querySelector('#category2 .prd-nav__btn[aria-current="page"]');
         const code2 = (active2?.dataset.code?.trim() || '');
@@ -236,6 +239,7 @@
         })
         .done(function(data){
 
+            console.log(data);
 
             pagenation(data.item3, data.item4, data.item5); //페이징 처리 부분
            
@@ -250,7 +254,6 @@
                     <li class="prd-gall__item">
                         <a href="#" class="prd-gall__link" onclick="finfo(${x.prodUid})">
                             <figure class="prd-gall__frame"><img src="@(filepath)/Product/${escape(x.pImg1)}" alt="Product thumbnail" class="prd-gall__img"></figure>
-                            <h4 class="prd-gall__name">${escape(x.pCode)}</h4>
                         </a>
                     </li>
                 `)

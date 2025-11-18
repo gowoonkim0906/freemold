@@ -42,9 +42,19 @@ namespace allinkbeauty.Controllers
             int pageno = (page - 1) * pagesize;
             int totalcount = 0;
 
+            ProductSearchModel ps = new ProductSearchModel()
+            {
+                category1 = acode,
+                category2 = category1,
+                category3 = category2,
+                volume1 = volume1,
+                volume2 = volume2,
+                kview = "Y"   
+            };
+
 
             List<KbeautyProductModel> list = new List<KbeautyProductModel>();
-            list = await _allinkbeautyService.KbeautyProductList(acode, category1, category2, volume1, volume2); //프리몰드 A001
+            list = await _allinkbeautyService.uspKbeautyProductList(ps); //프리몰드 A001
 
             totalcount = list == null ? 0 : list.Count;
             var items = list?.Skip(pageno).Take(pagesize).ToList();

@@ -15,27 +15,27 @@
                     <div class="swiper-wrapper">
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg1))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg1)" alt="product img01"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg1)" alt="product img01"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg2))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg2)" alt="product img02"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg2)" alt="product img02"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg3))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg3)" alt="product img03"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg3)" alt="product img03"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg4))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg4)" alt="product img04"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg4)" alt="product img04"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg5))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg5)" alt="product img05"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg5)" alt="product img05"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg6))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg6)" alt="product img06"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg6)" alt="product img06"></div>
                         }
                     </div>
                 </div>
@@ -43,37 +43,37 @@
                     <div class="swiper-wrapper">
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg1))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg1.Replace("/", "/thumb/"))" alt="product thumb img01"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg1.Replace("/", "/thumb/"))" alt="product thumb img01"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg2))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg2.Replace("/", "/thumb/"))" alt="product thumb img02"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg2.Replace("/", "/thumb/"))" alt="product thumb img02"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg3))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg3.Replace("/", "/thumb/"))" alt="product thumb img03"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg3.Replace("/", "/thumb/"))" alt="product thumb img03"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg4))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg4.Replace("/", "/thumb/"))" alt="product thumb img04"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg4.Replace("/", "/thumb/"))" alt="product thumb img04"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg5))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg5.Replace("/", "/thumb/"))" alt="product thumb img05"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg5.Replace("/", "/thumb/"))" alt="product thumb img05"></div>
                         }
                         @if (!string.IsNullOrWhiteSpace(productinfo.PImg6))
                         {
-                            <div class="swiper-slide"><img src="https://www.freemold.net/data/Product/@(productinfo.PImg6.Replace("/", "/thumb/"))" alt="product thumb img06"></div>
+                            <div class="swiper-slide"><img src="@(filepath)/Product/@(productinfo.PImg6.Replace("/", "/thumb/"))" alt="product thumb img06"></div>
                         }
                     </div>
                 </div>
             </div>
             <div class="view-info">
                 <section class="view-info__int">
-                    <h1 class="view-info__tit">@productinfo.PCode</h1>
+                    <h1 class="view-info__tit">@productinfo.PCodeEn</h1>
                 </section>
                 <div class="view-info__detail">
-                    @productinfo.PMemoEng
+                    @Html.Raw(productinfo.PMemoEng)
                 </div>
                 <div class="view-info__footer">
                     <a href="#" class="view-info__contact" onclick="flist()">List</a>

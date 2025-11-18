@@ -88,6 +88,11 @@
                             <input type="text" class="form-control" id="p_code" name="p_code" maxlength="120" required value="@productinfo.PCode">
                             <div class="invalid-feedback">제품코드 입력해주세요.</div>
                         </div>
+                        <div class="mt-4">
+                            <label for="p_code" class="form-label">제품코드(영문)</label>
+                            <input type="text" class="form-control" id="p_code_en" name="p_code_en" maxlength="120" required value="@productinfo.PCodeEn">
+                            <div class="invalid-feedback">제품코드 입력해주세요.</div>
+                        </div>
 
                         <div class="mt-4">
                             <label for="p_name" class="form-label">제품명 <span class="text-danger">*</span></label>
@@ -212,14 +217,24 @@
             <div class="col-xl-12 border-top">
                 <div class="pt-3">
 
-                    <!-- 2. 내용 -->
+                    <!-- 제품정보 -->
                     <div class="my-4">
-                        <label class="form-label">내용 <span class="text-danger">*</span></label>
+                        <label class="form-label">제품정보 <span class="text-danger">*</span></label>
                         <div id="editor" class="border rounded-2">@Html.Raw(productinfo.PMemo)</div>
 
                         <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
                         <input type="hidden" id="contentHtml" name="contentHtml" required>
                         <input type="hidden" id="contentMd" name="contentMd">
+                        <div class="invalid-feedback">내용을 입력해주세요.</div>
+                    </div>
+
+                    <div class="my-4">
+                        <label class="form-label">제품정보(영문)</label>
+                        <div id="editor2" class="border rounded-2">@Html.Raw(productinfo.PMemoEng)</div>
+
+                        <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
+                        <input type="hidden" id="contentHtml2" name="contentHtml2" required>
+                        <input type="hidden" id="contentMd2" name="contentMd2">
                         <div class="invalid-feedback">내용을 입력해주세요.</div>
                     </div>
 
@@ -277,13 +292,10 @@
         })();
 
 
-
-
-        const editor = new toastui.Editor({
-          el: document.querySelector('#editor'),
+        const commonOptions = {
           previewStyle: 'vertical',
           height: '420px',
-          initialEditType: 'wysiwyg', // 'markdown'으로 시작도 가능
+          initialEditType: 'wysiwyg',
           placeholder: '내용을 입력하세요...',
           toolbarItems: [
             ['heading', 'bold', 'italic', 'strike'],
@@ -292,20 +304,36 @@
             ['table', 'link'],
             ['image', 'code', 'codeblock']
           ]
-        });
+        };
 
-        // 이미지 업로드 훅 (옵션) — 서버 엔드포인트에 맞게 수정
-        editor.addHook('addImageBlobHook', async (blob, callback) => {
+
+        async function imageUploadHook(blob, callback) {
           try {
             const fd = new FormData();
             fd.append('file', blob);
             const res = await fetch('/upload/image', { method: 'POST', body: fd });
-            const json = await res.json(); // { url: '업로드된이미지의전체URL' } 형태 가정
+            const json = await res.json();
             callback(json.url, blob.name);
           } catch (e) {
             alert('이미지 업로드 실패');
           }
+        }
+
+        const editor = new toastui.Editor({
+          el: document.querySelector('#editor'),
+          commonOptions
         });
+
+        const editor2 = new toastui.Editor({
+          el: document.querySelector('#editor2'),
+          commonOptions
+        });
+
+
+
+        // 이미지 업로드 훅 (옵션) — 서버 엔드포인트에 맞게 수정
+        editor.addHook('addImageBlobHook', imageUploadHook);
+        editor2.addHook('addImageBlobHook', imageUploadHook);
 
 
         function productsave(){
@@ -317,12 +345,19 @@
             const md   = editor.getMarkdown().trim();
             const html = editor.getHTML().trim();
 
+            const md2   = editor2.getMarkdown().trim();
+            const html2 = editor2.getHTML().trim();
+
             // 마크다운 실내용(문자) 추출 — 완전 빈 경우 판단용(선택)
             const plain = md.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
+            const plain2 = md2.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
 
             // 전송값 세팅 — 정책에 따라 선택
             document.getElementById('contentMd').value   = md || '';              // 비워도 OK
             document.getElementById('contentHtml').value = plain ? html : '';     // 내용 없으면 HTML은 비움
+
+            document.getElementById('contentMd2').value   = md2 || '';              // 비워도 OK
+            document.getElementById('contentHtml2').value = plain2 ? html2 : '';     // 내용 없으면 HTML은 비움
 
 
             const delete_existing_ids = $("#delete_existing_ids").val();
@@ -336,12 +371,14 @@
             const uniqueVals   = [...new Set(nonEmptyVals)];
 
             const p_code = ($('#p_code').val() ?? '').toString();
+            const p_code = ($('#p_code').val() ?? '').toString();
             const p_name = ($('#p_name').val() ?? '').toString();
             const p_capacity = ($('#p_capacity').val() ?? '').toString();
             const p_size = ($('#p_size').val() ?? '').toString();
             const p_quality = ($('#p_quality').val() ?? '').toString();
             const p_origin = ($('#p_origin').val() ?? '').toString();
-
+            const p_memo = $('#contentHtml').val();
+            const p_memo_en = $('#contentHtml2').val();
 
 
             if(uniqueVals.length <= 0){
@@ -388,6 +425,8 @@
            _FormData.append('p_size', p_size);
            _FormData.append('p_quality', p_quality);
            _FormData.append('p_origin', p_origin);
+           _FormData.append('p_memo', p_memo);
+           _FormData.append('p_memo_en', p_memo_en);
            _FormData.append('delete_existing_ids', delete_existing_ids);
            _FormData.append('image_order', image_order);
 

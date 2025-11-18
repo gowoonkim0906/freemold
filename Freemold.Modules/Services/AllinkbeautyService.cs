@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Freemold.Modules.Services
 {
@@ -51,16 +52,14 @@ namespace Freemold.Modules.Services
 
         public List<StatisticsModel> StatisticsList(DateTime? sDate = null , DateTime? eDate = null) {
 
-            DateOnly datefrom = DateOnly.FromDateTime(sDate ?? DateTime.Today);
-            DateOnly dateto= DateOnly.FromDateTime(eDate ?? DateTime.Today);
+            
 
             var list =
-                _statisticsRepository.GetConnectionSms()
-                .Where(m => m.InDate >= datefrom && m.InDate <= dateto)
-                .GroupBy(m => m.InDate)
+                _statisticsRepository.GetConnectionAllInKBeauty(sDate, eDate)
+                .GroupBy(m => m.InDate.Date)
                 .Select(g => new StatisticsModel
                 {
-                    InDate = g.Key,
+                    InDate = g.Key.ToString("yyyy-MM-dd"),
                     TotalCnt = g.Count(),
                     Mobile = g.Count(x =>
                              x.UserAgent.Contains("iPhone") ||
@@ -75,12 +74,8 @@ namespace Freemold.Modules.Services
         public List<StatisticsHourModel> StatisticsHourList(DateTime? sDate = null, DateTime? eDate = null)
         {
 
-            DateTime datefrom = (sDate ?? DateTime.Today).Date;
-            DateTime dateto = (eDate ?? DateTime.Today).Date.AddDays(1).AddTicks(-1);
-
             var raw =
-                _statisticsRepository.GetConnectionSms()
-                .Where(m => m.RegDate >= datefrom && m.RegDate <= dateto)
+                _statisticsRepository.GetConnectionAllInKBeauty(sDate, eDate)
                 .GroupBy(m => m.RegDate.Hour)
                 .Select(g => new { Hour = g.Key, TotalCnt = g.Count() }).OrderBy(g => g.Hour).ToList();
 
@@ -98,12 +93,7 @@ namespace Freemold.Modules.Services
         public List<StatisticsRefererModel> StatisticsRefererList(DateTime? sDate = null, DateTime? eDate = null)
         {
 
-            DateOnly datefrom = DateOnly.FromDateTime(sDate ?? DateTime.Today);
-            DateOnly dateto = DateOnly.FromDateTime(eDate ?? DateTime.Today);
-
-
-            var raw = _statisticsRepository.GetConnectionSms()
-                            .Where(m => m.InDate >= datefrom && m.InDate <= dateto)
+            var raw = _statisticsRepository.GetConnectionAllInKBeauty(sDate, eDate)
                             .Select(m => m.HttpReferer ?? "")   // 최소 컬럼만
                             .AsNoTracking()
                             .ToList();         
@@ -111,7 +101,7 @@ namespace Freemold.Modules.Services
             var list = raw
                         .Select(r => r ?? "")
                         .Select(r => r.Replace("http://", "").Replace("https://", ""))
-                        .Select(r => r.Contains("standardmold.co.kr") ? "" : r)
+                        .Select(r => r.Contains("allinkbeauty.com") ? "" : r)
                         .Select(r => {
                             var idx = r.IndexOf('/');
                             return idx >= 0 ? r.Substring(0, idx) : r;
@@ -133,12 +123,7 @@ namespace Freemold.Modules.Services
         public List<StatisticsCountryModel> StatisticsCountryList(DateTime? sDate = null, DateTime? eDate = null)
         {
 
-            DateOnly datefrom = DateOnly.FromDateTime(sDate ?? DateTime.Today);
-            DateOnly dateto = DateOnly.FromDateTime(eDate ?? DateTime.Today);
-
-
-            var list = _statisticsRepository.GetConnectionCountrySms()
-                            .Where(m => m.InDate >= datefrom && m.InDate <= dateto)
+            var list = _statisticsRepository.GetConnectionCountryAllInKBeauty(sDate, eDate)
                             .GroupBy(m => new { m.CCode, m.CName })
                             .Select(g => new StatisticsCountryModel
                             {
@@ -159,6 +144,9 @@ namespace Freemold.Modules.Services
 
             return result;
         }
+
+
+
 
         public InquiryViewModel InquiryView(int idx)
         {
@@ -341,8 +329,6 @@ namespace Freemold.Modules.Services
             return result;
         }
 
-        
-
         public async Task<List<KbeautyProductModel>>  KbeautyProductList(string category1, string category2, string category3,string volume1,string volume2, CancellationToken ct = default)
         {
 
@@ -351,15 +337,7 @@ namespace Freemold.Modules.Services
 
 
             IQueryable<KbeautyProductModel> query = _productRepository.GetKbeautyProductList(category1)
-            .Where(m => m.Deleted == "N"
-                        && (m.PApprovalBefore ?? "") == "Y" //제폼승인1
-                        && m.PApproval == "Y"               //제폼승인2
-                        && m.PUse == "1"
-                        && m.PUseST == "Y"
-                        && m.Approval == "Y"                //기업승인1
-                        && (m.PApprovalBefore ?? "") == "Y" //기업승인2
-                        && m.ApprovalView == "Y"
-                        && m.StartDate <= datefrom
+            .Where(m => m.StartDate <= datefrom
                         && m.EndDate >= dateto
                         && m.UpCat == ";" + category1 + ";");
 
@@ -387,6 +365,114 @@ namespace Freemold.Modules.Services
 
             return await result.ToListAsync(ct);
         }
+
+        public async Task<List<KbeautyProductModel>> uspKbeautyProductList(ProductSearchModel ps , CancellationToken ct = default)
+        {
+            DateOnly datefrom = DateOnly.FromDateTime(DateTime.Today);
+            DateOnly dateto = DateOnly.FromDateTime(DateTime.Today.AddDays(-10));
+
+            var data = await _productRepository
+                .GetuspKbeautyProductList(ps.category1)
+                .ToListAsync(ct);  // List<UspKbeautyProductModel>
+
+            var query = data
+                .Where(m =>
+                    m.START_DATE <= datefrom &&
+                    m.END_DATE >= dateto &&
+                    m.UpCat == ";" + ps.category1 + ";");
+
+            //노출여부
+            if ((ps.kview ?? "N") == "Y")
+            {
+                query = query.Where(m => m.P_USE_ST == "Y");
+            }else if ((ps.kview ?? "N") == "N")
+            {
+                query = query.Where(m => m.P_USE_ST != "Y");
+            }
+
+            //승인여부
+            if ((ps.approval ?? "N") == "Y")
+            {
+                query = query.Where(m => m.APPROVAL == "Y" && (m.APPROVAL_BEFORE ?? "N" ) == "Y");
+            }
+            else if ((ps.approval ?? "N") == "N")
+            {
+                query = query.Where(m => m.APPROVAL != "Y" && (m.APPROVAL_BEFORE ?? "N") != "Y");
+            }
+
+
+            //검색어
+            if (!string.IsNullOrWhiteSpace(ps.searchval)) {
+
+                query = query.Where(m => 
+                    m.P_CODE.Contains(ps.searchval) ||
+                    m.P_NAME.Contains(ps.searchval) ||
+                    m.P_SIZE.Contains(ps.searchval) ||
+                    m.P_QUALITY.Contains(ps.searchval) ||
+                    m.P_CAPACITY.ToString().Contains(ps.searchval) ||
+                    m.COMPANY_NAME.Contains(ps.searchval)
+                );
+            }
+            
+
+            if (!string.IsNullOrWhiteSpace(ps.category3))
+            {
+                query = query.Where(m => (";" + m.P_CATEGORY + ";")
+                    .Contains(";" + ps.category3 + ";", StringComparison.OrdinalIgnoreCase));
+            }
+            else if (!string.IsNullOrWhiteSpace(ps.category2))
+            {
+                query = query.Where(m => (";" + m.P_CATEGORY + ";")
+                    .Contains(";" + ps.category2 + ";", StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (double.TryParse(ps.volume1, out double vol1) &&
+                double.TryParse(ps.volume2, out double vol2))
+            {
+                query = query.Where(m => m.P_CAPACITY >= vol1 && m.P_CAPACITY <= vol2);
+            }
+
+            
+
+            var result = query
+                .Select(m => new KbeautyProductModel
+                {
+                    ProdUid = m.PROD_UID,
+                    PCode = m.P_CODE,
+                    PCodeEn = m.P_CODE_EN,
+                    UpCat = m.UpCat,
+                    PName = m.P_NAME,
+                    PCapacity = m.P_CAPACITY,
+                    PCapUnit = m.P_CAP_UNIT,
+                    PSize = m.P_SIZE,
+                    PHit = m.P_HIT,
+                    PQuality = m.P_QUALITY,
+                    POrigin = m.P_ORIGIN,
+                    ProdType = m.ProdType,
+                    PCategory = m.P_CATEGORY,
+                    PImg1 = m.P_IMG1,
+                    PApproval = m.P_APPROVAL,
+                    PApprovalBefore = m.P_APPROVAL_BEFORE,
+                    Deleted = m.Deleted,
+                    PUse = m.P_USE,
+                    PUseST = m.P_USE_ST,
+                    PRegDate = m.P_REGDATE,
+                    Visit = m.Visit,
+                    CompanyName = m.COMPANY_NAME,
+                    PayUse = m.PayUse,
+                    Approval = m.APPROVAL,
+                    ApprovalBefore = m.APPROVAL_BEFORE,
+                    ApprovalView = m.APPROVAL_VIEW,
+                    StartDate = m.START_DATE,
+                    EndDate = m.END_DATE,
+                    ImgCnt = m.ImgCnt
+                })
+                .OrderByDescending(m => m.PRegDate)
+                .ToList();
+
+            return result;  // ✅ OK
+        }
+
 
         public async Task<KbeautyProductModel> KbeautyProductView(long produid, CancellationToken ct = default)
         {
@@ -428,6 +514,21 @@ namespace Freemold.Modules.Services
             }
         }
 
+
+        public async Task<List<ContactModel>>  ContactList(CancellationToken ct = default)
+        {
+            var result = _beautyRepository.GetContactList().OrderByDescending(m => m.idx).AsNoTracking();
+
+            return await result.ToListAsync(ct); ;
+        }
+
+
+        public async Task<List<TB_ALLINKBEAUTY_CONTACT_US>> ContactUsList(CancellationToken ct = default)
+        {
+            var result = _beautyRepository.GetContactUsList().OrderByDescending(m => m.idx).AsNoTracking();
+
+            return await result.ToListAsync(ct); ;
+        }
 
         public async Task<UspconnectionModel> AllinKVisitorInsert(string regip) {
 

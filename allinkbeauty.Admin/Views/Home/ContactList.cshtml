@@ -1,0 +1,211 @@
+﻿@using Freemold.Modules.Models.Table;
+
+@model IEnumerable<ContactModel>
+@{
+    int pageno = (int)ViewBag.pageno;
+}
+
+<div class="container-fluid px-4">
+    <!--<div class="mb-3 mt-4">
+        <form class="d-flex align-items-center" role="search">
+            <input type="text" class="form-control form-control-sm me-2" placeholder="이름 검색" style="max-width: 100px;">
+            <span class="mx-2">~</span>
+            <input type="text" class="form-control form-control-sm me-2" placeholder="근무지 검색" style="max-width: 100px;">
+            <button type="submit" class="btn btn-sm btn-primary">검색</button>
+        </form>
+    </div>-->
+    <div class="row mt-4">
+        <div class="col-xl-12">
+            <div class="card-body">
+                <table class="table table-bordered table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr class="text-center">
+                            <th style="width:5%;">No.</th>
+                            <th style="width:5%;">Full Name</th>
+                            <th style="width:10%;">Email Address</th>
+                            <th style="width:10%;">Country</th>
+                            <th style="width:10%;">Company Name/Dept./Position</th>
+                            <th>Type of Service</th>
+                            <th style="width:10%;">Product Category</th>
+                            <th style="width:10%;">Target Launch Timeline</th>
+                            <th style="width:10%;">Estimated Order Quantity</th>
+                            <th style="width:10%;">Budget Range</th>
+                            <th style="width:5%;">작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.Any())
+                        {
+                            int no = pageno;
+                            foreach (var item in Model)
+                            {
+                                <tr onclick="ContactViewForm(this);" style="cursor:pointer;"
+                                    data-fullname="@item.fullname"
+                                    data-email="@item.email"
+                                    data-country="@item.country"
+                                    data-company="@item.companyname"
+                                    data-type="@item.typeofservice"
+                                    data-category="@item.productcategory"
+                                    data-timeline="@item.targetlaunchtimeline"
+                                    data-quantity="@item.estimatedorderquantity"
+                                    data-budget="@item.budgetrange"
+                                    data-formula="@item.formularequirements"
+                                    data-packaging="@item.packagingpreferences"
+                                    data-notes="@item.notes"
+                                    data-regdate="@item.regdate.ToString("yyyy.MM.dd")">
+                                    <td class="text-center">@no</td>
+                                    <td>@item.fullname</td>
+                                    <td>@item.email</td>
+                                    <td>@item.country</td>
+                                    <td>@item.companyname</td>
+                                    <td>@item.typeofservice</td>
+                                    <td>@item.productcategory</td>
+                                    <td>@item.targetlaunchtimeline</td>
+                                    <td>@item.estimatedorderquantity</td>
+                                    <td>@item.budgetrange</td>
+                                    <td class="text-center">@item.regdate.ToString("yyyy.MM.dd")</td>
+                                </tr>
+                                --no;
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="11" style="text-align:center">등록된 내용이 없습니다.</td></tr>
+
+                        }
+
+                    </tbody>
+                </table>
+
+                @Html.Partial(Url.Content("_Pagination"))
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="ContactViewModal" tabindex="-1" aria-labelledby="ContactViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="mb-2 row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%;">Full Name</th>
+                                    <td id="viewname">홍길동</td>
+                                </tr>
+                                <tr>
+                                    <th>Email Address</th>
+                                    <td id="viewemail">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Country</th>
+                                    <td id="viewcountry">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Company Name/Dept./Position</th>
+                                    <td id="viewcompany">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Type of Service</th>
+                                    <td id="viewtype">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Product Category</th>
+                                    <td id="viewcategory">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Target Launch Timeline</th>
+                                    <td id="viewtimeline">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Estimated Order Quantity</th>
+                                    <td id="viewquantity">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Budget Range</th>
+                                    <td id="viewbudget">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Formula Requirements</th>
+                                    <td id="viewformula">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Packaging Preferences</th>
+                                    <td id="viewpackaging">hong@example.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Other Notes / Questions</th>
+                                    <td style="min-height: 150px;" id="viewnotes">
+                                        게시글 본문입니다.<br />
+                                        여러 줄도 가능하며, HTML 포맷팅도 지원할 수 있습니다.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>작성일</th>
+                                    <td id="viewregdate">2025-08-06 10:23</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+
+    function ContactViewForm(t){
+
+        const fullname = t.dataset.fullname;
+        const email = t.dataset.email;
+        const country = t.dataset.country;
+        const company = t.dataset.company;
+        const type = t.dataset.type;
+        const category = t.dataset.category;
+        const timeline = t.dataset.timeline;
+        const quantity = t.dataset.quantity;
+        const budget = t.dataset.budget;
+        const formula = t.dataset.formula;
+        const packaging = t.dataset.packaging;
+        const notes = t.dataset.notes;
+
+        const regdate = t.dataset.regdate;
+
+
+
+        $("#viewname").text(fullname);
+        $("#viewemail").text(email);
+        $("#viewcountry").text(country);
+        $("#viewcompany").text(company);
+        $("#viewtype").text(type);
+        $("#viewcategory").text(category);
+        $("#viewtimeline").text(timeline);
+        $("#viewquantity").text(quantity);
+        $("#viewbudget").text(budget);
+        $("#viewformula").text(formula);
+        $("#viewpackaging").text(packaging);
+        $("#viewnotes").text(notes);
+        $("#viewregdate").text(regdate);
+
+          
+        $('#ContactViewModal').modal('show');
+    }
+
+</script>

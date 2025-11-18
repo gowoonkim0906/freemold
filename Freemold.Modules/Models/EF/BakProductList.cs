@@ -24,6 +24,7 @@ public partial class BakProductList
     public string? P_NAME2 { get; set; }
 
     public string? P_CODE { get; set; }
+    public string? P_CODE_EN { get; set; }  
 
     public int? P_MOQ { get; set; }
 

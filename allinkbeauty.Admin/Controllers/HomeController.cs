@@ -256,33 +256,73 @@ namespace standardmold.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ProductListData(int page = 1)
+        public async Task<IActionResult> ProductListData(int page = 1, string acode = "A001", string searchval ="", string approval = "", string kview = "")
         {
-            int pageSize = 30;
-            int skip = (page - 1) * pageSize;
+            int pagesize = 30;
+            int pageno = 0;
+            int totalcount = 0;
+            int pageblock = 10;
 
-            var list = _allinkbeautyService.KProductList(); // 가능하면 async 버전 권장
-            int totalcount = list?.Count ?? 0;
-            var items = list?.Skip(skip).Take(pageSize).ToList() ?? new List<AdminProductModel>();
+            pageno = (page - 1) * pagesize; 
+
+            ProductSearchModel ps = new ProductSearchModel()
+            {
+                category1 = acode,
+                searchval = searchval,
+                approval = approval,
+                kview = kview
+            };
+
+
+            List<KbeautyProductModel> list = new List<KbeautyProductModel>();
+            list = await _allinkbeautyService.uspKbeautyProductList(ps); 
+
+            totalcount = list == null ? 0 : list.Count;
+            var items = list?.Skip(pageno).Take(pagesize).ToList();
+
 
             var keys = items.Select(x => x.PCategory ?? string.Empty)
-                            .Where(k => !string.IsNullOrWhiteSpace(k))
-                            .Distinct()
-                            .ToList();
+                    .Where(k => !string.IsNullOrWhiteSpace(k))
+                    .Distinct()
+                    .ToList();
+
 
             var tasks = keys.ToDictionary(k => k, k => _codeService.GetCategoryFullname(k));
             await Task.WhenAll(tasks.Values);
 
             var catMap = tasks.ToDictionary(kv => kv.Key, kv => kv.Value.Result);
-            foreach (var it in items)
-                if (!string.IsNullOrEmpty(it.PCategory) && catMap.TryGetValue(it.PCategory, out var fullName))
-                    it.PCategoryName = fullName;
 
-            ViewBag.totalcount = totalcount;
+            foreach (var it in items)
+            {
+                if (!string.IsNullOrEmpty(it.PCategory) &&
+                    catMap.TryGetValue(it.PCategory, out var fullName))
+                {
+                    it.PCategoryName = fullName;
+                }
+            }
+
+            pageno = totalcount - ((page - 1) * pagesize);
+
             ViewBag.page = page;
-            ViewBag.pageSize = pageSize;
+            ViewBag.pagesize = pagesize;
+            ViewBag.totalcount = totalcount;
+            ViewBag.pageblock = pageblock;
+            ViewBag.pageno = pageno;
+            ViewBag.filepath = _fileService.RootPath;
 
             return PartialView("_ProductListPartial", items);
+        }
+
+        public IActionResult ProductPageData(int page , int pagesize , int totalcount, int pageblock)
+        {
+            
+
+            ViewBag.page = page;
+            ViewBag.pagesize = pagesize;
+            ViewBag.totalcount = totalcount;
+            ViewBag.pageblock = pageblock;
+
+            return PartialView("_Pagination2");
         }
 
         public async Task<IActionResult> ProductEdit(int produid)
@@ -318,6 +358,66 @@ namespace standardmold.Admin.Controllers
 
         }
 
+        public async Task<IActionResult> ContactList(int page = 1)
+        {
+
+            int pagesize = 10;
+            int pageno = 0;
+            int totalcount = 0;
+            int pageblock = 10;
+
+
+            var listAll = await _allinkbeautyService.ContactList();
+
+            totalcount = listAll?.Count ?? 0;
+
+            var list = listAll?.OrderByDescending(m => m.idx)
+                       .Skip((page - 1) * pagesize)
+                       .Take(pagesize)
+                       .ToList();
+
+            pageno = totalcount - ((page - 1) * pagesize);
+
+            ViewBag.page = page;
+            ViewBag.pagesize = 10;
+            ViewBag.totalcount = totalcount;
+            ViewBag.pageblock = pageblock;
+            ViewBag.pageno = pageno;
+
+            return View(list);
+
+        }
+
+        public async Task<IActionResult> ContactUsList(int page = 1)
+        {
+            int pagesize = 10;
+            int pageno = 0;
+            int totalcount = 0;
+            int pageblock = 10;
+
+
+            var listAll = await _allinkbeautyService.ContactUsList();
+
+            totalcount = listAll?.Count ?? 0;
+
+            var list = listAll?.OrderByDescending(m => m.idx)
+                       .Skip((page - 1) * pagesize)
+                       .Take(pagesize)
+                       .ToList();
+
+            pageno = totalcount - ((page -1) * pagesize);
+
+            ViewBag.page = page;
+            ViewBag.pagesize = 10;
+            ViewBag.totalcount = totalcount;
+            ViewBag.pageblock = pageblock;
+            ViewBag.pageno = pageno;
+
+            return View(list);
+
+
+        }
+
         public async Task<IActionResult> ModalCategory(string ACode, string[] selectcode) {
 
             List<CategoryModel> list = new List<CategoryModel>();
@@ -326,6 +426,16 @@ namespace standardmold.Admin.Controllers
 
             ViewBag.categoryList = list;    
 
+            return View();
+        }
+
+        public IActionResult FormulaList()
+        {
+            return View();
+        }
+
+        public IActionResult PackagingList()
+        {
             return View();
         }
 
@@ -389,10 +499,10 @@ namespace standardmold.Admin.Controllers
         {
             try
             {
-                if (id == "admink" && password == "admin19@#%^")
+                if (id == "admink" && password == "admink!@#")
                 {
 
-                    HttpContext.Session.SetString("admin", "admin");
+                    HttpContext.Session.SetString("admin", "admink");
                     return Json(new { item1 = "success" });
                 }
                 else {

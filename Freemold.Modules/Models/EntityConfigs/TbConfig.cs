@@ -1653,6 +1653,7 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.P_CAP_UNIT).HasMaxLength(10);
                 entity.Property(e => e.P_CATEGORY).HasMaxLength(100);
                 entity.Property(e => e.P_CODE).HasMaxLength(100);
+                entity.Property(e => e.P_CODE_EN).HasMaxLength(100);
                 entity.Property(e => e.P_HOT)
                     .HasMaxLength(1)
                     .HasDefaultValue("0");
@@ -3983,6 +3984,9 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.PCode)
                     .HasMaxLength(100)
                     .HasColumnName("P_CODE");
+                entity.Property(e => e.PCodeEn)
+                    .HasMaxLength(100)
+                    .HasColumnName("P_CODE_EN");
                 entity.Property(e => e.PHit).HasColumnName("P_HIT");
                 entity.Property(e => e.PHot)
                     .HasMaxLength(1)
@@ -4108,6 +4112,9 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.PCode)
                     .HasMaxLength(100)
                     .HasColumnName("P_CODE");
+                entity.Property(e => e.PCodeEn)
+                    .HasMaxLength(100)
+                    .HasColumnName("P_CODE_EN");
                 entity.Property(e => e.PHit).HasColumnName("P_HIT");
                 entity.Property(e => e.PHot)
                     .HasMaxLength(1)
@@ -4180,6 +4187,12 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.UpCat)
                     .HasMaxLength(100)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<UspKbeautyProductModel>(entity =>
+            {
+                entity.HasNoKey();   // 필수
+                entity.ToView(null); // 실제 뷰 연결 없음 (Stored Procedure 결과 전용)
             });
 
 
