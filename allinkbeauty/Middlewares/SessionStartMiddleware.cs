@@ -26,6 +26,7 @@ namespace Middlewares
         {
             // 세션 사용: 반드시 app.UseSession() 이후에 이 미들웨어가 등록되어 있어야 함
             var started = context.Session.GetString("SessionStarted");
+            var sessionId = context.Session.Id;
             if (string.IsNullOrEmpty(started))
             {
                 context.Session.SetString("SessionStarted", "true");
@@ -63,7 +64,7 @@ namespace Middlewares
                 else
                 {
 
-                    var connect = await allinkbeautyService.AllinKVisitorInsert(clientIp ?? "");
+                    var connect = await allinkbeautyService.AllinKVisitorInsert(clientIp ?? "", sessionId);
 
                     if(connect.Idx <= 0)
                     {

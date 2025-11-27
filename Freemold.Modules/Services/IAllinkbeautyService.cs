@@ -31,9 +31,10 @@ namespace Freemold.Modules.Services
         Task<string> ContactUsInsert(TB_ALLINKBEAUTY_CONTACT_US input, CancellationToken ct = default);
         Task<List<ContactModel>> ContactList(CancellationToken ct = default);
         Task<List<TB_ALLINKBEAUTY_CONTACT_US>> ContactUsList(CancellationToken ct = default);
-        Task<UspconnectionModel> AllinKVisitorInsert(string regip);
+        Task<UspconnectionModel> AllinKVisitorInsert(string regip, string sessionId);
+        Task<string> EditorImageSave(IFormFile file);
 
-        
+
         bool BlockIp(string ip);
     }
 }

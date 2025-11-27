@@ -39,7 +39,7 @@ namespace Freemold.Modules.Services
             Stream outStream,
             string logoPath,
             string originalExt,
-            double opacity = 0.35,  // 배경 워터마크는 0.10~0.25 정도 권장
+            double opacity = 0.65,  // 배경 워터마크는 0.10~0.25 정도 권장
             double _scaleIgnored = 0.0, // (COVER 모드에선 미사용)
             int? _padIgnored = null // (COVER 모드에선 미사용)
         )
@@ -57,13 +57,7 @@ namespace Freemold.Modules.Services
             using var logo = new MagickImage(logoPath);
             logo.Alpha(AlphaOption.On);
 
-            // (선택) 로고가 흰 배경이면 흰색을 투명화 (완벽하진 않음)
-            try
-            {
-                logo.ColorFuzz = new Percentage(10); // 허용 오차
-                logo.Transparent(MagickColors.White);
-            }
-            catch { /* 버전 미지원 시 무시 */ }
+          
 
             // 3) COVER 스케일 계산: 이미지 전체를 덮도록
             int iw = unchecked((int)image.Width);
@@ -83,8 +77,8 @@ namespace Freemold.Modules.Services
             logo.Resize(geo);
 
             // 5) 배경 워터마크 투명도(더 옅게 권장)
-            double alpha = Math.Clamp(opacity, 0.05, 0.40);
-            logo.Evaluate(Channels.Alpha, EvaluateOperator.Multiply, alpha);
+            //double alpha = Math.Clamp(opacity, 0.20, 0.90);
+            //logo.Evaluate(Channels.Alpha, EvaluateOperator.Multiply, alpha);
 
             // 6) 중앙에 합성(배경처럼)
             image.Composite(logo, Gravity.Center, 0, 0, CompositeOperator.Over);

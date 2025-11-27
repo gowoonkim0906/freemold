@@ -5,7 +5,7 @@
 
     var list = ViewBag.list as List<AdminProductModel> ?? new List<AdminProductModel>();
     int pageno = (int)ViewBag.pageno;
-
+    string fileurl = ViewBag.fileurl as string ?? "";
 
 }
 <div class="container-fluid px-4">
@@ -53,7 +53,7 @@
                                     <td class="text-center">
                                         <div class="imgcnt">@item.ImgCnt</div> <!--이미지수-->
                                         <div class="viewcnt">@item.Visit</div> <!--조회수-->
-                                        <img src="https://freemold.net/data/Product/@(item.PImg1)" style="height:60px;cursor:pointer" onclick="productimg(@item.ProdUid)" />
+                                        <img src="@(fileurl)/Product/@(item.PImg1)" style="height:60px;cursor:pointer" onclick="productimg(@item.ProdUid)" />
                                     </td>
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PName</a></td>
                                     <td><a href="javascript:productview(@item.ProdUid)" class="link-dark">@item.PCode</a></td>

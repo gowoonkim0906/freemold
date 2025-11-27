@@ -1,0 +1,541 @@
+﻿@using Freemold.Modules;
+@using Freemold.Modules.Models;
+@using Freemold.Modules.Common;
+@{
+    var productinfo = ViewBag.productinfo as ProductDetailModel ?? new ProductDetailModel();
+    var productcategory = ViewBag.productcategory as List<CategoryFullnameModel> ?? new List<CategoryFullnameModel>();
+    var categorylist = ViewBag.categorylist as List<TbCategory> ?? new List<TbCategory>();
+    var codelist = ViewBag.codelist as List<TbCode> ?? new List<TbCode>();
+    string fileurl = ViewBag.fileurl as string ?? "";
+
+    string UpCat = productinfo.UpCat.Replace(";;", ",").Replace(";", "");
+
+
+
+}
+<style>
+    /* 이미지 미리보기 그리드 */
+    #previewGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: .75rem;
+    }
+
+        #previewGrid .thumb {
+            border: 1px solid var(--bs-border-color);
+            border-radius: .5rem;
+            padding: .5rem;
+            text-align: center;
+            font-size: .875rem;
+            overflow: hidden;
+        }
+
+        #previewGrid img {
+            display: block;
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: .25rem;
+            margin-bottom: .25rem;
+        }
+
+</style>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<link href="@Url.Content("~/css/dragfile.css")" rel="stylesheet" />
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<div class="container-fluid px-4">
+    <form class="needs-validation" novalidate action="/board/write" method="post" enctype="multipart/form-data">
+        <div class="row mt-4 border">
+            <div class="col-xl-6  border-end border-1">
+                <div class="py-3">
+                    <!-- 1. 기본 정보 -->
+                    <div class="row g-3">
+                        <div class="mt-4">
+                            <label for="prodtype" class="form-label">제품분류 <span class="text-danger">*</span></label>
+                            <div>
+
+                                @foreach (var item in categorylist)
+                                {
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="upcat" id="@item.Code" value="@item.Code" @(item.Code.Contains(UpCat) ? "checked" : "")>
+                                        <label class="form-check-label" for="@item.Code">@item.NameKor</label>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="title" class="form-label">카테고리 <span class="text-danger">*</span></label>
+                            <div class="row g-2 align-items-start">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-outline-dark btn-sm" onclick="catagorymodalopen()">카테고리</button>
+                                </div>
+                                <div class="col" id="selectcategory">
+                                    @if (productcategory?.Any() ?? false)
+                                    {
+                                        foreach (var item in productcategory)
+                                        {
+                                            <div class="text-break" data-val="@(item.Code)">@item.FullName</div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="p_code" class="form-label">제품코드 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="p_code" name="p_code" maxlength="120" required value="@productinfo.PCode">
+                            <div class="invalid-feedback">제품코드 입력해주세요.</div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="p_code_en" class="form-label">제품코드(영문)</label>
+                            <input type="text" class="form-control" id="p_code_en" name="p_code_en" maxlength="120" required value="@productinfo.PCodeEn">
+                            <div class="invalid-feedback">제품코드 입력해주세요.</div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="p_name" class="form-label">제품명 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="p_name" name="p_name" maxlength="120" required value="@productinfo.PName">
+                            <div class="invalid-feedback">제품명 입력해주세요.</div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="p_capacity" class="form-label">제품용량 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="p_capacity" name="p_capacity" maxlength="120" required value="@productinfo.PCapacity">
+                            <div class="invalid-feedback">제품용량 입력해주세요.</div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="p_size" class="form-label">제품사이즈 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="p_size" name="p_size" maxlength="120" required value="@productinfo.PSize">
+                            <div class="invalid-feedback">제품사이즈 입력해주세요.</div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="p_quality" class="form-label">재질 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="p_quality" name="p_quality" maxlength="120" required value="@productinfo.PQuality">
+                            <div class="invalid-feedback">제품사이즈 입력해주세요.</div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label for="p_quality" class="form-label">원산지 <span class="text-danger">*</span></label>
+                            <select class="form-select" aria-label="Default select example" name="p_origin" id="p_origin">
+                                <option value="">원산지를 선택해주세요</option>
+                                @foreach (var item in codelist)
+                                {
+                                    <option value="@(item.Name)" selected="@(item.Name == productinfo.POrigin ? true : false)">@(item.Name)</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="pt-3">
+
+                    <!-- 3. 첨부파일 -->
+                    <div class="mt-4">
+                        <label for="files" class="form-label">첨부파일</label>
+
+                        <div class="upload-container">
+                            <div class="upload-btn-wrapper">
+                                <input type="file" id="input_file" accept="image/*" multiple>
+                            </div>
+                            <div id="dropZone">
+                                <div id="dropText">여기에 제품사진을 드래그 해주세요</div>
+                                @if (productinfo.PImg1 != "")
+                                {
+                                    <div class="image-preview existing" data-id="@productinfo.PImg1" data-type="existing">
+                                        <img src="@(SiteConfig.fileurl)/Product/@(productinfo.PImg1)" draggable="false">
+                                        <button class="btn-delete" type="button" onclick="event.stopPropagation(); removeExistingImage('@productinfo.PImg1')">×</button>
+                                    </div>
+                                }
+
+                                @if (productinfo.PImg2 != "")
+                                {
+                                    <div class="image-preview existing" data-id="@productinfo.PImg2" data-type="existing">
+                                        <img src="@(SiteConfig.fileurl)/Product/@(productinfo.PImg2)" draggable="false">
+                                        <button class="btn-delete" type="button" onclick="event.stopPropagation(); removeExistingImage('@productinfo.PImg2')">×</button>
+                                    </div>
+                                }
+
+                                @if (productinfo.PImg3 != "")
+                                {
+                                    <div class="image-preview existing" data-id="@productinfo.PImg3" data-type="existing">
+                                        <img src="@(SiteConfig.fileurl)/Product/@(productinfo.PImg3)" draggable="false">
+                                        <button class="btn-delete" type="button" onclick="event.stopPropagation(); removeExistingImage('@productinfo.PImg3')">×</button>
+                                    </div>
+                                }
+
+                                @if (productinfo.PImg4 != "")
+                                {
+                                    <div class="image-preview existing" data-id="@productinfo.PImg4" data-type="existing">
+                                        <img src="@(SiteConfig.fileurl)/Product/@(productinfo.PImg4)" draggable="false">
+                                        <button class="btn-delete" type="button" onclick="event.stopPropagation(); removeExistingImage('@productinfo.PImg4')">×</button>
+                                    </div>
+                                }
+
+                                @if (productinfo.PImg5 != "")
+                                {
+                                    <div class="image-preview existing" data-id="@productinfo.PImg5" data-type="existing">
+                                        <img src="@(SiteConfig.fileurl)/Product/@(productinfo.PImg5)" draggable="false">
+                                        <button class="btn-delete" type="button" onclick="event.stopPropagation(); removeExistingImage('@productinfo.PImg5')">×</button>
+                                    </div>
+                                }
+
+                                @if (productinfo.PImg6 != "")
+                                {
+                                    <div class="image-preview existing" data-id="@productinfo.PImg6" data-type="existing">
+                                        <img src="@(SiteConfig.fileurl)/Product/@(productinfo.PImg6)" draggable="false">
+                                        <button class="btn-delete" type="button" onclick="event.stopPropagation(); removeExistingImage('@productinfo.PImg6')">×</button>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                        <input type="file" id="file-keep" multiple style="display:none" />
+                        <div name="hiddenfile" id="hiddenfile"></div>
+                        <input type="hidden" name="delete_existing_ids" id="delete_existing_ids" value="">
+                        <input type="hidden" name="image_order" id="image_order">
+                        <div class="upload-notice">
+                            <ul>
+                                <li>최대 5MB 이하 용량 제품사진만 첨부하실 수 있습니다.</li>
+                                <li>최대 6개 제품사진만 첨부하실 수 있습니다.</li>
+                                <li>첫번째 제품사진이 대표이미지로 설정됩니다.</li>
+                                <li>제품사진은 600px x 600px 사이즈로 등록하시는 것을 권장드립니다.</li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-xl-12 border-top">
+                <div class="pt-3">
+
+                    <!-- 제품정보 -->
+                    <div class="my-4">
+                        <label class="form-label">제품정보 <span class="text-danger">*</span></label>
+                        <div id="editor" class="border rounded-2">@Html.Raw(productinfo.PMemo)</div>
+
+                        <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
+                        <input type="hidden" id="contentHtml" name="contentHtml" required>
+                        <input type="hidden" id="contentMd" name="contentMd">
+                        <div class="invalid-feedback">내용을 입력해주세요.</div>
+                    </div>
+
+                    <div class="my-4">
+                        <label class="form-label">제품정보(영문)</label>
+                        <div id="editor2" class="border rounded-2">@Html.Raw(productinfo.PMemoEng)</div>
+
+                        <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
+                        <input type="hidden" id="contentHtml2" name="contentHtml2" required>
+                        <input type="hidden" id="contentMd2" name="contentMd2">
+                        <div class="invalid-feedback">내용을 입력해주세요.</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- 4. 액션 버튼 -->
+            <div class="d-flex justify-content-center gap-2 pt-3 ">
+                <button type="button" class="btn btn-outline-secondary" onclick="history.back()">취소</button>
+                <button type="button" class="btn btn-primary" onclick="productsave()">등록</button>
+            </div>
+        </div>
+        <input type="file" id="file-keep" multiple style="display:none;" />
+        <input type="hidden" name="delete_existing_ids" id="delete_existing_ids" value="">
+        <input type="hidden" name="image_order" id="image_order">
+    </form>
+</div>
+
+<div class="modal fade" id="categorymodal" tabindex="-1" aria-labelledby="categorymodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" id="categorymodalDialog">
+        <!-- 여기에 서버에서 내려준 .modal-content가 들어감 -->
+    </div>
+</div>
+
+
+@section Scripts {
+    <!-- 페이지 전용 JS (필요 시 외부 파일도 가능) -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="@Url.Content("~/js/dragfile.js")"></script>
+    <script>
+        // ① 부트스트랩 기본 폼 검증
+        (function () {
+          const form = document.querySelector('.needs-validation');
+          form.addEventListener('submit', function (e) {
+
+
+            if (!form.checkValidity()) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+
+
+
+          const previews = document.querySelectorAll('.image-preview');
+          const dropText = document.getElementById('dropText');
+          if (previews.length > 0 && dropText) {
+              dropText.style.display = 'none';
+          }
+
+
+
+        })();
+
+
+        const commonOptions = {
+          previewStyle: 'vertical',
+          height: '420px',
+          initialEditType: 'wysiwyg',
+          placeholder: '내용을 입력하세요...',
+          toolbarItems: [
+            ['heading', 'bold', 'italic', 'strike'],
+            ['hr', 'quote'],
+            ['ul', 'ol', 'task', 'indent', 'outdent'],
+            ['table', 'link'],
+            ['image', 'code', 'codeblock']
+          ]
+        };
+
+
+        async function imageUploadHook(blob, callback) {
+          try {
+            const fd = new FormData();
+            fd.append('file', blob);
+            const res = await fetch('/upload/image', { method: 'POST', body: fd });
+            const json = await res.json();
+            callback(json.url, blob.name);
+          } catch (e) {
+            alert('이미지 업로드 실패');
+          }
+        }
+
+        function createEditor(selector) {
+          const el = document.querySelector(selector);
+          if (!el) return null;
+
+          const initialHtml = el.innerHTML.trim();
+          el.innerHTML = '';
+
+          const editor = new toastui.Editor({
+            el: el,
+            ...commonOptions
+          });
+
+          if (initialHtml) {
+            editor.setHTML(initialHtml);
+          }
+
+          editor.addHook('addImageBlobHook', imageUploadHook);
+
+          return editor;
+        }
+
+        const editor  = createEditor('#editor');
+        const editor2 = createEditor('#editor2'); // 필요 없으면 div 자체를 안 만들면 null 반환됨
+
+
+
+
+        function productsave(){
+
+            const _FormData = new FormData();
+
+            datasave(); //파일 담기
+
+            const md   = editor.getMarkdown().trim();
+            const html = editor.getHTML().trim();
+
+            const md2   = editor2.getMarkdown().trim();
+            const html2 = editor2.getHTML().trim();
+
+            // 마크다운 실내용(문자) 추출 — 완전 빈 경우 판단용(선택)
+            const plain = md.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
+            const plain2 = md2.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
+
+            // 전송값 세팅 — 정책에 따라 선택
+            document.getElementById('contentMd').value   = md || '';              // 비워도 OK
+            document.getElementById('contentHtml').value = plain ? html : '';     // 내용 없으면 HTML은 비움
+
+            document.getElementById('contentMd2').value   = md2 || '';              // 비워도 OK
+            document.getElementById('contentHtml2').value = plain2 ? html2 : '';     // 내용 없으면 HTML은 비움
+
+
+            const delete_existing_ids = $("#delete_existing_ids").val();
+            const image_order = $("#image_order").val();
+
+            const vals = $('#selectcategory .text-break[data-val]')
+            .map((_, el) => $(el).data('val'))
+            .get();  // ['B001','B001','B001', ...]
+
+            const nonEmptyVals = vals.filter(v => v && String(v).trim() !== '');
+            const uniqueVals   = [...new Set(nonEmptyVals)];
+
+            const p_code = ($('#p_code').val() ?? '').toString();
+            const p_code_en = ($('#p_code_en').val() ?? '').toString();
+            const p_name = ($('#p_name').val() ?? '').toString();
+            const p_capacity = ($('#p_capacity').val() ?? '').toString();
+            const p_size = ($('#p_size').val() ?? '').toString();
+            const p_quality = ($('#p_quality').val() ?? '').toString();
+            const p_origin = ($('#p_origin').val() ?? '').toString();
+            const p_memo = $('#contentHtml').val();
+            const p_memo_en = $('#contentHtml2').val();
+
+
+            if(uniqueVals.length <= 0){
+
+                alert('카테고리를 선택해주세요');
+                return;
+            }
+
+            if(!p_code.trim()){
+                alert('제품코드를 등록해주세요.');
+                return;
+            }
+
+            if(!p_name.trim()){
+                alert('제품명을 등록해주세요.');
+                return;
+            }
+
+            if(!p_capacity.trim()){
+                alert('제품용량을 등록해주세요.');
+                return;
+            }
+
+            if(!p_size.trim()){
+                alert('제품사이즈를 등록해주세요.');
+                return;
+            }
+
+            if(!p_quality.trim()){
+                alert('재질을 등록해주세요.');
+                return;
+            }
+
+            if(!p_origin.trim()){
+                alert('원산지를 선택해 주세요.');
+                return;
+            }
+
+           _FormData.append('produid', "@(productinfo.ProdUid)");
+           _FormData.append('p_category', uniqueVals);
+           _FormData.append('p_code', p_code);
+           _FormData.append('p_code_en', p_code_en);
+           _FormData.append('p_name', p_name);
+           _FormData.append('p_capacity', p_capacity);
+           _FormData.append('p_size', p_size);
+           _FormData.append('p_quality', p_quality);
+           _FormData.append('p_origin', p_origin);
+           _FormData.append('p_memo', p_memo);
+           _FormData.append('p_memo_en', p_memo_en);
+           _FormData.append('delete_existing_ids', delete_existing_ids);
+           _FormData.append('image_order', image_order);
+
+
+           const files = document.getElementById('file-keep').files;
+           for (let i = 0; i < files.length; i++) {
+             _FormData.append('files', files[i]); // ← HttpPostedFileBase[] files 에 매핑
+           }
+
+
+           $.ajax({
+                url: 'AjaxProductEdit', // 서버의 URL
+                type: 'POST',
+                data: _FormData,
+                processData: false, // processData 옵션을 false로 설정해야 FormData를 제대로 전송할 수 있음
+                contentType: false, // contentType을 false로 설정하여 jQuery가 Content-Type 헤더를 설정하지 않도록 함
+                beforeSend: function () {
+                    showLoading();
+                },
+                success: function (response) {
+
+                   if(response.item1 == "sucess"){
+                        alert('제품이 수정되었습니다.');
+                   }
+
+                },
+                error: function (xhr, status, error) {
+
+                    alert('Error:', error);
+                    console.error('Error:', error);
+                },
+                complete: function () {
+                    hideLoading();
+                }
+            });
+
+        }
+
+        function catagorymodalopen(){
+
+            // console.log('test');
+
+             $("#categorymodalDialog").html("");
+
+             const val = $('input[name="flexRadioDefault"]:checked').map((_,el)=>el.value).get()
+
+
+
+             const vals = $('#selectcategory .text-break[data-val]')
+              .map((_, el) => $(el).data('val'))
+              .get();  // ['B001','B001','B001', ...]
+
+             const nonEmptyVals = vals.filter(v => v && String(v).trim() !== '');
+             const uniqueVals   = [...new Set(nonEmptyVals)];
+             console.log(uniqueVals);
+
+
+
+             var param = {ACode : val , selectcode : uniqueVals}
+
+             $.post("/Home/ModalCategory", param, function (html) {
+
+                 $('#categorymodalDialog').html(html);
+
+                 $("#categorymodal").modal('show');
+
+             });
+
+        }
+
+        function selectcategory(){
+
+            const $checked = $('#modalcategory input[type="checkbox"]:checked');
+
+            const seen = {};
+            const items = [];
+
+            $checked.each(function(){
+                const val   = this.value;                           // 체크박스 value
+                const label = $(this).data('selectval') || '';      // data-selectval (없으면 '')
+                if(!seen[val]){
+                  seen[val] = true;
+                  items.push({ val, label });
+                }
+            });
+
+            const html = items.map(it =>
+                `<div class="text-break" data-val="${it.val}">${it.label}</div>`
+            ).join('');
+
+
+            $('#selectcategory').html(html)
+
+            $("#categorymodal").modal('hide');
+        }
+
+    </script>
+}

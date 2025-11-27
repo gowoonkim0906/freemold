@@ -22,7 +22,7 @@ public partial class ProductList
     public string P_NAME2 { get; set; } = null!;
 
     public string P_CODE { get; set; } = null!;
-    public string P_CODE_EN { get; set; } = null!;
+    public string? P_CODE_EN { get; set; }
 
     public int P_MOQ { get; set; }
 

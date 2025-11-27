@@ -6,6 +6,7 @@ namespace Freemold.Modules;
 public partial class TB_CONNECTION_ALLINKBEAUTY
 {
     public long Idx { get; set; }
+    public string sessionid { get; set; } = null!;  
 
     public int mTimeStamp { get; set; }
 

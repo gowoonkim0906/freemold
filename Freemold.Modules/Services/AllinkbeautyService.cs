@@ -236,6 +236,10 @@ namespace Freemold.Modules.Services
                 Directory.CreateDirectory(path);
             }
 
+            // 썸네일용 폴더
+            string thumbDir = Path.Combine(path, "thumb");
+            if (!Directory.Exists(thumbDir)) Directory.CreateDirectory(thumbDir);
+
             string logoPath = Path.Combine(_fileService.WebRoot, "images", "freemold_watermark.png");
             if (!System.IO.File.Exists(logoPath))
             {
@@ -269,23 +273,46 @@ namespace Freemold.Modules.Services
 
                         try
                         {
-                            using var fs = new FileStream(candidate, FileMode.CreateNew, FileAccess.Write, FileShare.None);
 
-                            if (strImage.Contains(ext))
+                            using (var fs = new FileStream(candidate, FileMode.CreateNew, FileAccess.Write, FileShare.None))
                             {
 
-                                await _fileService.SaveWithWatermarkAsync(f, fs, logoPath, ext);
-                            }
-                            else
-                            {
-                                // 이미지가 아니면 그대로 저장
-                                await f.CopyToAsync(fs);
+                                if (strImage.Contains(ext))
+                                {
+
+                                    await _fileService.SaveWithWatermarkAsync(f, fs, logoPath, ext);
+                                }
+                                else
+                                {
+                                    // 이미지가 아니면 그대로 저장
+                                    await f.CopyToAsync(fs);
+                                }
                             }
 
 
                             //f.CopyToAsync(fs);
                             savedName = name;               // 최종 파일명
                             arrfilename[arri] = savedName;
+
+                            if (strImage.Contains(ext))
+                            {
+                                var sourcePath = candidate; // 방금 저장한 파일
+                                var thumbName = Path.GetFileNameWithoutExtension(savedName) + "." + ext;
+                                var thumbPath = Path.Combine(thumbDir, thumbName);
+
+                                using (var img = new MagickImage(sourcePath))
+                                {
+                                    // 긴 변을 220 안으로 맞추고, 220x220으로 패딩(배경 흰색)
+                                    img.Resize(new MagickGeometry(220, 220) { IgnoreAspectRatio = false });
+                                    img.BackgroundColor = MagickColors.White;
+                                    img.Extent(220, 220, Gravity.Center);
+
+                                    img.Write(thumbPath);
+                                }
+
+                            }
+
+
                             break;
                         }
                         catch (IOException)
@@ -530,7 +557,7 @@ namespace Freemold.Modules.Services
             return await result.ToListAsync(ct); ;
         }
 
-        public async Task<UspconnectionModel> AllinKVisitorInsert(string regip) {
+        public async Task<UspconnectionModel> AllinKVisitorInsert(string regip, string sessionId) {
 
        
 
@@ -546,6 +573,7 @@ namespace Freemold.Modules.Services
 
             TB_CONNECTION_ALLINKBEAUTY connection = new TB_CONNECTION_ALLINKBEAUTY();
 
+            connection.sessionid = sessionId;
             connection.Domain = Domain;
             connection.UserAgent = userAgent;
             connection.HttpReferer = HttpReferer;
@@ -564,7 +592,51 @@ namespace Freemold.Modules.Services
 
         }
 
-        
+        public async Task<string> EditorImageSave(IFormFile file)
+        {
+            string fnFolderDate = DateTime.Now.Year.ToString("D4") + "-" + DateTime.Now.Month.ToString("D2");
+
+            string saveFolder = Path.GetFullPath(Path.Combine(_fileService.RootPath, "summernote", fnFolderDate));
+
+            if (!Directory.Exists(saveFolder))
+            {
+                // 폴더가 없으면 생성
+                Directory.CreateDirectory(saveFolder);
+            }
+
+
+            const long maxFileSize = 10 * 1024 * 1024;
+            if (file.Length > maxFileSize)
+            {
+                return "no size";
+            }
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+            var ext = Path.GetExtension(file.FileName)?.ToLowerInvariant();
+
+            if (string.IsNullOrEmpty(ext) || !allowedExtensions.Contains(ext))
+            {
+                return "no file";
+            }
+
+
+            var fileName = $"{Guid.NewGuid():N}{ext}";
+            var filePath = Path.Combine(saveFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+
+            var relativeFolder = Path.Combine("Data", "summernote", fnFolderDate);
+            var urlPath = "/" + Path.Combine(relativeFolder, fileName)
+                .Replace("\\", "/"); // 윈도우 대비 슬래시 정리
+
+            var result = urlPath;
+            return result;
+        }   
+
         public bool BlockIp(string ip)
         {
             var result = false;

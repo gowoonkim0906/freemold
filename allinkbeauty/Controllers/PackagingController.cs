@@ -1,4 +1,5 @@
 ﻿using Freemold.Modules;
+using Freemold.Modules.Common;
 using Freemold.Modules.Models;
 using Freemold.Modules.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace allinkbeauty.Controllers
             ViewBag.categorylist2 = categorylist2;
             ViewBag.codelist = codelist;
 
-            ViewBag.filepath = _fileService.RootPath;
+            ViewBag.filepath = SiteConfig.fileurl;
             ViewBag.page = page;
             ViewBag.code1 = code1;
             ViewBag.code2 = code2;
@@ -62,7 +63,7 @@ namespace allinkbeauty.Controllers
             ViewBag.code2 = code2;    
             ViewBag.volume1 = volume1;  
             ViewBag.volume2 = volume2;
-            ViewBag.filepath = _fileService.RootPath;
+            ViewBag.filepath = SiteConfig.fileurl;
 
             return View();
         }

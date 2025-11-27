@@ -139,7 +139,7 @@ namespace standardmold.Admin.Controllers
             ViewBag.pageblock = pageblock;
             ViewBag.pageno = pageno;
             ViewBag.list = items;
-            ViewBag.fileurl = _fileService.RootPath;
+            ViewBag.fileurl = SiteConfig.fileurl;
 
             return View();
         }
@@ -184,7 +184,7 @@ namespace standardmold.Admin.Controllers
             ViewBag.pageblock = pageblock;
             ViewBag.pageno = pageno;
             ViewBag.list = items;
-            ViewBag.fileurl = _fileService.RootPath;
+            ViewBag.fileurl = SiteConfig.fileurl;
 
             return View();
         }
@@ -229,7 +229,7 @@ namespace standardmold.Admin.Controllers
             ViewBag.pageblock = pageblock;
             ViewBag.pageno = pageno;
             ViewBag.list = items;
-            ViewBag.fileurl = _fileService.RootPath;
+            ViewBag.fileurl = SiteConfig.fileurl;
 
             return View();
         }
@@ -308,7 +308,7 @@ namespace standardmold.Admin.Controllers
             ViewBag.totalcount = totalcount;
             ViewBag.pageblock = pageblock;
             ViewBag.pageno = pageno;
-            ViewBag.filepath = _fileService.RootPath;
+            ViewBag.filepath = SiteConfig.fileurl;
 
             return PartialView("_ProductListPartial", items);
         }
@@ -343,6 +343,30 @@ namespace standardmold.Admin.Controllers
             ViewBag.productcategory = tasks;
             ViewBag.categorylist = categorylist;
             ViewBag.codelist = codelist;
+            ViewBag.fileurl = SiteConfig.fileurl;
+
+            return View();
+        }
+
+        public async Task<IActionResult> ProductEdit2(int produid)
+        {
+            ProductDetailModel productinfo = _allinkbeautyService.ProductView(produid);
+
+
+            List<TbCode> codelist = new List<TbCode>();
+            codelist = await _codeService.GetCodeList("원산지");
+
+            List<TbCategory> categorylist = new List<TbCategory>();
+            categorylist = await _codeService.GetCategoryList("0000", "Y");
+
+            var tasks = await _codeService.GetCategoryFullnameLIst(productinfo.Cat);
+
+
+            ViewBag.productinfo = productinfo;
+            ViewBag.productcategory = tasks;
+            ViewBag.categorylist = categorylist;
+            ViewBag.codelist = codelist;
+            ViewBag.fileurl = SiteConfig.fileurl;
 
             return View();
         }
@@ -358,6 +382,7 @@ namespace standardmold.Admin.Controllers
 
         }
 
+        [LoginRequired]
         public async Task<IActionResult> ContactList(int page = 1)
         {
 
@@ -388,6 +413,7 @@ namespace standardmold.Admin.Controllers
 
         }
 
+        [LoginRequired]
         public async Task<IActionResult> ContactUsList(int page = 1)
         {
             int pagesize = 10;
@@ -429,11 +455,13 @@ namespace standardmold.Admin.Controllers
             return View();
         }
 
+        [LoginRequired]
         public IActionResult FormulaList()
         {
             return View();
         }
 
+        [LoginRequired]
         public IActionResult PackagingList()
         {
             return View();
@@ -495,6 +523,34 @@ namespace standardmold.Admin.Controllers
 
 
         [HttpPost]
+        public async Task<JsonResult> AjaxEditorImageSave(IFormFile file)
+        {
+            try
+            {
+                string url = string.Empty;   
+
+                if (file == null || file.Length == 0)
+                {
+                    return Json(new { success = false, message = "파일이 없습니다." });
+                }
+
+                url = await _allinkbeautyService.EditorImageSave(file);
+
+
+                return Json(new { success = true, url });
+
+            }
+            catch
+            {
+
+                return Json(new { success = false, message = "예기치 못한 오류가 발생했습니다." });
+            }
+
+
+        }
+
+
+        [HttpPost]
         public JsonResult AjaxLoginCheck(string id, string password)
         {
             try
@@ -521,7 +577,7 @@ namespace standardmold.Admin.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear(); // 모든 세션 삭제
-            return RedirectToAction("Login");
+            return Redirect("~/");
         }
 
 

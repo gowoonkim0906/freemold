@@ -42,12 +42,14 @@ namespace Freemold.Modules.Repositories
 
                 await _appdbcontext.Database.ExecuteSqlRawAsync(@"
             EXEC dbo.USP_CONNECTION_ALLINKBEAUTY 
-                @Domain = @p0, 
-                @UserAgent = @p1, 
-                @Referer = @p2, 
-                @RegIP = @p3, 
+                @SessionID = @p0, 
+                @Domain = @p1, 
+                @UserAgent = @p2, 
+                @Referer = @p3, 
+                @RegIP = @p4, 
                 @Idx = @Idx OUTPUT, 
                 @mTimeStamp = @mTimeStamp OUTPUT",
+                    connection.sessionid,
                     connection.Domain,
                     connection.UserAgent,
                     connection.HttpReferer,

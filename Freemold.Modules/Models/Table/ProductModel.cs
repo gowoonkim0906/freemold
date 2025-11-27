@@ -99,41 +99,41 @@ namespace Freemold.Modules.Models
     public class KbeautyProductModel()
     {
         public long ProdUid { get; set; }
-        public string PCode { get; set; } = null!;
+        public string? PCode { get; set; }
         public string? PCodeEn { get; set; }
-        public string UpCat { get; set; } = null!;
-        public string PName { get; set; } = null!;
-        public string PImg1 { get; set; } = null!;
-        public string PImg2 { get; set; } = null!;
-        public string PImg3 { get; set; } = null!;
-        public string PImg4 { get; set; } = null!;
-        public string PImg5 { get; set; } = null!;
-        public string PImg6 { get; set; } = null!;
-        public string PSize { get; set; } = null!;
-        public string PQuality { get; set; } = null!;
-        public string POrigin { get; set; } = null!;
-        public int PHit { get; set; }
-        public double PCapacity { get; set; }
-        public string PCapUnit { get; set; } = null!;
-        public string ProdType { get; set; } = null!;
-        public string PCategory { get; set; } = null!;
-        public string PCategoryName { get; set; } = null!;
-        public string PMemoEng { get; set; } = null!;
-        public string Deleted { get; set; } = null!;
-        public string PayUse { get; set; } = null!;
-        public string PUse { get; set; } = null!;
-        public string PUseST { get; set; } = null!;
-        public string CompanyName { get; set; } = null!;
-        public string Approval { get; set; } = null!;
-        public string? ApprovalBefore { get; set; } = null!;
-        public string ApprovalView { get; set; } = null!;
-        public string PApproval { get; set; } = null!;
+        public string? UpCat { get; set; }
+        public string? PName { get; set; }
+        public string? PImg1 { get; set; }
+        public string? PImg2 { get; set; }
+        public string? PImg3 { get; set; }
+        public string? PImg4 { get; set; }
+        public string? PImg5 { get; set; }
+        public string? PImg6 { get; set; }
+        public string? PSize { get; set; }
+        public string? PQuality { get; set; }
+        public string? POrigin { get; set; }
+        public int? PHit { get; set; }
+        public double? PCapacity { get; set; }
+        public string? PCapUnit { get; set; }
+        public string? ProdType { get; set; }
+        public string? PCategory { get; set; }
+        public string? PCategoryName { get; set; }
+        public string? PMemoEng { get; set; }
+        public string? Deleted { get; set; }
+        public string? PayUse { get; set; }
+        public string? PUse { get; set; }
+        public string? PUseST { get; set; }
+        public string? CompanyName { get; set; }
+        public string? Approval { get; set; }
+        public string? ApprovalBefore { get; set; }
+        public string? ApprovalView { get; set; }
+        public string? PApproval { get; set; }
         public string? PApprovalBefore { get; set; }
         public DateTime PRegDate { get; set; }
         public DateOnly? StartDate { get; set; }
         public DateOnly? EndDate { get; set; }
-        public int Visit { get; set; }
-        public int ImgCnt { get; set; }
+        public int? Visit { get; set; }
+        public int? ImgCnt { get; set; }
     }
 
     public class ProductDetailModel {

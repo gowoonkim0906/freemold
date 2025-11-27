@@ -6,8 +6,11 @@
     var productcategory = ViewBag.productcategory as List<CategoryFullnameModel> ?? new List<CategoryFullnameModel>();
     var categorylist = ViewBag.categorylist as List<TbCategory> ?? new List<TbCategory>();
     var codelist = ViewBag.codelist as List<TbCode> ?? new List<TbCode>();
+    string fileurl = ViewBag.fileurl as string ?? "";
 
     string UpCat = productinfo.UpCat.Replace(";;", ",").Replace(";", "");
+
+
 
 }
 <style>
@@ -39,9 +42,8 @@
 </style>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <link href="@Url.Content("~/css/dragfile.css")" rel="stylesheet" />
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link href="@Url.Content("~/summernote-0.9.0-dist/summernote-lite.min.css")" rel="stylesheet" />
 
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <div class="container-fluid px-4">
     <form class="needs-validation" novalidate action="/board/write" method="post" enctype="multipart/form-data">
         <div class="row mt-4 border">
@@ -89,7 +91,7 @@
                             <div class="invalid-feedback">제품코드 입력해주세요.</div>
                         </div>
                         <div class="mt-4">
-                            <label for="p_code" class="form-label">제품코드(영문)</label>
+                            <label for="p_code_en" class="form-label">제품코드(영문)</label>
                             <input type="text" class="form-control" id="p_code_en" name="p_code_en" maxlength="120" required value="@productinfo.PCodeEn">
                             <div class="invalid-feedback">제품코드 입력해주세요.</div>
                         </div>
@@ -220,21 +222,17 @@
                     <!-- 제품정보 -->
                     <div class="my-4">
                         <label class="form-label">제품정보 <span class="text-danger">*</span></label>
-                        <div id="editor" class="border rounded-2">@Html.Raw(productinfo.PMemo)</div>
-
-                        <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
-                        <input type="hidden" id="contentHtml" name="contentHtml" required>
-                        <input type="hidden" id="contentMd" name="contentMd">
+                        <textarea id="contentHtml" name="contentHtml" class="form-control border rounded-2" rows="10">
+                            @Html.Raw(productinfo.PMemo)         
+                        </textarea>
                         <div class="invalid-feedback">내용을 입력해주세요.</div>
                     </div>
 
                     <div class="my-4">
                         <label class="form-label">제품정보(영문)</label>
-                        <div id="editor2" class="border rounded-2">@Html.Raw(productinfo.PMemoEng)</div>
-
-                        <!-- 서버로 보낼 숨은 필드 (검증 대상) -->
-                        <input type="hidden" id="contentHtml2" name="contentHtml2" required>
-                        <input type="hidden" id="contentMd2" name="contentMd2">
+                        <textarea id="contentHtml2" name="contentHtml2" class="form-control border rounded-2" rows="10">
+                            @Html.Raw(productinfo.PMemoEng)         
+                        </textarea>
                         <div class="invalid-feedback">내용을 입력해주세요.</div>
                     </div>
 
@@ -265,6 +263,8 @@
     <!-- 페이지 전용 JS (필요 시 외부 파일도 가능) -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="@Url.Content("~/js/dragfile.js")"></script>
+    <script src="@Url.Content("~/summernote-0.9.0-dist/summernote-lite.min.js")"></script>
+    <script src="@Url.Content("~/summernote-0.9.0-dist/lang/summernote-ko-kr.min.js")"></script>
     <script>
         // ① 부트스트랩 기본 폼 검증
         (function () {
@@ -288,52 +288,62 @@
           }
 
 
+        function initEditor(selector, placeholder) {
+          $(selector).summernote({
+            height: 420,
+            placeholder: placeholder,
+            toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'italic', 'underline', 'clear']],
+              ['font2', ['strikethrough', 'superscript', 'subscript']],
+              ['para', ['ul', 'ol', 'paragraph']],
+              ['insert', ['link', 'picture', 'table', 'hr']],
+              ['view', ['codeview', 'fullscreen']]
+            ],
+            callbacks: {
+              onImageUpload: function (files) {
+                var $editor = $(this);
+                for (var i = 0; i < files.length; i++) {
+                  uploadImageToServer(files[i], $editor);
+                }
+              }
+            }
+          });
+        }
+
+        initEditor('#contentHtml',  '내용을 입력하세요...');
+        initEditor('#contentHtml2', '내용을 입력하세요...');
 
         })();
 
 
-        const commonOptions = {
-          previewStyle: 'vertical',
-          height: '420px',
-          initialEditType: 'wysiwyg',
-          placeholder: '내용을 입력하세요...',
-          toolbarItems: [
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
-            ['table', 'link'],
-            ['image', 'code', 'codeblock']
-          ]
-        };
 
+         function uploadImageToServer(file, $editor) {
+          var fd = new FormData();
+          fd.append('file', file);
 
-        async function imageUploadHook(blob, callback) {
-          try {
-            const fd = new FormData();
-            fd.append('file', blob);
-            const res = await fetch('/upload/image', { method: 'POST', body: fd });
-            const json = await res.json();
-            callback(json.url, blob.name);
-          } catch (e) {
-            alert('이미지 업로드 실패');
-          }
+          $.ajax({
+            url: '/Home/AjaxEditorImageSave',          // 서버 업로드 URL
+            type: 'POST',
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (json) {
+                if (json && json.success && json.url) {
+                    $editor.summernote('insertImage', json.url, function ($image) {
+
+                    $image.attr('alt', file.name);
+                    });
+                } else {
+                    alert('이미지 업로드 실패: ' + (json && json.message ? json.message : '알 수 없는 오류'));
+                }
+            },
+            error: function () {
+              alert('이미지 업로드 실패');
+            }
+          });
         }
 
-        const editor = new toastui.Editor({
-          el: document.querySelector('#editor'),
-          commonOptions
-        });
-
-        const editor2 = new toastui.Editor({
-          el: document.querySelector('#editor2'),
-          commonOptions
-        });
-
-
-
-        // 이미지 업로드 훅 (옵션) — 서버 엔드포인트에 맞게 수정
-        editor.addHook('addImageBlobHook', imageUploadHook);
-        editor2.addHook('addImageBlobHook', imageUploadHook);
 
 
         function productsave(){
@@ -342,23 +352,18 @@
 
             datasave(); //파일 담기
 
-            const md   = editor.getMarkdown().trim();
-            const html = editor.getHTML().trim();
+            var html = $('#contentHtml').summernote('code') || '';
+            var textOnly = html.replace(/<(.|\n)*?>/g, '').trim();
 
-            const md2   = editor2.getMarkdown().trim();
-            const html2 = editor2.getHTML().trim();
+            var html2 = $('#contentHtml2').summernote('code') || '';
+            var textOnly2 = html2.replace(/<(.|\n)*?>/g, '').trim();
 
-            // 마크다운 실내용(문자) 추출 — 완전 빈 경우 판단용(선택)
-            const plain = md.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
-            const plain2 = md2.replace(/[#>*`~_\-\[\]\(\)!\\\s]+/g, '');
-
-            // 전송값 세팅 — 정책에 따라 선택
-            document.getElementById('contentMd').value   = md || '';              // 비워도 OK
-            document.getElementById('contentHtml').value = plain ? html : '';     // 내용 없으면 HTML은 비움
-
-            document.getElementById('contentMd2').value   = md2 || '';              // 비워도 OK
-            document.getElementById('contentHtml2').value = plain2 ? html2 : '';     // 내용 없으면 HTML은 비움
-
+            /*
+            if (!textOnly) {
+              alert('제품정보를 입력해주세요.');
+              $('#contentHtml').summernote('focus');
+            }
+            */
 
             const delete_existing_ids = $("#delete_existing_ids").val();
             const image_order = $("#image_order").val();
@@ -371,14 +376,14 @@
             const uniqueVals   = [...new Set(nonEmptyVals)];
 
             const p_code = ($('#p_code').val() ?? '').toString();
-            const p_code = ($('#p_code').val() ?? '').toString();
+            const p_code_en = ($('#p_code_en').val() ?? '').toString();
             const p_name = ($('#p_name').val() ?? '').toString();
             const p_capacity = ($('#p_capacity').val() ?? '').toString();
             const p_size = ($('#p_size').val() ?? '').toString();
             const p_quality = ($('#p_quality').val() ?? '').toString();
             const p_origin = ($('#p_origin').val() ?? '').toString();
-            const p_memo = $('#contentHtml').val();
-            const p_memo_en = $('#contentHtml2').val();
+            const p_memo = $('#contentHtml').summernote('code');
+            const p_memo_en = $('#contentHtml2').summernote('code');
 
 
             if(uniqueVals.length <= 0){
@@ -420,6 +425,7 @@
            _FormData.append('produid', "@(productinfo.ProdUid)");
            _FormData.append('p_category', uniqueVals);
            _FormData.append('p_code', p_code);
+           _FormData.append('p_code_en', p_code_en);
            _FormData.append('p_name', p_name);
            _FormData.append('p_capacity', p_capacity);
            _FormData.append('p_size', p_size);
@@ -471,7 +477,7 @@
 
              $("#categorymodalDialog").html("");
 
-             const val = $('input[name="flexRadioDefault"]:checked').map((_,el)=>el.value).get()
+             const val = $('input[name="upcat"]:checked').map((_,el)=>el.value).get()
 
 
 
@@ -481,6 +487,7 @@
 
              const nonEmptyVals = vals.filter(v => v && String(v).trim() !== '');
              const uniqueVals   = [...new Set(nonEmptyVals)];
+              console.log(val);
              console.log(uniqueVals);
 
 

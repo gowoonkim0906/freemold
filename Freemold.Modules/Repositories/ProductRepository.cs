@@ -134,12 +134,14 @@ namespace Freemold.Modules.Repositories
             try
             {
 
+
+
                 var query = from i in _appdbcontext.ProductLists
                             join p in _appdbcontext.Member1 on i.MEMBER_UID equals p.UID
                             where i.Deleted == "N" &&
                                     i.P_APPROVAL == "Y" &&
                                     (i.P_APPROVAL_BEFORE ?? "") == "Y" &&
-                                    (p.CO_REMOVE ?? "N") != "Y" //탈퇴회원 제외
+                                    (p.CO_REMOVE ?? "N") != "Y"  //탈퇴회원 제외
                             select new KbeautyProductModel
                             {
                                 ProdUid = i.PROD_UID,
