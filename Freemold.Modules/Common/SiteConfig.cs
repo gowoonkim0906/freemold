@@ -14,6 +14,5 @@ namespace Freemold.Modules.Common
         public static string fileuploadfolder = @"D:\HostRoot\HostWeb\Freemold";
         public static string fileuploadpath = @"D:\HostRoot\HostWeb\Freemold\Data\Temp\";
 
-
     }
 }

@@ -2225,105 +2225,6 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.RegDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TbBoardDatum>(entity =>
-            {
-                entity.HasKey(e => e.UID).HasFillFactor(90);
-
-                entity.HasIndex(e => e.APPR, "IX_TB_BOARD_DATA_APPR").HasFillFactor(90);
-
-                entity.HasIndex(e => e.BOARD_CODE, "IX_TB_BOARD_DATA_BOARD_CODE").HasFillFactor(90);
-
-                entity.HasIndex(e => e.Cat, "IX_TB_BOARD_DATA_Cat").HasFillFactor(90);
-
-                entity.HasIndex(e => e.DEPTH, "IX_TB_BOARD_DATA_DEPTH").HasFillFactor(90);
-
-                entity.HasIndex(e => e.Deleted, "IX_TB_BOARD_DATA_Deleted").HasFillFactor(90);
-
-                entity.HasIndex(e => e.GRP, "IX_TB_BOARD_DATA_GRP")
-                    .IsDescending()
-                    .HasFillFactor(90);
-
-                entity.HasIndex(e => e.NOTICE, "IX_TB_BOARD_DATA_NOTICE").HasFillFactor(90);
-
-                entity.HasIndex(e => e.N_DATE1, "IX_TB_BOARD_DATA_N_DATE1")
-                    .IsDescending()
-                    .HasFillFactor(90);
-
-                entity.HasIndex(e => e.N_DATE2, "IX_TB_BOARD_DATA_N_DATE2")
-                    .IsDescending()
-                    .HasFillFactor(90);
-
-                entity.HasIndex(e => e.REG_DATE, "IX_TB_BOARD_DATA_REG_DATE")
-                    .IsDescending()
-                    .HasFillFactor(90);
-
-                entity.HasIndex(e => e.REG_ID, "IX_TB_BOARD_DATA_REG_ID").HasFillFactor(90);
-
-                entity.HasIndex(e => e.SEQ, "IX_TB_BOARD_DATA_SEQ").HasFillFactor(90);
-
-                entity.HasIndex(e => e.UpCat, "IX_TB_BOARD_DATA_UpCat").HasFillFactor(90);
-
-                entity.Property(e => e.APPR).HasMaxLength(1);
-                entity.Property(e => e.BOARD_CODE).HasMaxLength(20);
-                entity.Property(e => e.Cat).HasMaxLength(20);
-                entity.Property(e => e.Deleted)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValue("N")
-                    .IsFixedLength();
-                entity.Property(e => e.FIRST_WORD).HasMaxLength(50);
-                entity.Property(e => e.LINK1).HasMaxLength(200);
-                entity.Property(e => e.LINK2).HasMaxLength(200);
-                entity.Property(e => e.LIST_IMAGE_NAME).HasMaxLength(200);
-                entity.Property(e => e.LIST_IMAGE_RENAME).HasMaxLength(200);
-                entity.Property(e => e.MOD_DATE).HasColumnType("smalldatetime");
-                entity.Property(e => e.MOD_ID).HasMaxLength(200);
-                entity.Property(e => e.NOTICE).HasMaxLength(5);
-                entity.Property(e => e.N_DATE1).HasMaxLength(10);
-                entity.Property(e => e.N_DATE2).HasMaxLength(10);
-                entity.Property(e => e.REG_DATE).HasColumnType("smalldatetime");
-                entity.Property(e => e.REG_EMAIL).HasMaxLength(100);
-                entity.Property(e => e.REG_FILE_NAME).HasMaxLength(1000);
-                entity.Property(e => e.REG_FILE_RENAME).HasMaxLength(1000);
-                entity.Property(e => e.REG_HP).HasMaxLength(20);
-                entity.Property(e => e.REG_ID).HasMaxLength(200);
-                entity.Property(e => e.REG_IP).HasMaxLength(30);
-                entity.Property(e => e.REG_NAME).HasMaxLength(30);
-                entity.Property(e => e.REG_PW).HasMaxLength(100);
-                entity.Property(e => e.REG_SUBJECT).HasMaxLength(100);
-                entity.Property(e => e.Read_ID).HasMaxLength(50);
-                entity.Property(e => e.SECRET).HasMaxLength(1);
-                entity.Property(e => e.Tag0)
-                    .HasMaxLength(10)
-                    .HasDefaultValue("");
-                entity.Property(e => e.Tag1)
-                    .HasMaxLength(10)
-                    .HasDefaultValue("");
-                entity.Property(e => e.Tag2)
-                    .HasMaxLength(10)
-                    .HasDefaultValue("");
-                entity.Property(e => e.UpCat).HasMaxLength(20);
-                entity.Property(e => e.YOUTUBE_URL).HasMaxLength(200);
-                entity.Property(e => e.dEmail)
-                    .HasMaxLength(100)
-                    .HasComment("리플_담당자이메일");
-                entity.Property(e => e.dName)
-                    .HasMaxLength(30)
-                    .HasComment("리플_담당자이름");
-                entity.Property(e => e.dPhone)
-                    .HasMaxLength(20)
-                    .HasComment("리플_담당자연락처");
-                entity.Property(e => e.wEmail).HasMaxLength(100);
-                entity.Property(e => e.wKakaoID).HasMaxLength(100);
-                entity.Property(e => e.wName).HasMaxLength(30);
-                entity.Property(e => e.wPhone).HasMaxLength(20);
-                entity.Property(e => e.wType)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValue("0")
-                    .IsFixedLength();
-            });
-
             modelBuilder.Entity<TbBoardWview>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
@@ -3684,6 +3585,107 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .HasDefaultValueSql("(getdate())")
                     .HasColumnType("datetime");
                 entity.Property(e => e.RegIp).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TB_BOARD_DATA>(entity =>
+            {
+                entity.HasKey(e => e.UID).HasFillFactor(90);
+
+                entity.HasIndex(e => e.APPR, "IX_TB_BOARD_DATA_APPR").HasFillFactor(90);
+
+                entity.HasIndex(e => e.BOARD_CODE, "IX_TB_BOARD_DATA_BOARD_CODE").HasFillFactor(90);
+
+                entity.HasIndex(e => e.Cat, "IX_TB_BOARD_DATA_Cat").HasFillFactor(90);
+
+                entity.HasIndex(e => e.DEPTH, "IX_TB_BOARD_DATA_DEPTH").HasFillFactor(90);
+
+                entity.HasIndex(e => e.Deleted, "IX_TB_BOARD_DATA_Deleted").HasFillFactor(90);
+
+                entity.HasIndex(e => e.GRP, "IX_TB_BOARD_DATA_GRP")
+                    .IsDescending()
+                    .HasFillFactor(90);
+
+                entity.HasIndex(e => e.NOTICE, "IX_TB_BOARD_DATA_NOTICE").HasFillFactor(90);
+
+                entity.HasIndex(e => e.N_DATE1, "IX_TB_BOARD_DATA_N_DATE1")
+                    .IsDescending()
+                    .HasFillFactor(90);
+
+                entity.HasIndex(e => e.N_DATE2, "IX_TB_BOARD_DATA_N_DATE2")
+                    .IsDescending()
+                    .HasFillFactor(90);
+
+                entity.HasIndex(e => e.REG_DATE, "IX_TB_BOARD_DATA_REG_DATE")
+                    .IsDescending()
+                    .HasFillFactor(90);
+
+                entity.HasIndex(e => e.REG_ID, "IX_TB_BOARD_DATA_REG_ID").HasFillFactor(90);
+
+                entity.HasIndex(e => e.SEQ, "IX_TB_BOARD_DATA_SEQ").HasFillFactor(90);
+
+                entity.HasIndex(e => e.UpCat, "IX_TB_BOARD_DATA_UpCat").HasFillFactor(90);
+
+                entity.Property(e => e.APPR).HasMaxLength(1);
+                entity.Property(e => e.APPR_USER).HasMaxLength(100);
+                entity.Property(e => e.Admin_YN).HasMaxLength(1);
+                entity.Property(e => e.BOARD_CODE).HasMaxLength(20);
+                entity.Property(e => e.Cat).HasMaxLength(20);
+                entity.Property(e => e.Deleted)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValue("N")
+                    .IsFixedLength();
+                entity.Property(e => e.FIRST_WORD).HasMaxLength(50);
+                entity.Property(e => e.LINK1).HasMaxLength(200);
+                entity.Property(e => e.LINK2).HasMaxLength(200);
+                entity.Property(e => e.LIST_IMAGE_NAME).HasMaxLength(200);
+                entity.Property(e => e.LIST_IMAGE_RENAME).HasMaxLength(200);
+                entity.Property(e => e.MOD_DATE).HasColumnType("smalldatetime");
+                entity.Property(e => e.MOD_ID).HasMaxLength(200);
+                entity.Property(e => e.NOTICE).HasMaxLength(5);
+                entity.Property(e => e.N_DATE1).HasMaxLength(10);
+                entity.Property(e => e.N_DATE2).HasMaxLength(10);
+                entity.Property(e => e.REG_DATE).HasColumnType("smalldatetime");
+                entity.Property(e => e.REG_EMAIL).HasMaxLength(100);
+                entity.Property(e => e.REG_FILE_NAME).HasMaxLength(1000);
+                entity.Property(e => e.REG_FILE_RENAME).HasMaxLength(1000);
+                entity.Property(e => e.REG_HP).HasMaxLength(20);
+                entity.Property(e => e.REG_ID).HasMaxLength(200);
+                entity.Property(e => e.REG_IP).HasMaxLength(30);
+                entity.Property(e => e.REG_NAME).HasMaxLength(30);
+                entity.Property(e => e.REG_PW).HasMaxLength(100);
+                entity.Property(e => e.REG_SUBJECT).HasMaxLength(100);
+                entity.Property(e => e.Read_ID).HasMaxLength(50);
+                entity.Property(e => e.SECRET).HasMaxLength(1);
+                entity.Property(e => e.Tag0)
+                    .HasMaxLength(10)
+                    .HasDefaultValue("");
+                entity.Property(e => e.Tag1)
+                    .HasMaxLength(10)
+                    .HasDefaultValue("");
+                entity.Property(e => e.Tag2)
+                    .HasMaxLength(10)
+                    .HasDefaultValue("");
+                entity.Property(e => e.UpCat).HasMaxLength(20);
+                entity.Property(e => e.YOUTUBE_URL).HasMaxLength(200);
+                entity.Property(e => e.dEmail)
+                    .HasMaxLength(100)
+                    .HasComment("리플_담당자이메일");
+                entity.Property(e => e.dName)
+                    .HasMaxLength(30)
+                    .HasComment("리플_담당자이름");
+                entity.Property(e => e.dPhone)
+                    .HasMaxLength(20)
+                    .HasComment("리플_담당자연락처");
+                entity.Property(e => e.wEmail).HasMaxLength(100);
+                entity.Property(e => e.wKakaoID).HasMaxLength(100);
+                entity.Property(e => e.wName).HasMaxLength(30);
+                entity.Property(e => e.wPhone).HasMaxLength(20);
+                entity.Property(e => e.wType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValue("0")
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<VwCategory>(entity =>

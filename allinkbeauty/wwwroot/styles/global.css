@@ -5,8 +5,8 @@
 }
 
 :root {
-  --gothic : "Cormorant Garamond", serif;
-  --hd-height : 6.25rem;
+    --gothic: "Cormorant Garamond", serif;
+    --hd-height: 6.25rem;
 }
 
 html, body {

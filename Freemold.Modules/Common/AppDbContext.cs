@@ -53,7 +53,7 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<Member1> Member1 { get; set; }
 
-        public virtual DbSet<Member4> Member4s { get; set; }
+        public virtual DbSet<Member4> Member4 { get; set; }
 
         public virtual DbSet<MemberLogin> MemberLogins { get; set; }
 
@@ -75,7 +75,7 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<TbBlockIp> TbBlockIps { get; set; }
 
-        public virtual DbSet<TbBoardDatum> TbBoardData { get; set; }
+        public virtual DbSet<TB_BOARD_DATA> TB_BOARD_DATA { get; set; }
 
         public virtual DbSet<TbBoardWview> TbBoardWviews { get; set; }
 

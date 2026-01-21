@@ -18,16 +18,18 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("FrontendWhitelist", policy =>
-        policy
-            .WithOrigins(
-                "http://dev.freemold.net",
-                "https://dev.freemold.net",
-                "https://www.freemold.net"
-            )
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            // .AllowCredentials() // 쿠키/세션 쓸 때만
+    // 1) 전체 오픈 (조회용 등에)
+    options.AddPolicy("PublicCors", p =>
+        p.AllowAnyOrigin()
+         .AllowAnyHeader()
+         .AllowAnyMethod());
+
+    // 2) 일부 도메인만 허용 (메일 발송/변경 등)
+    options.AddPolicy("PartnerCors", p =>
+        p.WithOrigins("http://dev.freemold.net", "https://www.freemold.net")
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+    // .AllowCredentials()  // 쿠키/세션 필요할 때만. 이 경우 AllowAnyOrigin 불가
     );
 });
 
@@ -58,6 +60,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();      
+app.UseCors();         
+
 app.UseAuthorization();
 
 app.MapControllers();
@@ -76,5 +81,10 @@ void ConfigureServices(WebApplicationBuilder builder)
         var env = provider.GetRequiredService<IWebHostEnvironment>();
         return new EmailService(env.ContentRootPath);
     });
+    builder.Services.AddScoped<IFreemoldService, FreemoldService>();
+
+
+    //Repository 등록
+    builder.Services.AddScoped<MemberRepository>();
 
 }

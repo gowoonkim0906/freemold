@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Freemold.Modules;
 
-public partial class TbBoardDatum
+public partial class TB_BOARD_DATA
 {
     public long UID { get; set; }
 
@@ -67,6 +67,8 @@ public partial class TbBoardDatum
 
     public string APPR { get; set; } = null!;
 
+    public string? APPR_USER { get; set; }
+
     public string FIRST_WORD { get; set; } = null!;
 
     public int? pIdx { get; set; }
@@ -87,6 +89,8 @@ public partial class TbBoardDatum
     public string? dEmail { get; set; }
 
     public string? Read_ID { get; set; }
+
+    public string? Admin_YN { get; set; }
 
     public string Deleted { get; set; } = null!;
 

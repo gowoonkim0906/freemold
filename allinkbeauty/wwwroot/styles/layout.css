@@ -369,26 +369,29 @@
 
 .visual__text {
     display: block;
-    font-size: clamp(2rem, 17.7084vw, 340px);
+    font-size: clamp(2rem, 17.7084vw, 300px);
     font-weight: 700;
     font-family: var(--gothic);
-    line-height: 0.8125;
+    line-height: 1.2;
+    color: #4D4D4D;
+    z-index: 1;
 }
 
     .visual__text:first-child {
         letter-spacing: -0.03em;
+        padding-left: 0.4em;
     }
 
-    .visual__text:last-child {
-        font-style: italic;
-        text-align: right;
-        letter-spacing: -0.035em;
-        padding-right: 0.04em;
-    }
+.visual__text:last-child {
+    font-style: italic;
+    text-align: right;
+    letter-spacing: -0.035em;
+    padding-right: 0.4em;
+}
 
-    .visual__text span {
-        display: inline-block;
-    }
+.visual__text span {
+    display: inline-block;
+}
 
 .visual__word {
     position: absolute;
@@ -396,6 +399,7 @@
     left: 50%;
     transform: translate(-60%, -50%);
     width: 30.4688vw;
+    z-index: 2;
 }
 
 .visual__frame {

@@ -76,7 +76,7 @@ public partial class FreemoldContext : DbContext
 
     public virtual DbSet<TbBlockIp> TbBlockIps { get; set; }
 
-    public virtual DbSet<TbBoardDatum> TbBoardData { get; set; }
+    public virtual DbSet<TB_BOARD_DATA> TB_BOARD_DATA { get; set; }
 
     public virtual DbSet<TbBoardWview> TbBoardWviews { get; set; }
 
@@ -2382,7 +2382,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.RegDate).HasColumnType("datetime");
         });
 
-        modelBuilder.Entity<TbBoardDatum>(entity =>
+        modelBuilder.Entity<TB_BOARD_DATA>(entity =>
         {
             entity.HasKey(e => e.UID).HasFillFactor(90);
 
@@ -2421,6 +2421,8 @@ public partial class FreemoldContext : DbContext
             entity.HasIndex(e => e.UpCat, "IX_TB_BOARD_DATA_UpCat").HasFillFactor(90);
 
             entity.Property(e => e.APPR).HasMaxLength(1);
+            entity.Property(e => e.APPR_USER).HasMaxLength(100);
+            entity.Property(e => e.Admin_YN).HasMaxLength(1);
             entity.Property(e => e.BOARD_CODE).HasMaxLength(20);
             entity.Property(e => e.Cat).HasMaxLength(20);
             entity.Property(e => e.Deleted)
