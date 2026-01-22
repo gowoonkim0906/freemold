@@ -22,6 +22,13 @@ namespace Freemold.Modules.Models
         public string HtmlContent { get; set; } = "";
     }
 
+    public class MailReponse
+    {
+        public bool ok { get; set; } = false;
+        public string result { get; set; } = "";
+        public string message { get; set; } = "";
+    }
+
 
     public class JoinMailRequest
     {
@@ -43,5 +50,17 @@ namespace Freemold.Modules.Models
         public int mchk { get; set; }
         public int echk { get; set; }
         public string result { get; set; } = "";
+    }
+
+   
+    public class PasswordSearchMailReponse
+    {
+        public int ConIdx { get; set; }
+        public string RegIP { get; set; } = "";
+        public string ToEmail { get; set; } = "";
+        public string Subject { get; set; } = "";
+        public string Content { get; set; } = "";
+        public string HtmlContent { get; set; } = "";
+        public TbFindidpwLog? FindLog { get; set; }
     }
 }

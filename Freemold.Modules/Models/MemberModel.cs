@@ -27,4 +27,16 @@ namespace Freemold.Modules.Models
         public bool emailexists { get; set; }   = false;
         public bool mobileexists { get; set; } = false;
     }
+
+
+    public class MemberInfo
+    {
+        public int memberuid { get; set; }
+        public string memberid { get; set; } = "";
+        public string membername { get; set; } ="";
+        public string memberemail { get; set; } = "";
+        public string membermobile { get; set; } = "";
+        public string membergubun { get; set; } = "";
+    }
+
 }

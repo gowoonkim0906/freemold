@@ -1,4 +1,5 @@
-﻿using Freemold.Modules.Models;
+﻿using Freemold.Modules;
+using Freemold.Modules.Models;
 using Freemold.Modules.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,7 @@ namespace Freemold.Api.Controllers
                 request.ToEmail,
                 request.Subject,
                 request.Content,
-                request.HtmlContent,
-                ""
+                request.HtmlContent
             );
 
             if (result == "Accepted")
@@ -52,8 +52,8 @@ namespace Freemold.Api.Controllers
         }
 
 
-        [HttpPost("freemoldjoinemail")]
-        public async Task<IActionResult> FreemoldJoinSendEmail([FromBody] JoinMailRequest request)
+        [HttpPost("freemoldjoin")]
+        public async Task<IActionResult> FreemoldJoinSend([FromBody] JoinMailRequest request)
         {
 
             JoinAuthModel joinauthmodel = new JoinAuthModel();
@@ -79,7 +79,7 @@ namespace Freemold.Api.Controllers
             if (joinauthmodel.authkey.Length == 6)
             {
 
-                string result = await _sendgridService.SendEmailAsync(
+                string result = await _sendgridService.JoinEmail(
                     request.ToEmail,
                     request.Subject,
                     request.Content,
@@ -116,6 +116,44 @@ namespace Freemold.Api.Controllers
 
 
             
+        }
+
+
+        [HttpPost("freemoldsearch")]
+        public async Task<IActionResult> FreemoldSearchSend([FromBody] PasswordSearchMailReponse request)
+        {
+
+            string result = await _sendgridService.PasswordSearchEmail(
+                    request.FindLog,
+                    request.ToEmail,
+                    request.Subject,
+                    request.Content,
+                    request.HtmlContent
+                );
+
+
+            var res = new MailReponse();    
+
+            res.result = result;
+
+            //이메일 발송 성공
+            if (result == "Accepted")
+            {
+                res.ok = true;
+                res.message = "Email sent.";
+
+
+                return Ok(res);
+            }
+
+            //이메일 발송 실패
+            res.ok = false;
+            res.message = "SendGrid send failed";
+
+            return Ok(res);
+
+
+
         }
 
     }   

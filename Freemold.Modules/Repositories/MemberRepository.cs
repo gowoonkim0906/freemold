@@ -3,6 +3,7 @@ using Freemold.Modules.Models;
 using Freemold.Modules.Models.Table;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,7 +32,7 @@ namespace Freemold.Modules.Repositories
                 {
                     Direction = ParameterDirection.Output
                 };
-                var AuthKey = new SqlParameter("@AuthKey", SqlDbType.Char,6)
+                var AuthKey = new SqlParameter("@AuthKey", SqlDbType.Char, 6)
                 {
                     Direction = ParameterDirection.Output
                 };
@@ -65,14 +66,14 @@ namespace Freemold.Modules.Repositories
                 };
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new JoinAuthModel();
             }
         }
 
-
-        public Task<bool> ExistsByEmailAsync(string email) {
+        public Task<bool> ExistsByEmailAsync(string email)
+        {
 
             var q =
                 from m in _appdbcontext.Member4.AsNoTracking()
@@ -96,6 +97,26 @@ namespace Freemold.Modules.Repositories
             return q.AnyAsync();
         }
 
+
+        public IQueryable<MemberInfo> MemberInfo()
+        {
+            var query =
+                from m in _appdbcontext.Member4.AsNoTracking()
+                join t in _appdbcontext.MemberLogins.AsNoTracking()
+                    on m.Uid equals t.MemberUid
+                where  m.Approval == "Y" && t.MemberApproval != "N"
+                select new MemberInfo {
+                    memberuid = m.Uid,
+                    memberid = t.MemberId,
+                    membername = m.MemberName,
+                    memberemail = m.Email,
+                    membermobile = m.Mobile,
+                    membergubun = t.MemberGubun
+                };
+
+            return query;
+        }
+
         public async Task<DupCheckResponse> DuplicateCheck(DuplicateCheckRequest duplicatecheckrequest)
         {
             try
@@ -117,5 +138,66 @@ namespace Freemold.Modules.Repositories
                 return new DupCheckResponse();
             }
         }
+
+        public async Task<string> FindidqwLogInsert(TbFindidpwLog input, CancellationToken ct = default)
+        {
+            try
+            {
+                var entity = new TbFindidpwLog
+                {
+                    ConIdx = input.ConIdx,
+                    FindType = input.FindType,
+                    MName = input.MName,
+                    MId = input.MId,
+                    AddInfo = input.AddInfo,
+                    RegIp = input.RegIp,
+                    RegDate = DateTime.Now
+                };
+
+                await _appdbcontext.TbFindidpwLogs.AddAsync(entity, ct);
+                var rows = await _appdbcontext.SaveChangesAsync(ct);
+
+                return rows > 0 ? "success" : "fail";
+            }
+            catch (Exception ex)
+            {
+                _appdbcontext.ChangeTracker.Clear();
+                return "fail";
+            }
+
+            
+        }
+
+        public async Task<string> PasswordUpdate(int memberuid, string pwd)
+        {
+
+            string result = "success";
+
+            try
+            {
+                var p = await _appdbcontext.MemberLogins.FirstAsync(x => x.MemberGubun == "4" && x.MemberUid == memberuid);
+
+                //패스워드 수정
+                p.MemberPw = pwd;
+                p.TmpData = pwd;
+                p.ChkPassword = "Y";
+                p.ChkPasswordDate = DateTime.Now;
+
+                var rows = await _appdbcontext.SaveChangesAsync();
+
+                if (rows <= 0) result = "fail";
+            }
+            catch (Exception ex)
+            {
+                result = "fail";
+
+                _appdbcontext.ChangeTracker.Clear();      // 선택: 메모리 상태 초기화
+                throw;
+            }
+
+
+            return result;
+        }
+
     }
 }
