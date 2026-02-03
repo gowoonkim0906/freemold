@@ -36,6 +36,7 @@ namespace Freemold.Modules.Models
         public string Mobile { get; set; } = "";
         public string AuthType { get; set; } = "";
         public string RegIP { get; set; } = "";
+        public string Memberid { get; set; } = "";
         public string ToEmail { get; set; } = "";
         public string Subject { get; set; } = "";
         public string Content { get; set; } = "";

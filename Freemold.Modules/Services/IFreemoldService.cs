@@ -9,7 +9,7 @@ namespace Freemold.Modules.Services
 {
     public interface IFreemoldService
     {
-        Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip);
+        Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip, string memberid);
 
         Task<DupCheckResponse> DuplicateCheck(DuplicateCheckRequest duplicatecheckrequest);
     }

@@ -20,9 +20,9 @@ namespace Freemold.Modules.Services
         }
 
 
-        public async Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip)
+        public async Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip, string memberid)
         {
-            var result = _memberRepository.JoinAuth(conidx, mobile, email, authtype, regip);
+            var result = _memberRepository.JoinAuth(conidx, mobile, email, authtype, regip, memberid);
             return await result;
         }
 

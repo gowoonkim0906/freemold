@@ -13,6 +13,7 @@ namespace Freemold.Modules.Services
     public class SendgridService: ISendgridService
     {
         private readonly string _apiKey;
+        private readonly string _sentMail;
         private readonly IWebHostEnvironment _env;
         private readonly MemberRepository _memberRepository;
 
@@ -20,6 +21,7 @@ namespace Freemold.Modules.Services
         public SendgridService(IConfiguration configuration, IWebHostEnvironment env, MemberRepository memberRepository)
         {
             _apiKey = configuration["SendGrid:ApiKey"];
+            _sentMail = configuration["Sentmail"];
             _env = env;
             _memberRepository = memberRepository;
         }
@@ -28,7 +30,7 @@ namespace Freemold.Modules.Services
         {
 
             var client = new SendGridClient(_apiKey);
-            var from = new EmailAddress("planet13@dplanet.co.kr", "프리몰닷넷");
+            var from = new EmailAddress(_sentMail, "프리몰닷넷");
             var to = new EmailAddress(toEmail);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 

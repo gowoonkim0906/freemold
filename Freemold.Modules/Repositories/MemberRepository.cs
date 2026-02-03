@@ -20,7 +20,7 @@ namespace Freemold.Modules.Repositories
         { }
 
 
-        public async Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip)
+        public async Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip, string memberid)
         {
             try
             {
@@ -44,6 +44,7 @@ namespace Freemold.Modules.Repositories
                 @Email = @p2, 
                 @AuthType = @p3, 
                 @RegIP = @p4, 
+                @Memberid = @p5, 
                 @MobileChk = @MobileChk OUTPUT, 
                 @EmailChk = @EmailChk OUTPUT,
                 @AuthKey = @AuthKey OUTPUT",
@@ -52,6 +53,7 @@ namespace Freemold.Modules.Repositories
                     email,
                     authtype,
                     regip,
+                    memberid,
                     MobileChk,
                     EmailChk,
                     AuthKey

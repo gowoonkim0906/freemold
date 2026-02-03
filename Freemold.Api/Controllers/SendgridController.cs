@@ -63,7 +63,8 @@ namespace Freemold.Api.Controllers
                 request.Mobile,
                 request.ToEmail,
                 request.AuthType,
-                request.RegIP
+                request.RegIP,
+                request.Memberid
             );
 
 
