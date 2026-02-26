@@ -21,8 +21,8 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                var query = from i in _appdbcontext.ProductLists
-                            join p in _appdbcontext.Member1
+                var query = from i in _appdbcontext.product_list
+                            join p in _appdbcontext.member1
                                 on i.MEMBER_UID equals p.UID
                             select new AdminProductDetailModel
                             {
@@ -51,7 +51,7 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                var prodUids = (from i in _appdbcontext.ProductLists
+                var prodUids = (from i in _appdbcontext.product_list
                                 let catNorm = i.Cat.Replace(";"+ Acode+";", "").Replace(";;", ",").Replace(";", "")
                                 from s in _appdbcontext.FnSplit(catNorm, ",")
                                 join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
@@ -59,8 +59,8 @@ namespace Freemold.Modules.Repositories
                                 select i.PROD_UID).Distinct();
 
 
-                var query = from i in _appdbcontext.ProductLists
-                            join p in _appdbcontext.Member1 on i.MEMBER_UID equals p.UID
+                var query = from i in _appdbcontext.product_list
+                            join p in _appdbcontext.member1 on i.MEMBER_UID equals p.UID
                             where prodUids.Contains(i.PROD_UID) && (p.CO_REMOVE ?? "N") != "Y" //탈퇴회원 제외
                             && i.Deleted == "N"
                             && i.P_APPROVAL == "Y"                  //제폼승인1
@@ -136,8 +136,8 @@ namespace Freemold.Modules.Repositories
 
 
 
-                var query = from i in _appdbcontext.ProductLists
-                            join p in _appdbcontext.Member1 on i.MEMBER_UID equals p.UID
+                var query = from i in _appdbcontext.product_list
+                            join p in _appdbcontext.member1 on i.MEMBER_UID equals p.UID
                             where i.Deleted == "N" &&
                                     i.P_APPROVAL == "Y" &&
                                     (i.P_APPROVAL_BEFORE ?? "") == "Y" &&
@@ -172,11 +172,11 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                var query = from i in _appdbcontext.ProductLists
+                var query = from i in _appdbcontext.product_list
                             let catNorm = i.Cat.Replace(";;", ",").Replace(";", "")
                             from s in _appdbcontext.FnSplit(catNorm, ",")
                             join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
-                            join p in _appdbcontext.Member1 on i.MEMBER_UID equals p.UID
+                            join p in _appdbcontext.member1 on i.MEMBER_UID equals p.UID
                             select new AdminProductModel
                             {
                                 ProdUid = i.PROD_UID,
@@ -228,7 +228,7 @@ namespace Freemold.Modules.Repositories
             try
             {
                 var query = from i in _appdbcontext.VwProductListSms
-                            join p in _appdbcontext.Member1
+                            join p in _appdbcontext.member1
                                 on i.MemberUid equals p.UID
                             join c in _appdbcontext.TbStandardProdMains
                                 on i.ProdUid equals c.PIdx into sd
@@ -285,8 +285,8 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                var query = from i in _appdbcontext.ProductLists
-                            join p in _appdbcontext.Member1
+                var query = from i in _appdbcontext.product_list
+                            join p in _appdbcontext.member1
                                 on i.MEMBER_UID equals p.UID
                             join c in _appdbcontext.TbStandardProdMains
                                 on i.PROD_UID equals c.PIdx into sd
@@ -343,8 +343,8 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                var query = from i in _appdbcontext.ProductLists
-                            join p in _appdbcontext.Member1
+                var query = from i in _appdbcontext.product_list
+                            join p in _appdbcontext.member1
                                 on i.MEMBER_UID equals p.UID
                             select new ProductDetailModel
                             {
@@ -434,9 +434,9 @@ namespace Freemold.Modules.Repositories
 
             try
             {
-                var p = await _appdbcontext.ProductLists.FirstAsync(x => x.PROD_UID == productSaveModel.produid);
+                var p = await _appdbcontext.product_list.FirstAsync(x => x.PROD_UID == productSaveModel.produid);
 
-                var bak = new BakProductList
+                var bak = new BAK_product_list
                 {
                     PROD_UID = p.PROD_UID,
                     it_id = p.it_id,
@@ -504,7 +504,7 @@ namespace Freemold.Modules.Repositories
                 };
 
                 //bak 저장
-                _appdbcontext.BakProductLists.Add(bak);
+                _appdbcontext.BAK_product_list.Add(bak);
 
                 //수정
                 p.P_CATEGORY = productSaveModel.p_category;
@@ -550,9 +550,9 @@ namespace Freemold.Modules.Repositories
 
             try
             {
-                var p = await _appdbcontext.ProductLists.FirstAsync(x => x.PROD_UID == ProdUid);
+                var p = await _appdbcontext.product_list.FirstAsync(x => x.PROD_UID == ProdUid);
 
-                var bak = new BakProductList
+                var bak = new BAK_product_list
                 {
                     PROD_UID = p.PROD_UID,
                     it_id = p.it_id,
@@ -619,7 +619,7 @@ namespace Freemold.Modules.Repositories
                 };
 
                 //bak 저장
-                _appdbcontext.BakProductLists.Add(bak);
+                _appdbcontext.BAK_product_list.Add(bak);
 
 
                 p.P_USE_ST = PUseSt;

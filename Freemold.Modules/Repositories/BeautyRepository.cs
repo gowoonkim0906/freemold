@@ -21,8 +21,8 @@ namespace Freemold.Modules.Repositories
         {
             try
             {
-                var query = from p in _appdbcontext.ProductLists
-                            join c in _appdbcontext.Member1 on p.MEMBER_UID equals c.UID
+                var query = from p in _appdbcontext.product_list
+                            join c in _appdbcontext.member1 on p.MEMBER_UID equals c.UID
                             select new ProductModel
                             {
                                 PImg1 = p.P_IMG1,

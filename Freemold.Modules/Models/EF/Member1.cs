@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Freemold.Modules;
 
-public partial class Member1
+public partial class member1
 {
     public int UID { get; set; }
 
@@ -205,7 +205,9 @@ public partial class Member1
 
     public string CO_ITEM_USE { get; set; } = null!;
 
-    public string? CO_REMOVE { get; set; } = null;
+    public string? CO_LIMIT { get; set; }
+
+    public string? CO_REMOVE { get; set; }
 
     public DateTime? CO_REMOVE_DATE { get; set; }
 
@@ -262,4 +264,6 @@ public partial class Member1
     public string? Location { get; set; }
 
     public string Deleted { get; set; } = null!;
+
+    public string? ADMIN_MEMO { get; set; }
 }

@@ -78,10 +78,10 @@ namespace Freemold.Modules.Repositories
         {
 
             var q =
-                from m in _appdbcontext.Member4.AsNoTracking()
+                from m in _appdbcontext.member4.AsNoTracking()
                 join t in _appdbcontext.MemberLogins.AsNoTracking()
-                    on m.Uid equals t.MemberUid
-                where m.Email == email && m.Approval == "Y" && t.MemberApproval != "N"
+                    on m.UID equals t.MemberUid
+                where m.EMAIL == email && m.APPROVAL == "Y" && t.MemberApproval != "N"
                 select m;
 
             return q.AnyAsync();
@@ -90,10 +90,10 @@ namespace Freemold.Modules.Repositories
         public Task<bool> ExistsByMobileAsync(string mobile)
         {
             var q =
-                from m in _appdbcontext.Member4.AsNoTracking()
+                from m in _appdbcontext.member4.AsNoTracking()
                 join t in _appdbcontext.MemberLogins.AsNoTracking()
-                    on m.Uid equals t.MemberUid
-                where m.Mobile == mobile && m.Approval == "Y" && t.MemberApproval != "N"
+                    on m.UID equals t.MemberUid
+                where m.MOBILE == mobile && m.APPROVAL == "Y" && t.MemberApproval != "N"
                 select m;
 
             return q.AnyAsync();
@@ -103,16 +103,16 @@ namespace Freemold.Modules.Repositories
         public IQueryable<MemberInfo> MemberInfo()
         {
             var query =
-                from m in _appdbcontext.Member4.AsNoTracking()
+                from m in _appdbcontext.member4.AsNoTracking()
                 join t in _appdbcontext.MemberLogins.AsNoTracking()
-                    on m.Uid equals t.MemberUid
-                where  m.Approval == "Y" && t.MemberApproval != "N"
+                    on m.UID equals t.MemberUid
+                where  m.APPROVAL == "Y" && t.MemberApproval != "N"
                 select new MemberInfo {
-                    memberuid = m.Uid,
+                    memberuid = m.UID,
                     memberid = t.MemberId,
-                    membername = m.MemberName,
-                    memberemail = m.Email,
-                    membermobile = m.Mobile,
+                    membername = m.MEMBER_NAME,
+                    memberemail = m.EMAIL,
+                    membermobile = m.MOBILE,
                     membergubun = t.MemberGubun
                 };
 

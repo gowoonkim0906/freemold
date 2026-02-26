@@ -16,153 +16,6 @@ public partial class FreemoldContext : DbContext
     {
     }
 
-    public virtual DbSet<BakBanner> BakBanners { get; set; }
-
-    public virtual DbSet<BakBannerKeyword> BakBannerKeywords { get; set; }
-
-    public virtual DbSet<BakBoardDatum> BakBoardData { get; set; }
-
-    public virtual DbSet<BakBoardRegcontent> BakBoardRegcontents { get; set; }
-
-    public virtual DbSet<BakCategory> BakCategories { get; set; }
-
-    public virtual DbSet<BakFavorite> BakFavorites { get; set; }
-
-    public virtual DbSet<BakFavoriteUser> BakFavoriteUsers { get; set; }
-
-    public virtual DbSet<BakMember1> BakMember1s { get; set; }
-
-    public virtual DbSet<BakMember4> BakMember4s { get; set; }
-
-    public virtual DbSet<BakMemberLogin> BakMemberLogins { get; set; }
-
-    public virtual DbSet<BakNaverimgUpload> BakNaverimgUploads { get; set; }
-
-    public virtual DbSet<BakProductList> BakProductLists { get; set; }
-
-    public virtual DbSet<BakProductUser> BakProductUsers { get; set; }
-
-    public virtual DbSet<BakQna> BakQnas { get; set; }
-
-    public virtual DbSet<Category> Categories { get; set; }
-
-    public virtual DbSet<Category1> Categories1 { get; set; }
-
-    public virtual DbSet<CategoryOri> CategoryOris { get; set; }
-
-    public virtual DbSet<Httpreferer> Httpreferers { get; set; }
-
-    public virtual DbSet<Member1> Member1s { get; set; }
-
-    public virtual DbSet<Member4> Member4s { get; set; }
-
-    public virtual DbSet<MemberLogin> MemberLogins { get; set; }
-
-    public virtual DbSet<ProductList> ProductLists { get; set; }
-
-    public virtual DbSet<Qna> Qnas { get; set; }
-
-    public virtual DbSet<TbAdminLog> TbAdminLogs { get; set; }
-
-    public virtual DbSet<TbBanner> TbBanners { get; set; }
-
-    public virtual DbSet<TbBannerClick> TbBannerClicks { get; set; }
-
-    public virtual DbSet<TbBannerKeyword> TbBannerKeywords { get; set; }
-
-    public virtual DbSet<TbBannerType> TbBannerTypes { get; set; }
-
-    public virtual DbSet<TbBannerTypeCat> TbBannerTypeCats { get; set; }
-
-    public virtual DbSet<TbBlockIp> TbBlockIps { get; set; }
-
-    public virtual DbSet<TB_BOARD_DATA> TB_BOARD_DATA { get; set; }
-
-    public virtual DbSet<TbBoardWview> TbBoardWviews { get; set; }
-
-    public virtual DbSet<TbCategory> TbCategories { get; set; }
-
-    public virtual DbSet<TbCode> TbCodes { get; set; }
-
-    public virtual DbSet<TbCompareChain> TbCompareChains { get; set; }
-
-    public virtual DbSet<TbCompareFolder> TbCompareFolders { get; set; }
-
-    public virtual DbSet<TbCompareIng> TbCompareIngs { get; set; }
-
-    public virtual DbSet<TbConnection> TbConnections { get; set; }
-
-    public virtual DbSet<TbConnectionSm> TbConnectionSms { get; set; }
-
-    public virtual DbSet<TbCount> TbCounts { get; set; }
-
-    public virtual DbSet<TbError> TbErrors { get; set; }
-
-    public virtual DbSet<TbFavorite> TbFavorites { get; set; }
-
-    public virtual DbSet<TbFavoriteChain> TbFavoriteChains { get; set; }
-
-    public virtual DbSet<TbFavoriteFolder> TbFavoriteFolders { get; set; }
-
-    public virtual DbSet<TbFavoriteUser> TbFavoriteUsers { get; set; }
-
-    public virtual DbSet<TbFindidpwLog> TbFindidpwLogs { get; set; }
-
-    public virtual DbSet<TbHelp> TbHelps { get; set; }
-
-    public virtual DbSet<TbHelpClick> TbHelpClicks { get; set; }
-
-    public virtual DbSet<TbHelpMemo> TbHelpMemos { get; set; }
-
-    public virtual DbSet<TbHomepage> TbHomepages { get; set; }
-
-    public virtual DbSet<TbIptable> TbIptables { get; set; }
-
-    public virtual DbSet<TbMailMReport> TbMailMReports { get; set; }
-
-    public virtual DbSet<TbMsg> TbMsgs { get; set; }
-
-    public virtual DbSet<TbProductUser> TbProductUsers { get; set; }
-
-    public virtual DbSet<TbQuickmenu> TbQuickmenus { get; set; }
-
-    public virtual DbSet<TbRecentView> TbRecentViews { get; set; }
-
-    public virtual DbSet<TbSmInquiry> TbSmInquiries { get; set; }
-
-    public virtual DbSet<TbSmsAuth> TbSmsAuths { get; set; }
-
-    public virtual DbSet<TbStandardProdMain> TbStandardProdMains { get; set; }
-
-    public virtual DbSet<TbSubmenu> TbSubmenus { get; set; }
-
-    public virtual DbSet<TbSuggest> TbSuggests { get; set; }
-
-    public virtual DbSet<TbUserSearch> TbUserSearches { get; set; }
-
-    public virtual DbSet<TbUserSearchRaw> TbUserSearchRaws { get; set; }
-
-    public virtual DbSet<TmList> TmLists { get; set; }
-
-    public virtual DbSet<TmpAm> TmpAms { get; set; }
-
-    public virtual DbSet<VwCategory> VwCategories { get; set; }
-
-    public virtual DbSet<VwCategoryList> VwCategoryLists { get; set; }
-
-    public virtual DbSet<VwCategorySm> VwCategorySms { get; set; }
-
-    public virtual DbSet<VwCatprodChain> VwCatprodChains { get; set; }
-
-    public virtual DbSet<VwMemberList> VwMemberLists { get; set; }
-
-    public virtual DbSet<VwNcategory> VwNcategories { get; set; }
-
-    public virtual DbSet<VwNcategoryList> VwNcategoryLists { get; set; }
-
-    public virtual DbSet<VwProductList> VwProductLists { get; set; }
-
-    public virtual DbSet<VwProductListSm> VwProductListSms { get; set; }
 
     public DbSet<FnSplit> FnSplit => Set<FnSplit>();
 
@@ -522,11 +375,9 @@ public partial class FreemoldContext : DbContext
                 .HasColumnName("RegIP");
         });
 
-        modelBuilder.Entity<BakMember1>(entity =>
+        modelBuilder.Entity<BAK_member1>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_member1");
+            entity.HasNoKey();
 
             entity.Property(e => e.ADDRESS1).HasMaxLength(200);
             entity.Property(e => e.ADDRESS11).HasMaxLength(200);
@@ -540,6 +391,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.ADDTIT2).HasMaxLength(20);
             entity.Property(e => e.ADDTIT3).HasMaxLength(20);
             entity.Property(e => e.ADMIN_ID).HasMaxLength(50);
+            entity.Property(e => e.ADMIN_MEMO).HasColumnType("text");
             entity.Property(e => e.APPDATE).HasColumnType("smalldatetime");
             entity.Property(e => e.APPDATE_BEFORE).HasColumnType("smalldatetime");
             entity.Property(e => e.APPROVAL).HasMaxLength(1);
@@ -592,6 +444,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.CO_ID).HasMaxLength(15);
             entity.Property(e => e.CO_ITEM_USE).HasMaxLength(1);
             entity.Property(e => e.CO_LEFT_IMG).HasMaxLength(100);
+            entity.Property(e => e.CO_LIMIT).HasMaxLength(50);
             entity.Property(e => e.CO_MAP).HasMaxLength(100);
             entity.Property(e => e.CO_RELATION).HasMaxLength(500);
             entity.Property(e => e.CO_REMOVE).HasMaxLength(1);
@@ -674,152 +527,73 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.ZIPCODE3).HasMaxLength(7);
         });
 
-        modelBuilder.Entity<BakMember4>(entity =>
+        modelBuilder.Entity<BAK_member4>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_member4");
+            entity.HasNoKey();
 
-            entity.Property(e => e.Address1)
-                .HasMaxLength(200)
-                .HasColumnName("ADDRESS1");
-            entity.Property(e => e.Address2)
-                .HasMaxLength(200)
-                .HasColumnName("ADDRESS2");
-            entity.Property(e => e.Approval)
-                .HasMaxLength(1)
-                .HasColumnName("APPROVAL");
-            entity.Property(e => e.AttrId)
-                .HasMaxLength(50)
-                .HasColumnName("AttrID");
-            entity.Property(e => e.Bidx)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("BIdx");
-            entity.Property(e => e.Birthday)
-                .HasMaxLength(10)
-                .HasColumnName("BIRTHDAY");
-            entity.Property(e => e.BregDate)
+            entity.Property(e => e.ADDRESS1).HasMaxLength(200);
+            entity.Property(e => e.ADDRESS2).HasMaxLength(200);
+            entity.Property(e => e.APPROVAL).HasMaxLength(1);
+            entity.Property(e => e.AttrID).HasMaxLength(50);
+            entity.Property(e => e.BIRTHDAY).HasMaxLength(10);
+            entity.Property(e => e.BIdx).ValueGeneratedOnAdd();
+            entity.Property(e => e.BRegDate)
                 .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("BRegDate");
-            entity.Property(e => e.BregId)
-                .HasMaxLength(50)
-                .HasColumnName("BRegID");
-            entity.Property(e => e.BregIp)
+                .HasColumnType("datetime");
+            entity.Property(e => e.BRegID).HasMaxLength(50);
+            entity.Property(e => e.BRegIP)
                 .HasMaxLength(23)
-                .IsUnicode(false)
-                .HasColumnName("BRegIP");
-            entity.Property(e => e.BregType)
-                .HasMaxLength(50)
-                .HasColumnName("BRegType");
-            entity.Property(e => e.CompDept)
-                .HasMaxLength(50)
-                .HasColumnName("COMP_DEPT");
-            entity.Property(e => e.CompName)
-                .HasMaxLength(50)
-                .HasColumnName("COMP_NAME");
-            entity.Property(e => e.Country)
-                .HasMaxLength(50)
-                .HasColumnName("COUNTRY");
+                .IsUnicode(false);
+            entity.Property(e => e.BRegType).HasMaxLength(50);
+            entity.Property(e => e.COMP_DEPT).HasMaxLength(50);
+            entity.Property(e => e.COMP_NAME).HasMaxLength(50);
+            entity.Property(e => e.COUNTRY).HasMaxLength(50);
             entity.Property(e => e.Deleted)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.Email)
-                .HasMaxLength(100)
-                .HasColumnName("EMAIL");
+            entity.Property(e => e.EMAIL).HasMaxLength(100);
+            entity.Property(e => e.END_LOGIN_DATE).HasColumnType("smalldatetime");
+            entity.Property(e => e.END_LOGIN_IP).HasMaxLength(30);
             entity.Property(e => e.EmailAuth)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.EmailAuthDate).HasColumnType("smalldatetime");
-            entity.Property(e => e.EndLoginDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("END_LOGIN_DATE");
-            entity.Property(e => e.EndLoginIp)
-                .HasMaxLength(30)
-                .HasColumnName("END_LOGIN_IP");
+            entity.Property(e => e.FAX).HasMaxLength(20);
+            entity.Property(e => e.FIRST_NAME).HasMaxLength(50);
             entity.Property(e => e.FavoriteBusiness)
                 .HasMaxLength(6)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.Fax)
-                .HasMaxLength(20)
-                .HasColumnName("FAX");
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(50)
-                .HasColumnName("FIRST_NAME");
-            entity.Property(e => e.Homepage)
-                .HasMaxLength(200)
-                .HasColumnName("HOMEPAGE");
-            entity.Property(e => e.InterceptDate)
-                .HasMaxLength(8)
-                .HasColumnName("INTERCEPT_DATE");
-            entity.Property(e => e.LeaveDate)
-                .HasMaxLength(8)
-                .HasColumnName("LEAVE_DATE");
-            entity.Property(e => e.Lunar)
-                .HasMaxLength(1)
-                .HasColumnName("LUNAR");
-            entity.Property(e => e.Mailing)
-                .HasMaxLength(1)
-                .HasColumnName("MAILING");
+            entity.Property(e => e.HOMEPAGE).HasMaxLength(200);
+            entity.Property(e => e.INTERCEPT_DATE).HasMaxLength(8);
+            entity.Property(e => e.LEAVE_DATE).HasMaxLength(8);
+            entity.Property(e => e.LUNAR).HasMaxLength(1);
+            entity.Property(e => e.MAILING).HasMaxLength(1);
+            entity.Property(e => e.MEMBER_CLASS).HasMaxLength(50);
+            entity.Property(e => e.MEMBER_NAME).HasMaxLength(20);
+            entity.Property(e => e.MEMBER_OPEN).HasMaxLength(1);
+            entity.Property(e => e.MEMBER_OPEN_DATE).HasColumnType("smalldatetime");
+            entity.Property(e => e.MEMBER_TYPE).HasMaxLength(1);
+            entity.Property(e => e.MOBILE).HasMaxLength(20);
+            entity.Property(e => e.MOD_DATE).HasColumnType("smalldatetime");
             entity.Property(e => e.MarketingAgree)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.MemberClass)
-                .HasMaxLength(50)
-                .HasColumnName("MEMBER_CLASS");
-            entity.Property(e => e.MemberLevel).HasColumnName("MEMBER_LEVEL");
-            entity.Property(e => e.MemberName)
-                .HasMaxLength(20)
-                .HasColumnName("MEMBER_NAME");
-            entity.Property(e => e.MemberOpen)
-                .HasMaxLength(1)
-                .HasColumnName("MEMBER_OPEN");
-            entity.Property(e => e.MemberOpenDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("MEMBER_OPEN_DATE");
-            entity.Property(e => e.MemberType)
-                .HasMaxLength(1)
-                .HasColumnName("MEMBER_TYPE");
-            entity.Property(e => e.Memo).HasColumnName("MEMO");
-            entity.Property(e => e.Mobile)
-                .HasMaxLength(20)
-                .HasColumnName("MOBILE");
             entity.Property(e => e.MobileAuth)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.MobileAuthDate).HasColumnType("smalldatetime");
-            entity.Property(e => e.ModDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("MOD_DATE");
-            entity.Property(e => e.NickName)
-                .HasMaxLength(20)
-                .HasColumnName("NICK_NAME");
-            entity.Property(e => e.Point).HasColumnName("POINT");
-            entity.Property(e => e.RegDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("REG_DATE");
-            entity.Property(e => e.RegIp)
-                .HasMaxLength(30)
-                .HasColumnName("REG_IP");
-            entity.Property(e => e.Sex)
-                .HasMaxLength(1)
-                .HasColumnName("SEX");
-            entity.Property(e => e.Sms)
-                .HasMaxLength(1)
-                .HasColumnName("SMS");
-            entity.Property(e => e.Tel)
-                .HasMaxLength(20)
-                .HasColumnName("TEL");
-            entity.Property(e => e.Uid).HasColumnName("UID");
-            entity.Property(e => e.VisitCnt).HasColumnName("VISIT_CNT");
-            entity.Property(e => e.Zipcode)
-                .HasMaxLength(7)
-                .HasColumnName("ZIPCODE");
+            entity.Property(e => e.NICK_NAME).HasMaxLength(20);
+            entity.Property(e => e.REG_DATE).HasColumnType("smalldatetime");
+            entity.Property(e => e.REG_IP).HasMaxLength(30);
+            entity.Property(e => e.SEX).HasMaxLength(1);
+            entity.Property(e => e.SMS).HasMaxLength(1);
+            entity.Property(e => e.TEL).HasMaxLength(20);
+            entity.Property(e => e.ZIPCODE).HasMaxLength(7);
         });
 
         modelBuilder.Entity<BakMemberLogin>(entity =>
@@ -915,7 +689,7 @@ public partial class FreemoldContext : DbContext
                 .HasColumnName("RegIP");
         });
 
-        modelBuilder.Entity<BakProductList>(entity =>
+        modelBuilder.Entity<BAK_product_list>(entity =>
         {
             entity.HasKey(e => e.BIdx);
 
@@ -1324,7 +1098,7 @@ public partial class FreemoldContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Member1>(entity =>
+        modelBuilder.Entity<member1>(entity =>
         {
             entity.HasKey(e => e.UID).HasFillFactor(90);
 
@@ -1352,6 +1126,8 @@ public partial class FreemoldContext : DbContext
                 .IsDescending()
                 .HasFillFactor(90);
 
+            entity.HasIndex(e => e.UID, "IX_member1_UID");
+
             entity.Property(e => e.ADDRESS1).HasMaxLength(200);
             entity.Property(e => e.ADDRESS11).HasMaxLength(200);
             entity.Property(e => e.ADDRESS12).HasMaxLength(200);
@@ -1364,6 +1140,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.ADDTIT2).HasMaxLength(20);
             entity.Property(e => e.ADDTIT3).HasMaxLength(20);
             entity.Property(e => e.ADMIN_ID).HasMaxLength(50);
+            entity.Property(e => e.ADMIN_MEMO).HasColumnType("text");
             entity.Property(e => e.APPDATE).HasColumnType("smalldatetime");
             entity.Property(e => e.APPDATE_BEFORE).HasColumnType("smalldatetime");
             entity.Property(e => e.APPROVAL).HasMaxLength(1);
@@ -1407,6 +1184,7 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.CO_ID).HasMaxLength(15);
             entity.Property(e => e.CO_ITEM_USE).HasMaxLength(1);
             entity.Property(e => e.CO_LEFT_IMG).HasMaxLength(100);
+            entity.Property(e => e.CO_LIMIT).HasMaxLength(50);
             entity.Property(e => e.CO_MAP).HasMaxLength(100);
             entity.Property(e => e.CO_RELATION).HasMaxLength(500);
             entity.Property(e => e.CO_REMOVE).HasMaxLength(1);
@@ -1499,13 +1277,11 @@ public partial class FreemoldContext : DbContext
             entity.Property(e => e.ZIPCODE3).HasMaxLength(7);
         });
 
-        modelBuilder.Entity<Member4>(entity =>
+        modelBuilder.Entity<member4>(entity =>
         {
-            entity.HasKey(e => e.Uid).HasFillFactor(90);
+            entity.HasKey(e => e.UID).HasFillFactor(90);
 
-            entity.ToTable("member4");
-
-            entity.HasIndex(e => e.Birthday, "IX_member4_BIRTHDAY")
+            entity.HasIndex(e => e.BIRTHDAY, "IX_member4_BIRTHDAY")
                 .IsDescending()
                 .HasFillFactor(90);
 
@@ -1513,144 +1289,77 @@ public partial class FreemoldContext : DbContext
 
             entity.HasIndex(e => e.FavoriteBusiness, "IX_member4_FavoriteBusiness").HasFillFactor(90);
 
-            entity.HasIndex(e => e.LeaveDate, "IX_member4_LEAVE_DATE")
+            entity.HasIndex(e => e.LEAVE_DATE, "IX_member4_LEAVE_DATE")
                 .IsDescending()
                 .HasFillFactor(90);
 
-            entity.HasIndex(e => e.RegDate, "IX_member4_REG_DATE")
+            entity.HasIndex(e => e.REG_DATE, "IX_member4_REG_DATE")
                 .IsDescending()
                 .HasFillFactor(90);
 
-            entity.HasIndex(e => e.Sex, "IX_member4_SEX").HasFillFactor(90);
+            entity.HasIndex(e => e.SEX, "IX_member4_SEX").HasFillFactor(90);
 
-            entity.Property(e => e.Uid).HasColumnName("UID");
-            entity.Property(e => e.Address1)
-                .HasMaxLength(200)
-                .HasColumnName("ADDRESS1");
-            entity.Property(e => e.Address2)
-                .HasMaxLength(200)
-                .HasColumnName("ADDRESS2");
-            entity.Property(e => e.Approval)
-                .HasMaxLength(1)
-                .HasColumnName("APPROVAL");
-            entity.Property(e => e.AttrId)
-                .HasMaxLength(50)
-                .HasColumnName("AttrID");
-            entity.Property(e => e.Birthday)
-                .HasMaxLength(10)
-                .HasColumnName("BIRTHDAY");
-            entity.Property(e => e.CompDept)
-                .HasMaxLength(50)
-                .HasColumnName("COMP_DEPT");
-            entity.Property(e => e.CompName)
-                .HasMaxLength(50)
-                .HasColumnName("COMP_NAME");
-            entity.Property(e => e.Country)
-                .HasMaxLength(50)
-                .HasColumnName("COUNTRY");
+            entity.HasIndex(e => e.UID, "IX_member4_UID");
+
+            entity.Property(e => e.ADDRESS1).HasMaxLength(200);
+            entity.Property(e => e.ADDRESS2).HasMaxLength(200);
+            entity.Property(e => e.APPROVAL).HasMaxLength(1);
+            entity.Property(e => e.AttrID).HasMaxLength(50);
+            entity.Property(e => e.BIRTHDAY).HasMaxLength(10);
+            entity.Property(e => e.COMP_DEPT).HasMaxLength(50);
+            entity.Property(e => e.COMP_NAME).HasMaxLength(50);
+            entity.Property(e => e.COUNTRY).HasMaxLength(50);
             entity.Property(e => e.Deleted)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasDefaultValue("N")
                 .IsFixedLength();
-            entity.Property(e => e.Email)
-                .HasMaxLength(100)
-                .HasColumnName("EMAIL");
+            entity.Property(e => e.EMAIL).HasMaxLength(100);
+            entity.Property(e => e.END_LOGIN_DATE).HasColumnType("smalldatetime");
+            entity.Property(e => e.END_LOGIN_IP).HasMaxLength(30);
             entity.Property(e => e.EmailAuth)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasDefaultValue("N")
                 .IsFixedLength();
             entity.Property(e => e.EmailAuthDate).HasColumnType("smalldatetime");
-            entity.Property(e => e.EndLoginDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("END_LOGIN_DATE");
-            entity.Property(e => e.EndLoginIp)
-                .HasMaxLength(30)
-                .HasColumnName("END_LOGIN_IP");
+            entity.Property(e => e.FAX).HasMaxLength(20);
+            entity.Property(e => e.FIRST_NAME).HasMaxLength(50);
             entity.Property(e => e.FavoriteBusiness)
                 .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasDefaultValue("000000")
                 .IsFixedLength();
-            entity.Property(e => e.Fax)
-                .HasMaxLength(20)
-                .HasColumnName("FAX");
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(50)
-                .HasColumnName("FIRST_NAME");
-            entity.Property(e => e.Homepage)
-                .HasMaxLength(200)
-                .HasColumnName("HOMEPAGE");
-            entity.Property(e => e.InterceptDate)
-                .HasMaxLength(8)
-                .HasColumnName("INTERCEPT_DATE");
-            entity.Property(e => e.LeaveDate)
-                .HasMaxLength(8)
-                .HasColumnName("LEAVE_DATE");
-            entity.Property(e => e.Lunar)
-                .HasMaxLength(1)
-                .HasColumnName("LUNAR");
-            entity.Property(e => e.Mailing)
-                .HasMaxLength(1)
-                .HasColumnName("MAILING");
+            entity.Property(e => e.HOMEPAGE).HasMaxLength(200);
+            entity.Property(e => e.INTERCEPT_DATE).HasMaxLength(8);
+            entity.Property(e => e.LEAVE_DATE).HasMaxLength(8);
+            entity.Property(e => e.LUNAR).HasMaxLength(1);
+            entity.Property(e => e.MAILING).HasMaxLength(1);
+            entity.Property(e => e.MEMBER_CLASS).HasMaxLength(50);
+            entity.Property(e => e.MEMBER_NAME).HasMaxLength(20);
+            entity.Property(e => e.MEMBER_OPEN).HasMaxLength(1);
+            entity.Property(e => e.MEMBER_OPEN_DATE).HasColumnType("smalldatetime");
+            entity.Property(e => e.MEMBER_TYPE).HasMaxLength(1);
+            entity.Property(e => e.MOBILE).HasMaxLength(20);
+            entity.Property(e => e.MOD_DATE).HasColumnType("smalldatetime");
             entity.Property(e => e.MarketingAgree)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasDefaultValue("N")
                 .IsFixedLength();
-            entity.Property(e => e.MemberClass)
-                .HasMaxLength(50)
-                .HasColumnName("MEMBER_CLASS");
-            entity.Property(e => e.MemberLevel).HasColumnName("MEMBER_LEVEL");
-            entity.Property(e => e.MemberName)
-                .HasMaxLength(20)
-                .HasColumnName("MEMBER_NAME");
-            entity.Property(e => e.MemberOpen)
-                .HasMaxLength(1)
-                .HasColumnName("MEMBER_OPEN");
-            entity.Property(e => e.MemberOpenDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("MEMBER_OPEN_DATE");
-            entity.Property(e => e.MemberType)
-                .HasMaxLength(1)
-                .HasColumnName("MEMBER_TYPE");
-            entity.Property(e => e.Memo).HasColumnName("MEMO");
-            entity.Property(e => e.Mobile)
-                .HasMaxLength(20)
-                .HasColumnName("MOBILE");
             entity.Property(e => e.MobileAuth)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasDefaultValue("N")
                 .IsFixedLength();
             entity.Property(e => e.MobileAuthDate).HasColumnType("smalldatetime");
-            entity.Property(e => e.ModDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("MOD_DATE");
-            entity.Property(e => e.NickName)
-                .HasMaxLength(20)
-                .HasColumnName("NICK_NAME");
-            entity.Property(e => e.Point).HasColumnName("POINT");
-            entity.Property(e => e.RegDate)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("REG_DATE");
-            entity.Property(e => e.RegIp)
-                .HasMaxLength(30)
-                .HasColumnName("REG_IP");
-            entity.Property(e => e.Sex)
-                .HasMaxLength(1)
-                .HasColumnName("SEX");
-            entity.Property(e => e.Sms)
-                .HasMaxLength(1)
-                .HasColumnName("SMS");
-            entity.Property(e => e.Tel)
-                .HasMaxLength(20)
-                .HasColumnName("TEL");
-            entity.Property(e => e.VisitCnt).HasColumnName("VISIT_CNT");
-            entity.Property(e => e.Zipcode)
-                .HasMaxLength(7)
-                .HasColumnName("ZIPCODE");
+            entity.Property(e => e.NICK_NAME).HasMaxLength(20);
+            entity.Property(e => e.REG_DATE).HasColumnType("smalldatetime");
+            entity.Property(e => e.REG_IP).HasMaxLength(30);
+            entity.Property(e => e.SEX).HasMaxLength(1);
+            entity.Property(e => e.SMS).HasMaxLength(1);
+            entity.Property(e => e.TEL).HasMaxLength(20);
+            entity.Property(e => e.ZIPCODE).HasMaxLength(7);
         });
 
         modelBuilder.Entity<MemberLogin>(entity =>
@@ -1716,7 +1425,7 @@ public partial class FreemoldContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<ProductList>(entity =>
+        modelBuilder.Entity<product_list>(entity =>
         {
             entity.ToTable("product_list");
 

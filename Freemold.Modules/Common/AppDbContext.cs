@@ -29,15 +29,15 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<BakFavoriteUser> BakFavoriteUsers { get; set; }
 
-        public virtual DbSet<BakMember1> BakMember1s { get; set; }
+        public virtual DbSet<BAK_member1> BAK_member1 { get; set; }
 
-        public virtual DbSet<BakMember4> BakMember4s { get; set; }
+        public virtual DbSet<BAK_member4> BAK_member4 { get; set; }
 
         public virtual DbSet<BakMemberLogin> BakMemberLogins { get; set; }
 
         public virtual DbSet<BakNaverimgUpload> BakNaverimgUploads { get; set; }
 
-        public virtual DbSet<BakProductList> BakProductLists { get; set; }
+        public virtual DbSet<BAK_product_list> BAK_product_list { get; set; }
 
         public virtual DbSet<BakProductUser> BakProductUsers { get; set; }
 
@@ -51,13 +51,13 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<Httpreferer> Httpreferers { get; set; }
 
-        public virtual DbSet<Member1> Member1 { get; set; }
+        public virtual DbSet<member1> member1 { get; set; }
 
-        public virtual DbSet<Member4> Member4 { get; set; }
+        public virtual DbSet<member4> member4 { get; set; }
 
         public virtual DbSet<MemberLogin> MemberLogins { get; set; }
 
-        public virtual DbSet<ProductList> ProductLists { get; set; }
+        public virtual DbSet<product_list> product_list { get; set; }
 
         public virtual DbSet<Qna> Qnas { get; set; }
 

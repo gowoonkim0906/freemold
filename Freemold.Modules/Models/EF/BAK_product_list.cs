@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Freemold.Modules;
 
-public partial class BakProductList
+public partial class BAK_product_list
 {
     public long? PROD_UID { get; set; }
 
@@ -24,7 +22,8 @@ public partial class BakProductList
     public string? P_NAME2 { get; set; }
 
     public string? P_CODE { get; set; }
-    public string? P_CODE_EN { get; set; }  
+
+    public string? P_CODE_EN { get; set; }
 
     public int? P_MOQ { get; set; }
 
@@ -53,6 +52,7 @@ public partial class BakProductList
     public string? P_MEMO { get; set; }
 
     public string? P_MEMO2 { get; set; }
+
     public string? P_MEMO_ENG { get; set; }
 
     public DateTime? P_REGDATE { get; set; }

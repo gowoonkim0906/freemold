@@ -14,7 +14,7 @@ namespace Freemold.Modules.Repositories
             {
                 var query = (
                     from i in _appdbcontext.TbSmInquiries
-                    join p in _appdbcontext.ProductLists
+                    join p in _appdbcontext.product_list
                         on i.PIdx equals p.PROD_UID into prodGroup
                     from prod in prodGroup.DefaultIfEmpty()
                     select new InquiryModel

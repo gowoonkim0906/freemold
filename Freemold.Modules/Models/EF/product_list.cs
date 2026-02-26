@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Freemold.Modules;
 
-public partial class ProductList
+public partial class product_list
 {
     public long PROD_UID { get; set; }
 
@@ -22,6 +22,7 @@ public partial class ProductList
     public string P_NAME2 { get; set; } = null!;
 
     public string P_CODE { get; set; } = null!;
+
     public string? P_CODE_EN { get; set; }
 
     public int P_MOQ { get; set; }
@@ -51,6 +52,7 @@ public partial class ProductList
     public string P_MEMO { get; set; } = null!;
 
     public string P_MEMO2 { get; set; } = null!;
+
     public string? P_MEMO_ENG { get; set; }
 
     public DateTime P_REGDATE { get; set; }
