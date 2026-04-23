@@ -1,10 +1,13 @@
 using Freemold.Modules.Common;
+using Freemold.Modules.Models;
 using Freemold.Modules.Repositories;
 using Freemold.Modules.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Npgsql;
 using Org.BouncyCastle.Tls;
 using System;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,7 @@ builder.Services.AddEndpointsApiExplorer(); // Minimal API 용
 builder.Services.AddSwaggerGen();           // Swagger 문서 생성용
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var pgConnStr = builder.Configuration.GetConnectionString("PostgresConnection");
 
 builder.Services.AddCors(options =>
 {
@@ -41,11 +45,17 @@ builder.Services.AddScoped<DbConn>(provider =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddScoped<PgDbConn>(_ => new PgDbConn(pgConnStr));
+
+
 ConfigureServices(builder);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.Configure<StorageOptions>(
+    builder.Configuration.GetSection("Storage"));
 
 var app = builder.Build();
 
@@ -58,7 +68,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();                  // Swagger UI 제공
 }
 
-app.UseHttpsRedirection();
+//if (!app.Environment.IsDevelopment())
+//{
+//    app.UseHttpsRedirection();
+//}
+//app.UseHttpsRedirection();
 
 app.UseRouting();      
 app.UseCors();         
@@ -74,6 +88,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 {
 
     builder.Services.AddHttpClient();
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddTransient<ISendgridService, SendgridService>();
     builder.Services.AddTransient<IBannerService, BannerService>();
     builder.Services.AddScoped<IEmailService>(provider =>
@@ -82,9 +97,11 @@ void ConfigureServices(WebApplicationBuilder builder)
         return new EmailService(env.ContentRootPath);
     });
     builder.Services.AddScoped<IFreemoldService, FreemoldService>();
+    builder.Services.AddScoped<IFileService, FileService>();
 
 
     //Repository 등록
     builder.Services.AddScoped<MemberRepository>();
+    builder.Services.AddScoped<ProductRepository>();
 
 }

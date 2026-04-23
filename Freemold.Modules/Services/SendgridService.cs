@@ -30,7 +30,7 @@ namespace Freemold.Modules.Services
         {
 
             var client = new SendGridClient(_apiKey);
-            var from = new EmailAddress(_sentMail, "프리몰닷넷");
+            var from = new EmailAddress(_sentMail, "프리몰드닷넷");
             var to = new EmailAddress(toEmail);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 

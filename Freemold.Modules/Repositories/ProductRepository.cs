@@ -1,4 +1,5 @@
-﻿using Freemold.Modules.Common;
+﻿using Dapper;
+using Freemold.Modules.Common;
 using Freemold.Modules.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,13 @@ namespace Freemold.Modules.Repositories
 {
     public class ProductRepository : BaseRepository
     {
-        private readonly IDbContextFactory<AppDbContext> _factory;
+   
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public ProductRepository(AppDbContext _appdbcontext, IDbContextFactory<AppDbContext> factory, IHttpContextAccessor httpContextAccessor) : base(_appdbcontext)
+        private readonly PgDbConn _pg;
+        public ProductRepository(AppDbContext _appdbcontext, IHttpContextAccessor httpContextAccessor, PgDbConn pg) : base(_appdbcontext)
         {
-            _factory = factory;
             _httpContextAccessor = httpContextAccessor;
+            _pg = pg;
         }
 
         //allinkbeauty 문의사항 상세내용
@@ -644,6 +646,53 @@ namespace Freemold.Modules.Repositories
             return result;
         }
 
-        
+
+        public async Task<int> DeleteVectorimg(int[] prod_uid)
+        {
+            if (prod_uid == null || prod_uid.Length == 0)
+                return 0;
+
+            try
+            {
+                const string sql = @"
+                                DELETE FROM product_image_embeddings
+                                WHERE prod_uid = ANY(@prod_uid);
+                                ";
+
+                await using var conn = _pg.Open();
+                return await conn.ExecuteAsync(sql, new { prod_uid });
+
+            }
+            catch
+            {
+                throw;
+
+            }
+
+        }
+
+        public async Task<int> DeleteVectorimgDev(int[] prod_uid)
+        {
+            if (prod_uid == null || prod_uid.Length == 0)
+                return 0;
+
+            try
+            {
+                const string sql = @"
+                                DELETE FROM product_image_embeddings_dev
+                                WHERE prod_uid = ANY(@prod_uid);
+                                ";
+
+                await using var conn = _pg.Open();
+                return await conn.ExecuteAsync(sql, new { prod_uid });
+
+            }
+            catch
+            {
+                throw;
+
+            }
+
+        }
     }
 }

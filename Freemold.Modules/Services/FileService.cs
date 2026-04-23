@@ -1,8 +1,13 @@
-﻿using Freemold.Modules.Models;
+﻿using Dapper;
+using Freemold.Modules.Common;
+using Freemold.Modules.Models;
+using Freemold.Modules.Repositories;
+using ImageMagick;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using ImageMagick;
+using Org.BouncyCastle.Crypto;
+using System.Globalization;
 using System.Threading.Channels;
 
 namespace Freemold.Modules.Services
@@ -11,8 +16,10 @@ namespace Freemold.Modules.Services
     {
         private readonly string _root;
         private IHostEnvironment _env;
+        ProductRepository _productRepository;
 
-        public FileService(IOptions<StorageOptions> opts, IHostEnvironment env) {
+        public FileService(IOptions<StorageOptions> opts, IHostEnvironment env, ProductRepository productRepository)
+        {
 
             var raw = opts.Value.RootPath;
             /*_root = Path.GetFullPath(string.IsNullOrWhiteSpace(raw)
@@ -26,6 +33,7 @@ namespace Freemold.Modules.Services
             Directory.CreateDirectory(_root); // 경로 보장
 
             _env = env;
+            this._productRepository = productRepository;
         }
 
 
@@ -57,7 +65,7 @@ namespace Freemold.Modules.Services
             using var logo = new MagickImage(logoPath);
             logo.Alpha(AlphaOption.On);
 
-          
+
 
             // 3) COVER 스케일 계산: 이미지 전체를 덮도록
             int iw = unchecked((int)image.Width);
@@ -214,6 +222,66 @@ namespace Freemold.Modules.Services
 
             image.Write(outStream, fmt);
             await outStream.FlushAsync();
+        }
+
+
+        public async Task<string> Searchfile(IFormFile searchfile, string userId)
+        {
+            string fnFolderDate = DateTime.Now.Year.ToString("D4") + "-" + DateTime.Now.Month.ToString("D2");
+            string path = Path.GetFullPath(Path.Combine(RootPath, fnFolderDate));
+
+            if (!Directory.Exists(path))
+            {
+                // 폴더가 없으면 생성
+                Directory.CreateDirectory(path);
+            }
+
+            string savefilename = "";
+            var ext = Path.GetExtension(searchfile.FileName).TrimStart('.').ToLowerInvariant();
+            var savedName = string.Empty;
+
+            string[] strImage = new[] { "jpg", "jpeg", "png", "webp", "bmp", "tif", "tiff", "gif" };
+
+            if (!strImage.Contains(ext))
+            {
+                return "NO";
+            }
+
+            savefilename = DateTime.Now.ToOADate().ToString(CultureInfo.InvariantCulture).Replace('.', '_');
+
+            for (int i = 0; ; i++)
+            {
+                var name = i == 0 ? $"{savefilename}.{ext}" : $"{savefilename} ({i}).{ext}";
+                var candidate = Path.Combine(path, name);
+
+                try
+                {
+                    using (var fs = new FileStream(candidate, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+                    {
+                        await searchfile.CopyToAsync(fs);
+                        savedName = fnFolderDate+"/"+name;
+                    }
+
+                    return savedName;
+                }
+                catch (IOException)
+                {
+                    continue;
+                }
+            }
+
+        }
+
+        public async Task<int> DeleteVectorimg(int[] prod_uid)
+        {
+            
+            return await _productRepository.DeleteVectorimg(prod_uid);
+        }
+
+        public async Task<int> DeleteVectorimgDev(int[] prod_uid)
+        {
+
+            return await _productRepository.DeleteVectorimgDev(prod_uid);
         }
     }
 }
