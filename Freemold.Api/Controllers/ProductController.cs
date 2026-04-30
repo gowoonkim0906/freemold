@@ -361,5 +361,96 @@ namespace Freemold.Api.Controllers
                 message = "업로드 완료"
             });
         }
+
+        [HttpPost("fileSearchVectorUrl")]
+        public async Task<IActionResult> fileSearchVectorUrl([FromForm] FileSearchVectionRequest req)
+        {
+            string rcode = "fail";
+            string msg = string.Empty;
+            string fileName = string.Empty;
+            const string pythonApiUrl = "http://211.233.64.26:8060/search/url";
+
+            var client = _httpClientFactory.CreateClient();
+            client.Timeout = TimeSpan.FromSeconds(60);
+
+            
+
+            fileName = await _fileService.Searchfile(req.searchfile, req.userId);
+
+            if (fileName == "No")
+            {
+                return StatusCode(StatusCodes.Status502BadGateway, new
+                {
+                    ok = false,
+                    message = "파일저장에 실패하였습니다."
+                });
+            }
+
+            HttpResponseMessage resp;
+            string respText;
+
+
+            try
+            {
+                var payload = new { image_url = @"https://www.freemold.net/Data/Search/" + fileName, top_k = req.topK, remove_bg = req.remove_bg, search_mode= req.search_mode };
+
+                // prod_uids 키가 그대로 나가도록 (혹시 정책 때문에 바뀌는 경우 방지)
+                var jsonOpt = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = null
+                };
+
+                resp = await client.PostAsJsonAsync(pythonApiUrl, payload, jsonOpt);
+                respText = await resp.Content.ReadAsStringAsync();
+            }
+            catch (TaskCanceledException ex)
+            {
+                return StatusCode(StatusCodes.Status504GatewayTimeout, new
+                {
+                    ok = false,
+                    message = "Python API timeout.",
+                    error = ex.Message
+                });
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode(StatusCodes.Status502BadGateway, new
+                {
+                    ok = false,
+                    message = "Python API request failed.",
+                    error = ex.Message
+                });
+            }
+
+            if (!resp.IsSuccessStatusCode)
+            {
+                return StatusCode((int)resp.StatusCode, new
+                {
+                    ok = false,
+                    message = "Python API returned error.",
+                    statusCode = (int)resp.StatusCode,
+                    response = respText
+                });
+            }
+
+            object? pythonResult;
+
+            try
+            {
+                pythonResult = JsonSerializer.Deserialize<object>(respText);
+            }
+            catch
+            {
+                pythonResult = respText;
+            }
+
+
+            return Ok(new
+            {
+                ok = true,
+                message = "업로드 완료",
+                result = pythonResult
+            });
+        }
     }
 }
