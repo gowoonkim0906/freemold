@@ -13,14 +13,14 @@ namespace Freemold.Api.Controllers
     [EnableCors("PublicCors")]
     public class ProductController : Controller
     {
-        
+
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IFileService _fileService;
 
         public ProductController(IHttpClientFactory httpClientFactory, IFileService fileService)
         {
             _httpClientFactory = httpClientFactory;
-            this._fileService = fileService;    
+            this._fileService = fileService;
         }
 
 
@@ -250,14 +250,15 @@ namespace Freemold.Api.Controllers
                     });
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return StatusCode(StatusCodes.Status502BadGateway, new
                 {
                     ok = false,
                     message = ex.Message
                 });
             }
-            
+
         }
 
         [HttpPost("fileDeleteVectorDev")]
@@ -319,11 +320,12 @@ namespace Freemold.Api.Controllers
                     message = "파일저장에 실패하였습니다."
                 });
             }
-            else {
+            else
+            {
 
                 try
                 {
-                    var payload = new { image_url = @"D:\img\save\"+fileName };
+                    var payload = new { image_url = @"D:\img\save\" + fileName };
 
                     // prod_uids 키가 그대로 나가도록 (혹시 정책 때문에 바뀌는 경우 방지)
                     var jsonOpt = new JsonSerializerOptions
@@ -373,7 +375,7 @@ namespace Freemold.Api.Controllers
             var client = _httpClientFactory.CreateClient();
             client.Timeout = TimeSpan.FromSeconds(60);
 
-            
+
 
             fileName = await _fileService.Searchfile(req.searchfile, req.userId);
 
@@ -392,7 +394,7 @@ namespace Freemold.Api.Controllers
 
             try
             {
-                var payload = new { image_url = @"https://www.freemold.net/Data/Search/" + fileName, top_k = req.topK, remove_bg = req.remove_bg, search_mode= req.search_mode };
+                var payload = new { image_url = @"https://www.freemold.net/Data/Search/" + fileName, top_k = req.topK, remove_bg = req.remove_bg, search_mode = req.search_mode };
 
                 // prod_uids 키가 그대로 나가도록 (혹시 정책 때문에 바뀌는 경우 방지)
                 var jsonOpt = new JsonSerializerOptions
@@ -450,6 +452,23 @@ namespace Freemold.Api.Controllers
                 ok = true,
                 message = "업로드 완료",
                 result = pythonResult
+            });
+        }
+
+        [HttpGet("productcategory")]
+
+        public async Task<IActionResult> GetProductCategory()
+        {
+            var categories = new List<object>
+            {
+                new { id = 1, name = "카테고리 1" },
+                new { id = 2, name = "카테고리 2" },
+                new { id = 3, name = "카테고리 3" }
+            };
+            return Ok(new
+            {
+                ok = true,
+                categories
             });
         }
     }
