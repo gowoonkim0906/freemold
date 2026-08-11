@@ -27,6 +27,7 @@ namespace Freemold.Api.Controllers
             string result = await _sendgridService.SendEmailAsync(
                 request.ToEmail,
                 request.Subject,
+                HttpContext.Connection.RemoteIpAddress?.ToString() ?? "",
                 request.Content,
                 request.HtmlContent
             );
@@ -83,6 +84,7 @@ namespace Freemold.Api.Controllers
                 string result = await _sendgridService.JoinEmail(
                     request.ToEmail,
                     request.Subject,
+                    request.RegIP,
                     request.Content,
                     request.HtmlContent,
                     joinauthmodel.authkey

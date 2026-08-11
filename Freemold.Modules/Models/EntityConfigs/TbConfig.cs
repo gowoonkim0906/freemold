@@ -3538,6 +3538,18 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .IsFixedLength();
             });
 
+            modelBuilder.Entity<TB_EMAIL_SEND>(entity =>
+            {
+                entity.HasKey(e => e.Idx);
+
+                entity.Property(e => e.EmailState).HasMaxLength(50);
+                entity.Property(e => e.EmailSubject).HasMaxLength(200);
+                entity.Property(e => e.FromEmail).HasMaxLength(100);
+                entity.Property(e => e.RegIp).HasMaxLength(50);
+                entity.Property(e => e.SendDate).HasColumnType("datetime");
+                entity.Property(e => e.ToEmail).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<VwCategory>(entity =>
             {
                 entity

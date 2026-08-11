@@ -151,6 +151,8 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<TB_ALLINKBEAUTY_CONTACT_US> TB_ALLINKBEAUTY_CONTACT_US { get; set; }
 
+        public virtual DbSet<TB_EMAIL_SEND> TB_EMAIL_SEND { get; set; }
+
         public virtual DbSet<VwCategory> VwCategories { get; set; }
 
         public virtual DbSet<VwCategoryList> VwCategoryLists { get; set; }

@@ -16,17 +16,19 @@ namespace Freemold.Modules.Services
         private readonly string _sentMail;
         private readonly IWebHostEnvironment _env;
         private readonly MemberRepository _memberRepository;
+        private readonly EmailRepository _emailRepository;
 
 
-        public SendgridService(IConfiguration configuration, IWebHostEnvironment env, MemberRepository memberRepository)
+        public SendgridService(IConfiguration configuration, IWebHostEnvironment env, MemberRepository memberRepository, EmailRepository emailRepository)
         {
             _apiKey = configuration["SendGrid:ApiKey"];
             _sentMail = configuration["Sentmail"];
             _env = env;
             _memberRepository = memberRepository;
+            _emailRepository = emailRepository;
         }
 
-        public async Task<string> SendEmailAsync(string toEmail, string subject, string plainTextContent = "", string htmlContent = "")
+        public async Task<string> SendEmailAsync(string toEmail, string subject, string regIp, string plainTextContent = "", string htmlContent = "")
         {
 
             var client = new SendGridClient(_apiKey);
@@ -40,9 +42,20 @@ namespace Freemold.Modules.Services
             var responseBody = await response.Body.ReadAsStringAsync();
             //Console.WriteLine(responseBody);
 
+            TB_EMAIL_SEND input = new TB_EMAIL_SEND
+            {
+                ToEmail = toEmail,
+                FromEmail = _sentMail,
+                EmailSubject = subject,
+                EmailState = response.StatusCode.ToString(),
+                RegIp = regIp
+            };
+
+            await _emailRepository.EmailSendInsert(input);
+
             return response.StatusCode.ToString();
         }
-        public async Task<string> JoinEmail(string toEmail, string subject, string plainTextContent = "", string htmlContent = "", string authkey = "")
+        public async Task<string> JoinEmail(string toEmail, string subject, string regip, string plainTextContent = "", string htmlContent = "", string authkey = "")
         {
             var templatePath = Path.Combine(_env.ContentRootPath, "Templates", "AuthEmail.html");
 
@@ -56,7 +69,7 @@ namespace Freemold.Modules.Services
             }
 
 
-            var result = await SendEmailAsync(toEmail, subject, plainTextContent, htmlContent);
+            var result = await SendEmailAsync(toEmail, subject, regip, plainTextContent, htmlContent);
 
             return result;
         }
@@ -108,7 +121,7 @@ namespace Freemold.Modules.Services
                 }
 
 
-                var result = await SendEmailAsync(toEmail, subject, plainTextContent, htmlContent);
+                var result = await SendEmailAsync(toEmail, subject, log.RegIp, plainTextContent, htmlContent);
 
                 return result;
             }

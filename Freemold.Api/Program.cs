@@ -103,5 +103,6 @@ void ConfigureServices(WebApplicationBuilder builder)
     //Repository µî·Ï
     builder.Services.AddScoped<MemberRepository>();
     builder.Services.AddScoped<ProductRepository>();
+    builder.Services.AddScoped<EmailRepository>();
 
 }

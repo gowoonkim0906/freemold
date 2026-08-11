@@ -657,6 +657,8 @@ namespace Freemold.Modules.Repositories
                 const string sql = @"
                                 DELETE FROM product_image_embeddings
                                 WHERE prod_uid = ANY(@prod_uid);
+                                DELETE FROM product_image_region_embeddings
+                                WHERE prod_uid = ANY(@prod_uid);
                                 ";
 
                 await using var conn = _pg.Open();
@@ -680,8 +682,6 @@ namespace Freemold.Modules.Repositories
             {
                 const string sql = @"
                                 DELETE FROM product_image_embeddings_dev
-                                WHERE prod_uid = ANY(@prod_uid);
-                                DELETE FROM product_image_region_embeddings
                                 WHERE prod_uid = ANY(@prod_uid);
                                 ";
 
