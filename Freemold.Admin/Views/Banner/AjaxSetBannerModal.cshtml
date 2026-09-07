@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+
+}
+<div class="modal-header py-1">
+    <h5 class="modal-title" id="setbannermodal-title">배너 등록</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+
+<div class="modal-body py-1">
+    <div class="mb-1">
+        <label class="form-label">업체명</label>
+        <div class="d-flex gap-2">
+            <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+
+            <select class="form-select w-auto">
+                <option value="">업체명을 입력해주세요.</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="mb-1">
+        <label class="form-label">링크(url)</label>
+        <div>
+            <input type="text" class="form-control" name="example-text-input">
+            <small class="form-hint">링크주소가 없을 경우 미니홈피로 지정됩니다. 우튜브주소위치</small>
+        </div>
+    </div>
+
+    <div class="mb-1">
+        <div class="form-label">이미지</div>
+        <input type="file" class="form-control">
+    </div>
+
+    <div class="mb-1">
+        <label class="form-label">기타(설명) <span class="form-label-description">56/100</span></label>
+        <textarea class="form-control" name="example-textarea-input" rows="4" placeholder="Content.."></textarea>
+    </div>
+
+    <div class="mb-1">
+        <label class="form-label">사용기간</label>
+        <div class="d-flex align-items-center gap-2">
+            <input type="date" class="form-control">
+            <span>~</span>
+            <input type="date" class="form-control">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 ">
+            <div class="mb-1">
+                <label class="form-label">노출</label>
+                <label class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radios-inline" checked="">
+                    <span class="form-check-label">사용</span>
+                </label>
+                <label class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radios-inline">
+                    <span class="form-check-label">예약</span>
+                </label>
+                <label class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radios-inline">
+                    <span class="form-check-label">대기</span>
+                </label>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-1">
+                <label class="form-label">순번</label>
+                <input type="text" class="form-control" style="width:150px;">
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="mb-1">
+        <label class="form-label">금액</label>
+        <div class="d-flex align-items-center gap-2">
+
+            <input type="text"  class="form-control" style="width:150px;">
+            <span>원</span>
+
+            <span class="ms-auto text-secondary small">
+                (최종 수정자 : 2026-08-01 아무개)
+            </span>
+
+        </div>
+    </div>
+
+ 
+
+</div>
+
+
+<div class="modal-footer py-1">
+
+    <a href="#" class="btn btn-danger" data-bs-dismiss="modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></svg>
+        취소</a>
+    <a href="#" class="btn btn-primary btn-5 ms-auto" data-bs-dismiss="modal">
+        <!-- Download SVG icon from http://tabler.io/icons/icon/plus -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-2"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+        저장
+    </a>
+</div>

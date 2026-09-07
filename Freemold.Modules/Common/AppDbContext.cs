@@ -63,15 +63,17 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<TbAdminLog> TbAdminLogs { get; set; }
 
-        public virtual DbSet<TbBanner> TbBanners { get; set; }
+        public virtual DbSet<TB_BANNER> TB_BANNER { get; set; }
 
-        public virtual DbSet<TbBannerClick> TbBannerClicks { get; set; }
+        public virtual DbSet<TB_BANNER_CLICK> TB_BANNER_CLICK { get; set; }
 
-        public virtual DbSet<TbBannerKeyword> TbBannerKeywords { get; set; }
+        public virtual DbSet<TB_BANNER_KEYWORD> TB_BANNER_KEYWORD { get; set; }
 
-        public virtual DbSet<TbBannerType> TbBannerTypes { get; set; }
+        public virtual DbSet<TB_BANNER_TYPE_CAT> TB_BANNER_TYPE_CAT { get; set; }
 
-        public virtual DbSet<TbBannerTypeCat> TbBannerTypeCats { get; set; }
+        public virtual DbSet<TB_BANNER_CATEGORY> TB_BANNER_CATEGORY { get; set; }
+
+        public virtual DbSet<TB_BANNER_TYPE> TB_BANNER_TYPE { get; set; }
 
         public virtual DbSet<TbBlockIp> TbBlockIps { get; set; }
 
@@ -165,7 +167,7 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<VwNcategory> VwNcategories { get; set; }
 
-        public virtual DbSet<VwNcategoryList> VwNcategoryLists { get; set; }
+        public virtual DbSet<VW_NCATEGORY_LIST> VW_NCATEGORY_LIST { get; set; }
 
         public virtual DbSet<VwProductList> VwProductLists { get; set; }
         public virtual DbSet<VwProductListSm> VwProductListSms { get; set; }

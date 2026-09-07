@@ -1,0 +1,50 @@
+﻿
+
+.status-dot-lg {
+    width: 20px !important;
+    height: 20px !important;
+}
+.banner-type-menu {
+    width: 100%;
+}
+
+
+/* 왼쪽 세부 메뉴가 길어질 때만 스크롤 */
+.banner-menu-scroll {
+    width: 100%;
+    max-height: 310px;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+
+
+/* 기본 status-dot보다 조금 크게 */
+.status-dot-11 {
+    width: 11px !important;
+    height: 11px !important;
+}
+
+.banner-type-menu .list-group-item-action:hover,
+.banner-type-menu .list-group-item-action:focus {
+    background-color: var(--tblr-primary-lt) !important;
+    color: var(--tblr-primary) !important;
+}
+
+
+.category-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    padding: 0;
+    border: 1px solid var(--tblr-border-color);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--tblr-body-color);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+}

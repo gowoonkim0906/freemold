@@ -70,7 +70,7 @@ namespace Freemold.Modules.Services
         }
 
         //카테고리 리스트
-        public async Task<List<VwNcategoryList>> GetVwNcategoryList(string[] ACode, string StdMld = "")
+        public async Task<List<VW_NCATEGORY_LIST>> GetVwNcategoryList(string[] ACode, string StdMld = "")
         {
             try
             {
@@ -81,13 +81,13 @@ namespace Freemold.Modules.Services
                     query = query.Where(x => x.StdMld == StdMld);
                 }
 
-                var list = await query.Where(x => ACode.Contains(x.Acode) && x.Depth > 1)
-                            .OrderBy(x => x.Aord)
-                            .ThenBy(x => x.Acode)
-                            .ThenBy(x => x.Bord)
-                            .ThenBy(x => x.Bcode)
-                            .ThenBy(x => x.Cord)
-                            .ThenBy(x => x.Ccode)
+                var list = await query.Where(x => ACode.Contains(x.ACode) && x.Depth > 1)
+                            .OrderBy(x => x.AOrd)
+                            .ThenBy(x => x.ACode)
+                            .ThenBy(x => x.BOrd)
+                            .ThenBy(x => x.BCode)
+                            .ThenBy(x => x.COrd)
+                            .ThenBy(x => x.CCode)
                             .ToListAsync();
 
                 return list;
@@ -104,11 +104,11 @@ namespace Freemold.Modules.Services
             {
                 var query = _codeRepository.GetVwNcategoryList().AsNoTracking();
 
-                query = query.Where(x => x.Bcode != null && x.Bcode.Trim() != "");
+                query = query.Where(x => x.BCode != null && x.BCode.Trim() != "");
 
                 if (!string.IsNullOrEmpty(ACode))
                 {
-                    query = query.Where(x => x.Acode == ACode );
+                    query = query.Where(x => x.ACode == ACode );
                 }
 
                 if (!string.IsNullOrEmpty(StdMld))
@@ -121,25 +121,25 @@ namespace Freemold.Modules.Services
                             {
                                 Code = g.Code,
                                 UpCode = g.UpCode,
-                                Acode = g.Acode,
-                                Bcode = g.Bcode,
-                                Ccode = g.Ccode,
-                                Akor = g.Akor,
-                                Bkor = g.Bkor,  
-                                Ckor = g.Ckor,  
-                                Aeng = g.Aeng,  
-                                Beng = g.Beng,
-                                Ceng = g.Ceng,
+                                Acode = g.ACode,
+                                Bcode = g.BCode,
+                                Ccode = g.CCode,
+                                Akor = g.AKor,
+                                Bkor = g.BKor,  
+                                Ckor = g.CKor,  
+                                Aeng = g.AEng,  
+                                Beng = g.BEng,
+                                Ceng = g.CEng,
                                 CatName = g.CatName,
                                 StdMld = g.StdMld,
                                 Depth = g.Depth,
                                 Ord = g.Ord,
-                                Aord = g.Aord,
-                                Bord = g.Bord,
-                                Cord = g.Cord,
+                                Aord = g.AOrd,
+                                Bord = g.BOrd,
+                                Cord = g.COrd,
                                 CheckYN = (Selectval != null
                                            && Selectval.Contains(
-                                               string.IsNullOrEmpty(g.Ccode) ? g.Bcode : g.Ccode
+                                               string.IsNullOrEmpty(g.CCode) ? g.BCode : g.CCode
                                                ))
                                            ? "Y" : "N"
                             }) 

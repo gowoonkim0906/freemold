@@ -1,0 +1,113 @@
+﻿@using Freemold.Modules.Models;
+@{
+    Layout = null;
+
+
+    var bgubun = ViewBag.bannergubun as string ?? "";
+    var binfo = ViewBag.bannersettinginfo as BannerSettingModel ?? new BannerSettingModel();
+    var cinfo = ViewBag.bannersettingcategorymodel as BannerSettingCategoryModel ?? new BannerSettingCategoryModel();
+
+    string btitle = "";
+    int bprice = 0;
+    int bmonths = 0;
+    int bsizex = 0;
+    int bsizey = 0;
+    string bmode = "";
+    string bmemo = "";
+    int bidx = 0;
+    string bbcode = "";
+
+    if (bgubun == "c")
+    {
+        btitle = cinfo.catname ?? "";
+        bprice = cinfo.bannerprice;
+        bmonths = cinfo.bannermonths;
+        bsizex = cinfo.bannersizex;
+        bsizey = cinfo.bannersizey;
+        bmode = cinfo.bannermode ?? "";
+        bmemo = cinfo.memo ?? "";
+        bidx = cinfo.banneridx;
+        bbcode = cinfo.bcode ?? "";
+    }
+    else
+    {
+        btitle = binfo.bcname ?? "";
+        bprice = binfo.bannerprice;
+        bmonths = binfo.bannermonths;
+        bsizex = binfo.bannersizex;
+        bsizey = binfo.bannersizey;
+        bmode = binfo.bannermode ?? "";
+        bmemo = binfo.memo ?? "";
+        bidx = binfo.banneridx;
+    
+    }
+
+
+}
+<input type="hidden" name="bcat" value= "" />
+<input type="hidden" name="bcatname" value="@(btitle)" />
+
+<div class="modal-header py-1">
+    <h5 class="modal-title">영역 수정 (@(btitle))</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body py-1">
+    <div class="mb-1">
+        <label class="form-label">금액</label>
+        <div class="d-flex gap-2 align-items-center">
+            <input type="text" class="form-control number" name="bprice" id="bprice" style="width:150px;" value="@(bprice)">
+
+            <span>원</span>
+
+        </div>
+    </div>
+    <div class="mb-1">
+        <label class="form-label">계약기간</label>
+        <div class="d-flex gap-2 align-items-center">
+            <input type="text" class="form-control number" name="bmonths" id="bmonths" style="width:150px;" value="@(bprice)">
+
+            <span>개월</span>
+
+        </div>
+    </div>
+    <div class="mb-1">
+        <label class="form-label">사이즈</label>
+        <div class="d-flex align-items-center gap-2">
+            <input type="text" class="form-control number" name="bsizex" id="bsizex" value="@(bsizex)">
+            <span>x</span>
+            <input type="text" class="form-control number" name="bsizey" id="bsizey" value="@(bsizey)">
+        </div>
+    </div>
+    <div class="mb-1">
+        <label class="form-label">노출</label>
+        <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="bmode" id="bmode1" value="fixed" @(bmode != "rolling" ? "checked" : "")>
+            <span class="form-check-label">고정</span>
+        </label>
+        <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="bmode" id="bmode2" value="rolling" @(bmode == "rolling" ? "checked" : "")>
+            <span class="form-check-label">롤링</span>
+        </label>
+    </div>
+    <div class="mb-1">
+        <label class="form-label">메모 <span class="form-label-description"><span id="bmemoCount">0</span>/100</span></label>
+        <textarea class="form-control" name="bmemo" id="bmemo" rows="4" maxlength="100" placeholder="Content..">@(bmemo)</textarea>
+    </div>
+</div>
+<div class="modal-footer py-1">
+    <button type="button" class="btn me-auto" data-bs-dismiss="modal">취소</button>
+    <button type="button" class="btn btn-primary" onclick="modifysetting(this)" data-bidx="@(bidx)" data-bgubun="@(bgubun)" data-bbcode="@(bbcode)">저장</button>
+</div>
+<script>
+    $(function () {
+
+        const $memo = $('#bmemo');
+
+        $('#bmemoCount').text($memo.val().length);
+
+        $memo.on('input', function () {
+            $('#bmemoCount').text($(this).val().length);
+        });
+
+    });
+</script>

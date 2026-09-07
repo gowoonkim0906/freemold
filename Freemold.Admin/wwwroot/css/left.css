@@ -1,0 +1,219 @@
+﻿/* ================================
+   Admin Sidebar
+================================ */
+
+.admin-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+    padding: 0 12px;
+}
+
+.admin-sidebar-logo {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* 로고 링크 */
+.admin-sidebar-logo > a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+
+/* 로고 아이콘 */
+.admin-logo-icon {
+    display: block;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+}
+
+
+/* 프리몰드 글씨 */
+.admin-logo-text {
+    display: block;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+/* 삼선 버튼 */
+.admin-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--tblr-navbar-color);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.admin-sidebar-toggle:hover {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #fff;
+}
+
+.admin-sidebar-toggle:focus,
+.admin-sidebar-toggle:focus-visible,
+.admin-sidebar-toggle:active {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+
+/* =================================================
+   초기 렌더링 안정화
+   - 페이지가 처음 그려질 때는 transition을 사용하지 않음
+   - _AdminLayout에서 admin-sidebar-ready가 붙은 뒤에만 활성화
+================================================= */
+#adminSidebar,
+.page-wrapper {
+    transition: none;
+}
+
+body.admin-sidebar-ready #adminSidebar {
+    transition: width .2s ease;
+}
+
+body.admin-sidebar-ready .page-wrapper {
+    transition: margin-left .2s ease;
+}
+
+
+/* ================================
+   Desktop collapsed sidebar
+================================ */
+
+@media (min-width: 992px) {
+
+    /* 사이드바 폭 */
+    body.admin-sidebar-collapsed {
+        --tblr-navbar-vertical-width: 72px;
+    }
+
+    body.admin-sidebar-collapsed #adminSidebar {
+        width: 72px;
+        min-width: 72px;
+    }
+
+
+    /* ================================
+    로고
+    ================================ */
+
+    /* 접으면 프리몰드 글씨만 숨김 */
+    body.admin-sidebar-collapsed #adminSidebar .admin-logo-text {
+        display: none;
+    }
+
+    /* 로고 아이콘은 계속 표시 */
+    body.admin-sidebar-collapsed #adminSidebar .admin-logo-icon {
+        display: block;
+        width: 34px;
+        height: 34px;
+    }
+
+    /* 로고 가운데 정렬 */
+    body.admin-sidebar-collapsed #adminSidebar .admin-sidebar-logo {
+        flex: initial;
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body.admin-sidebar-collapsed #adminSidebar .admin-sidebar-logo > a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+    }
+
+
+    /* ================================
+    상단 로고 + 삼선
+    ================================ */
+
+    body.admin-sidebar-collapsed #adminSidebar .admin-sidebar-header {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 0;
+    }
+
+
+    /* ================================
+    메뉴
+    ================================ */
+
+    /* 메뉴 글자 숨김 */
+    body.admin-sidebar-collapsed #adminSidebar .nav-link-title {
+        display: none;
+    }
+
+    /* dropdown 화살표 숨김 */
+    body.admin-sidebar-collapsed #adminSidebar .dropdown-toggle::after {
+        display: none;
+    }
+
+    /* 아이콘 가운데 정렬 */
+    body.admin-sidebar-collapsed #adminSidebar .nav-link {
+        justify-content: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    body.admin-sidebar-collapsed #adminSidebar .nav-link-icon {
+        margin: 0;
+    }
+
+
+    /* ================================
+    하위 메뉴
+    ================================ */
+
+    body.admin-sidebar-collapsed #adminSidebar .dropdown-menu {
+        display: none !important;
+    }
+
+
+    /* ================================
+    사용자 정보
+    ================================ */
+
+    body.admin-sidebar-collapsed #adminSidebar .nav-item .d-xl-block {
+        display: none !important;
+    }
+
+    
+}
+
+/* ================================
+    left 메뉴 선택색 변경
+    ================================ */
+#adminSidebar .nav-link.active,
+#adminSidebar .dropdown-item.active {
+    background-color: rgba(255, 255, 255, .12) !important;
+    color: #fff !important;
+}

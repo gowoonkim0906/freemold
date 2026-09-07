@@ -44,11 +44,11 @@ namespace Freemold.Modules.Repositories
             }
         }
 
-        public IQueryable<VwNcategoryList> GetVwNcategoryList()
+        public IQueryable<VW_NCATEGORY_LIST> GetVwNcategoryList()
         {
             try
             {
-                return _appdbcontext.VwNcategoryLists;
+                return _appdbcontext.VW_NCATEGORY_LIST;
             }
             catch
             {

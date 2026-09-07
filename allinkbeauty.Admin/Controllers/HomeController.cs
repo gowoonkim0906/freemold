@@ -469,7 +469,7 @@ namespace standardmold.Admin.Controllers
 
         public async Task<JsonResult> CategoryList(string[] ACode) { 
         
-            List<VwNcategoryList> list = new List<VwNcategoryList>();
+            List<VW_NCATEGORY_LIST> list = new List<VW_NCATEGORY_LIST>();
             list =  await _codeService.GetVwNcategoryList(ACode);
 
             return Json(new { Item1 = "success", Item2 = list });   

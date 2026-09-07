@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var pgConnStr = builder.Configuration.GetConnectionString("PostgresConnection");
+
 
 builder.Services.AddScoped<DbConn>(provider =>
 {
@@ -29,6 +31,8 @@ builder.Services.AddDbContextFactory<AppDbContext>(
     ServiceLifetime.Scoped
 );
 
+builder.Services.AddScoped<PgDbConn>(_ => new PgDbConn(pgConnStr));
+
 ConfigureServices(builder);
 
 // Add services to the container.
@@ -41,7 +45,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.Name = ".MySessionStartDemo.Session";
+    options.Cookie.Name = ".Freemold.Session";
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; // 동의 없이도 필수 쿠키로 사용
     options.Cookie.SameSite = SameSiteMode.Lax;

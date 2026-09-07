@@ -1,0 +1,24 @@
+﻿<!doctype html>
+<html lang="ko" data-bs-theme-primary="orange">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>@ViewData["Title"] - 관리자</title>
+
+    <link rel="stylesheet" href="~/lib/tabler/css/tabler.min.css" />
+    <link rel="stylesheet" href="~/lib/tabler/css/tabler-themes.css" />
+</head>
+
+<body>
+
+    <div class="page page-center">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/tabler/js/tabler.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

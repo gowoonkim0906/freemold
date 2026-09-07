@@ -1,0 +1,546 @@
+﻿@{
+    ViewData["Title"] = "배너관리";
+    Layout = "_AdminLayout";
+}
+
+<div class="page-header d-print-none" aria-label="Page header">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+
+                <h2 class="page-title">
+
+                    배너관리 > 영역별 관리
+                </h2>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- END PAGE HEADER -->
+<!-- BEGIN PAGE BODY -->
+<div class="page-body">
+
+    <div class="container-xl">
+
+        <!-- =====================================
+             상단 라인
+        ====================================== -->
+        <div class="row g-3 align-items-center mb-3">
+
+            <!-- 왼쪽 제목 -->
+            <div class="col-12 col-lg-3">
+
+                <h3 class="mb-0">
+                    배너 영역 및 타입
+                </h3>
+
+            </div>
+
+
+            <!-- 오른쪽 상태 + 버튼 -->
+            <div class="col-12 col-lg-9">
+
+                <div class="d-flex align-items-center flex-wrap gap-3">
+
+                    <span>
+                        <span class="status-dot bg-dark me-2 status-dot-11"></span>
+                        전체10
+                    </span>
+
+                    <span>
+                        <span class="status-dot bg-red me-2 status-dot-11"></span>
+                        마감임박3
+                    </span>
+
+                    <span>
+                        <span class="status-dot bg-green me-2 status-dot-11"></span>
+                        운영중10
+                    </span>
+
+                    <span>
+                        <span class="status-dot bg-blue me-2 status-dot-11"></span>
+                        예약3
+                    </span>
+
+                    <span>
+                        <span class="status-dot bg-yellow me-2 status-dot-11"></span>
+                        대기1
+                    </span>
+
+
+                    <!-- 오른쪽 끝 -->
+                    <div class="ms-auto d-flex align-items-center gap-2">
+
+                        <span class="me-2" id="bannersize">
+                            배너 사이즈 : 400*400
+                        </span>
+
+                        <button type="button"
+                                class="btn btn-blue"
+                                onclick="bannersetmodal()">
+                            배너등록
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-danger">
+                            선택삭제
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             실제 내용
+        ====================================== -->
+        <div class="row g-3">
+
+            <!-- LEFT -->
+            <div class="col-12 col-lg-3">
+
+                <div class="card banner-type-menu">
+
+                    <div class="list-group list-group-flush">
+
+                        <!-- 1 -->
+                        <div class="list-group-item bg-gray-100 fw-bold">
+
+                            <a href="#bannerGroup1"
+                               class="d-flex align-items-center text-reset text-decoration-none"
+                               data-bs-toggle="collapse"
+                               aria-expanded="false">
+
+                                <span>
+                                    로고/팝업/검색창/로그인
+                                </span>
+
+                                <span class="ms-auto">
+                                    +
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="collapse" id="bannerGroup1">
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                로고
+                            </a>
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                메인_팝업
+                            </a>
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                검색창
+                            </a>
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                로그인
+                            </a>
+
+                        </div>
+
+
+                        <!-- 2 -->
+                        <div class="list-group-item bg-gray-100 fw-bold">
+
+                            <a href="#bannerGroup2"
+                               class="d-flex align-items-center text-reset text-decoration-none"
+                               data-bs-toggle="collapse"
+                               aria-expanded="true">
+
+                                <span>
+                                    최상단/마이페이지/메인배너
+                                </span>
+
+                                <span class="ms-auto">
+                                    -
+                                </span>
+
+                            </a>
+
+                        </div>
+
+
+                        <div class="collapse show"
+                             id="bannerGroup2">
+
+                            <div class="banner-menu-scroll">
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+
+                                    최상단_중앙
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+
+                                    최상단_좌측
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action d-flex align-items-center">
+
+                                    <span>
+                                        최상단_우측
+                                    </span>
+
+                                    <span class="badge bg-secondary-lt ms-auto">
+                                        ● 3
+                                    </span>
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+
+                                    마이페이지
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+
+                                    메인_좌_S
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+
+                                    메인_좌_N
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action d-flex align-items-center">
+
+                                    <span>
+                                        메인_신규
+                                    </span>
+
+                                    <span class="ms-auto">
+
+                                        <span class="badge bg-red-lt text-red">
+                                            ● 2
+                                        </span>
+
+                                        <span class="badge bg-blue-lt text-blue">
+                                            ● 1
+                                        </span>
+
+                                    </span>
+
+                                </a>
+
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+                                    메인_O
+                                </a>
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+                                    메인_A
+                                </a>
+
+                                <a href="#"
+                                   class="list-group-item list-group-item-action">
+                                    로그인3
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 3 -->
+                        <div class="list-group-item bg-gray-100 fw-bold">
+
+                            <a href="#bannerGroup3"
+                               class="d-flex align-items-center text-reset text-decoration-none"
+                               data-bs-toggle="collapse">
+
+                                <span>
+                                    서브탑배너
+                                </span>
+
+                                <span class="ms-auto">
+                                    +
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="collapse" id="bannerGroup3">
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                서브탑배너1
+                            </a>
+
+                        </div>
+
+
+                        <!-- 4 -->
+                        <div class="list-group-item bg-gray-100 fw-bold">
+
+                            <a href="#bannerGroup4"
+                               class="d-flex align-items-center text-reset text-decoration-none"
+                               data-bs-toggle="collapse">
+
+                                <span>
+                                    커뮤니티띠배너/쪽지창
+                                </span>
+
+                                <span class="ms-auto">
+                                    +
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="collapse"
+                             id="bannerGroup4">
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                커뮤니티배너
+                            </a>
+
+                        </div>
+
+
+                        <!-- 5 -->
+                        <div class="list-group-item bg-gray-100 fw-bold">
+
+                            <a href="#bannerGroup5"
+                               class="d-flex align-items-center text-reset text-decoration-none"
+                               data-bs-toggle="collapse">
+
+                                <span>
+                                    OEM/ODM배너
+                                </span>
+
+                                <span class="ms-auto">
+                                    +
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="collapse"
+                             id="bannerGroup5">
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                OEM
+                            </a>
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                ODM
+                            </a>
+
+                        </div>
+
+
+                        <!-- 6 -->
+                        <div class="list-group-item bg-gray-100 fw-bold">
+
+                            <a href="#bannerGroup6"
+                               class="d-flex align-items-center text-reset text-decoration-none"
+                               data-bs-toggle="collapse">
+
+                                <span>
+                                    카테고리배너
+                                </span>
+
+                                <span class="ms-auto">
+                                    +
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                        <div class="collapse"
+                             id="bannerGroup6">
+
+                            <a href="#"
+                               class="list-group-item list-group-item-action">
+                                카테고리1
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <div class="col-12 col-lg-9">
+
+                <div class="card">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-vcenter mb-0">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th class="text-center">
+
+                                        <input type="checkbox"
+                                               class="form-check-input">
+
+                                    </th>
+
+                                    <th class="text-center">
+                                        번호
+                                    </th>
+
+                                    <th class="text-center">
+                                        상태
+                                    </th>
+
+                                    <th class="text-center">
+                                        등록일
+                                    </th>
+
+                                    <th class="text-center">
+                                        게재기간
+                                    </th>
+
+                                    <th class="text-center">
+                                        업체명
+                                    </th>
+
+                                    <th class="text-center">
+                                        이미지
+                                    </th>
+
+                                    <th class="text-center">
+                                        노출
+                                    </th>
+
+                                    <th class="text-center">
+                                        메모
+                                    </th>
+
+                                    <th class="text-center">
+                                        금액
+                                    </th>
+
+                                    <th class="text-center">
+                                        관리
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td colspan="11"
+                                        class="text-center text-secondary py-4">
+
+                                        좌측 배너위치를 선택해주세요.
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal modal-blur fade"
+     id="setbannermodal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="setbannermodal-title"
+     aria-hidden="true"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+
+        <div class="modal-content" id="setbannermodal-content">
+
+            <!-- Ajax 내용 -->
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+
+    function bannersetmodal() {
+
+        $("#setbannermodal-content").html("");
+
+        const ajaxlink = 'AjaxSetBannerModal';
+
+
+        var param = {};
+
+        $.post(ajaxlink, param, function (html) {
+            $('#setbannermodal-content').html(html);
+        });
+
+
+        $('#setbannermodal').modal('show');
+
+    }
+
+</script>

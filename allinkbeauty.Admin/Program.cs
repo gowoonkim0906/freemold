@@ -11,6 +11,7 @@ using System.Net;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var pgConnStr = builder.Configuration.GetConnectionString("PostgresConnection");
 
 builder.Services.AddScoped<DbConn>(provider =>
 {
@@ -25,6 +26,8 @@ builder.Services.AddDbContextFactory<AppDbContext>(
     options => options.UseSqlServer(connectionString),
     ServiceLifetime.Scoped 
 );
+
+builder.Services.AddScoped<PgDbConn>(_ => new PgDbConn(pgConnStr));
 
 ConfigureServices(builder);
 

@@ -1,0 +1,85 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <title>@ViewData["Title"] - 관리자</title>
+
+    <link rel="stylesheet" href="~/lib/tabler/css/tabler.min.css" />
+    <link rel="stylesheet" href="~/lib/tabler/css/tabler-themes.css" />
+    <link rel="stylesheet" href="~/css/left.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/js/common.js" asp-append-version="true"></script>
+</head>
+
+<body class="layout-fluid">
+
+    <div class="page">
+
+        <!-- LEFT MENU -->
+        <partial name="_AdminSidebar" />
+
+        <!-- RIGHT CONTENT -->
+        <div class="page-wrapper">
+
+            @RenderBody()
+
+            <partial name="_AdminFooter" />
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/tabler/js/tabler.min.js"></script>
+    <script>
+        (() => {
+
+            /*
+             * 첫 렌더링에서는 사이드바 transition을 사용하지 않습니다.
+             * CSS가 모두 적용된 뒤에만 transition을 활성화해서
+             * 새로고침 시 page-wrapper가 좌우로 튀는 현상을 방지합니다.
+             */
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.body.classList.add('admin-sidebar-ready');
+                });
+            });
+
+            const toggle = document.getElementById('adminSidebarToggle');
+
+            if (!toggle) {
+                return;
+            }
+
+            toggle.addEventListener('click', function () {
+
+                document.body.classList.toggle('admin-sidebar-collapsed');
+
+                const collapsed =
+                    document.body.classList.contains('admin-sidebar-collapsed');
+
+                toggle.setAttribute(
+                    'aria-label',
+                    collapsed ? '사이드바 펼치기' : '사이드바 접기'
+                );
+
+                toggle.setAttribute(
+                    'title',
+                    collapsed ? '메뉴 펼치기' : '메뉴 접기'
+                );
+
+            });
+
+        })();
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

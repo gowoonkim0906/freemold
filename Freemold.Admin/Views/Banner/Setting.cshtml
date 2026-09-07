@@ -1,0 +1,413 @@
+﻿@using Freemold.Modules.Models;
+@{
+    ViewData["Title"] = "배너관리";
+    Layout = "_AdminLayout";
+
+
+    var list = ViewBag.bannerlist as List<BannerSettingModel> ?? new List<BannerSettingModel>();
+    var list2 = ViewBag.bannercategorylist as List<BannerSettingCategoryModel> ?? new List<BannerSettingCategoryModel>();
+
+    var groups = list.GroupBy(b => new { b.bccode, b.bcname, b.bcord })
+                .OrderBy(g => g.Key.bcord)
+                .ToList();
+
+    int groupIndex = 0;
+}
+
+<div class="page-header d-print-none" aria-label="Page header">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+
+                <h2 class="page-title">
+                    배너관리 > 설정
+                </h2>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="page-body">
+
+    <div class="container-xl">
+
+        <div class="row g-3">
+
+            <div class="col-12">
+                
+                <div class="card">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-vcenter mb-0 banner-price-table">
+
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="width:15%">대분류</th>
+                                    <th style="width:15%">소분류</th>
+                                    <th style="width:8%">총 슬롯</th>
+                                    <th style="width:10%">금액(원)</th>
+                                    <th style="width:10%">계약기간</th>
+                                    <th style="width:10%">사이즈(PX)</th>
+                                    <th style="width:8%">노출방식</th>
+                                    <th>메모</th>
+                                    <th style="width:8%">관리</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                                @foreach (var group in groups)
+                                {
+                                    var groupId = group.Key.bccode;
+                                    var items = group
+                                                .OrderBy(x => x.ord1)
+                                                .ThenBy(x => x.ord2)
+                                                .ToList();
+
+                                    for (int i = 0; i < items.Count; i++)
+                                    {
+
+                                        var item = items[i];
+
+                                        <tr data-category-group="@(i == 0 ? groupId : null)"
+                                            data-category-detail="@(i > 0 ? groupId : null)"
+                                            class="@(i > 0 ? "d-none" : "")">
+                                        
+                                        @if (i == 0)
+                                        {
+                                            <td rowspan="@items.Count"
+                                                class="align-top"
+                                                data-category-cell="@groupId">
+
+                                                <div class="d-flex align-items-center">
+
+                                                    <button type="button"
+                                                            class="category-toggle me-2"
+                                                            data-category-toggle="@groupId"
+                                                            aria-expanded="false"
+                                                            title="펼치기">
+                                                        −
+                                                    </button>
+
+                                                    <span>@group.Key.bcname</span>
+                                                </div>
+
+                                            </td>
+                                        }
+
+                                        <td>@item.bannername</td>
+
+                                        <td class="text-center">@item.bannercnt</td>
+
+                                        <td class="text-center" id="bprice_@(item.banneridx)">@item.bannerprice</td>
+
+                                        <td class="text-center" id="bmonths_@(item.banneridx)">@item.bannermonths 개월</td>
+
+                                        <td class="text-center" id="bsize_@(item.banneridx)">@item.bannersizex x @item.bannersizey</td>
+
+                                        <td class="text-center" id="bmode_@(item.banneridx)">@item.bannermode</td>
+
+                                        <td id="bmemo_@(item.banneridx)">@item.memo</td>
+
+                                        <td class="text-center">
+                                                <button class="btn btn-orange btn-sm" onclick="bannersettingmodal('b','@(item.banneridx)','')">수정</button>
+                                        </td>
+
+                                        </tr>
+                                    }
+
+                                }
+
+
+                                @if (list2.Any())
+                                {
+                                    int i = 0;
+
+                                    
+                                    foreach (var item in list2)
+                                    {
+                                        <tr data-category-group="@(i == 0 ? "BC006" : null)"
+                                            data-category-detail="@(i > 0 ? "BC006" : null)"
+                                            class="@(i > 0 ? "d-none" : "")">
+
+
+                                            @if (i == 0)
+                                            {
+                                                <td rowspan="@list2.Count"
+                                                    class="align-top"
+                                                    data-category-cell="BC006">
+
+                                                    <div class="d-flex align-items-center">
+
+                                                        <button type="button"
+                                                                class="category-toggle me-2"
+                                                                data-category-toggle="BC006"
+                                                                aria-expanded="false"
+                                                                title="펼치기">
+                                                            −
+                                                        </button>
+
+                                                        <span>카테고리배너</span>
+                                                    </div>
+
+                                                </td>
+                                            }
+
+                                            <td>@item.catname</td>
+
+                                            <td class="text-center">@item.bannercnt</td>
+
+                                            <td class="text-center" id="cprice_@(item.bcode)">@item.bannerprice</td>
+
+                                            <td class="text-center" id="cmonths_@(item.bcode)">@item.bannermonths 개월</td>
+
+                                            <td class="text-center" id="csize_@(item.bcode)">@item.bannersizex x @item.bannersizey</td>
+
+                                            <td class="text-center" id="cmode_@(item.bcode)">@item.bannermode</td>
+
+                                            <td id="cmemo_@(item.bcode)">@item.memo</td>
+
+                                            <td class="text-center">
+                                                <button class="btn btn-orange btn-sm" onclick="bannersettingmodal('c','@(item.banneridx)','@(item.bcode)')">수정</button>
+                                            </td>
+
+
+                                        </tr>
+
+                                        i++;
+                                    }
+                                    
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal modal-blur fade" id="setbannersettingmodal" tabindex="-1" role="dialog" aria-labelledby="setbannersettingmodal-title" aria-hidden="true">
+    <div class="modal-dialog modal-3 modal-dialog-centered" role="document">
+        <div class="modal-content" id="setbannersettingmodal-content">
+            
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $('[data-category-toggle]').each(function () {
+
+            const $button = $(this);
+            const groupName = $button.data('category-toggle');
+
+            const $detailRows = $(
+                '[data-category-detail="' + groupName + '"]'
+            );
+
+            const $categoryCell = $(
+                '[data-category-cell="' + groupName + '"]'
+            );
+
+
+            // =========================
+            // 최초 로딩 시 모두 접기
+            // =========================
+            if ($detailRows.length > 0) {
+
+                $detailRows.addClass('d-none');
+
+                if ($categoryCell.length > 0) {
+                    $categoryCell.prop('rowSpan', 1);
+                }
+
+                $button
+                    .text('+')
+                    .attr('aria-expanded', 'false')
+                    .attr('title', '펼치기')
+                    .attr('aria-label', '펼치기');
+            }
+
+
+            // =========================
+            // 클릭 이벤트
+            // =========================
+            $button.on('click', function () {
+
+                if ($detailRows.length === 0) {
+                    return;
+                }
+
+                const isExpanded =
+                    $button.attr('aria-expanded') === 'true';
+
+                if (isExpanded) {
+
+                    // 접기
+                    $detailRows.addClass('d-none');
+
+                    if ($categoryCell.length > 0) {
+                        $categoryCell.prop('rowSpan', 1);
+                    }
+
+                    $button
+                        .text('+')
+                        .attr('aria-expanded', 'false')
+                        .attr('title', '펼치기')
+                        .attr('aria-label', '펼치기');
+
+                } else {
+
+                    // 펼치기
+                    $detailRows.removeClass('d-none');
+
+                    if ($categoryCell.length > 0) {
+                        $categoryCell.prop(
+                            'rowSpan',
+                            $detailRows.length + 1
+                        );
+                    }
+
+                    $button
+                        .text('−')
+                        .attr('aria-expanded', 'true')
+                        .attr('title', '접기')
+                        .attr('aria-label', '접기');
+                }
+
+            });
+
+        });
+
+    });
+
+    function bannersettingmodal(bgubun, bidx, bbcode) {
+
+        $("#setbannersettingmodal-content").html("");
+
+        const ajaxlink = 'AjaxSetBannerSettingModal';
+
+
+        var param = {
+            bgubun:bgubun,
+            bidx:bidx,
+            bbcode:bbcode
+        };
+
+        $.post(ajaxlink, param, function (html) {
+            $('#setbannersettingmodal-content').html(html);
+        });
+
+
+        $('#setbannersettingmodal').modal('show');
+
+    }
+
+    //배너 수정
+    function modifysetting(e){
+        
+        const bgubun  = e.dataset.bgubun;
+        const bidx  = e.dataset.bidx;
+        const bbcode  = e.dataset.bbcode;
+        const bprice = $("#bprice").val();
+        const bmonths = $("#bmonths").val();
+        const bsizex = $("#bsizex").val();
+        const bsizey = $("#bsizey").val();
+        const bmode = $('input[name="bmode"]:checked').val();
+        const bmemo = $("#bmemo").val();
+
+        if (!bprice.trim()) {
+            alert("금액을 입력해주세요.");
+            bprice.focus();
+            return;
+        }
+
+        if (!bmonths.trim()) {
+            alert("계약기간을 입력해주세요.");
+            bmonths.focus();
+            return;
+        }
+
+        if (!bsizex.trim()) {
+            alert("배너 가로 사이즈를 입력해주세요.");
+            bsizex.focus();
+            return;
+        }
+
+        if (!bsizey.trim()) {
+            alert("배너 세로 사이즈를 입력해주세요.");
+            bsizey.focus();
+            return;
+        }
+
+
+        $.ajax({
+            url:'/Banner/AjaxSetSetting',
+            type:'POST',
+            data:{
+                bgubun:bgubun,
+                bidx:bidx,
+                bbcode:bbcode,
+                bprice:bprice,
+                bmonths:bmonths,
+                bsizex:bsizex,
+                bsizey:bsizey,
+                bmode:bmode,
+                bmemo:bmemo
+            },
+            success:function(data){
+                if(data.item1 == "success")
+                {
+                    alert('수정 하였습니다.');
+
+                    if(bgubun == "b"){
+
+                        $("#bprice_"+bidx).text(bprice);
+                        $("#bmonths_"+bidx).text(bmonths);
+                        $("#bsize_"+bidx).text(bsizex+" x "+bsizey);
+                        $("#bmode_"+bidx).text(bmode);
+                        $("#bmemo_"+bidx).text(bmemo);
+                    
+                    }else if(bgubun == "c"){ //카테고리배너
+                    
+                        $("#cprice_"+bbcode).text(bprice);
+                        $("#cmonths_"+bbcode).text(bmonths);
+                        $("#csize_"+bbcode).text(bsizex+" x "+bsizey);
+                        $("#bmode_"+bbcode).text(bmode);
+                        $("#cmemo_"+bbcode).text(bmemo);
+                    }
+                
+
+                    $('#setbannersettingmodal').modal('hide');
+
+                }
+                else
+                {
+                    alert('등록에 실패하였습니다.');
+                }
+            },
+            error:function(){
+                alert("서버와 통신 중 오류가 발생했습니다.");
+            }
+        });
+
+
+    }
+
+    
+
+</script>

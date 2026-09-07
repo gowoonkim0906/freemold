@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="F logo">
+  <title>F Logo</title>
+  <desc>Rounded square terracotta-orange tile with a white stylized lowercase f.</desc>
+
+  <!-- Background tile -->
+  <rect x="0" y="0" width="240" height="240" rx="52" ry="52" fill="#DB6843"/>
+
+  <!-- Stylized lowercase f: left stem + top hook + middle crossbar -->
+  <g fill="#FFFFFF">
+    <!-- Left vertical stem (anchors the character top to bottom) -->
+    <rect x="84" y="56" width="40" height="144" rx="6" ry="6"/>
+    <!-- Top arm: short horizontal bar at the very top -->
+    <rect x="84" y="56" width="92" height="34" rx="6" ry="6"/>
+    <!-- Crossbar: longer horizontal bar through the middle -->
+    <rect x="84" y="118" width="116" height="34" rx="6" ry="6"/>
+  </g>
+</svg>

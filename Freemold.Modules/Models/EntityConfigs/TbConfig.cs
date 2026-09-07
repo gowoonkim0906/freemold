@@ -1795,11 +1795,9 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.UserAgent).IsUnicode(false);
             });
 
-            modelBuilder.Entity<TbBanner>(entity =>
+            modelBuilder.Entity<TB_BANNER>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
-
-                entity.ToTable("TB_BANNER");
 
                 entity.HasIndex(e => e.BannerUnlimit, "IX_TB_BANNER_BannerUnlimit").HasFillFactor(90);
 
@@ -1807,37 +1805,20 @@ namespace Freemold.Modules.Models.EntityConfigs
 
                 entity.HasIndex(e => e.Ord, "IX_TB_BANNER_Ord").HasFillFactor(90);
 
-                entity.HasIndex(e => e.BIdx, "IX_TB_BANNER_bIdx").HasFillFactor(90);
+                entity.HasIndex(e => e.bIdx, "IX_TB_BANNER_bIdx").HasFillFactor(90);
 
-                entity.HasIndex(e => e.BType, "IX_TB_BANNER_bType").HasFillFactor(90);
+                entity.HasIndex(e => e.bType, "IX_TB_BANNER_bType").HasFillFactor(90);
 
-                entity.HasIndex(e => e.EDate, "IX_TB_BANNER_eDate")
+                entity.HasIndex(e => e.eDate, "IX_TB_BANNER_eDate")
                     .IsDescending()
                     .HasFillFactor(90);
 
-                entity.HasIndex(e => e.IsUse, "IX_TB_BANNER_isUse").HasFillFactor(90);
+                entity.HasIndex(e => e.isUse, "IX_TB_BANNER_isUse").HasFillFactor(90);
 
-                entity.HasIndex(e => e.SDate, "IX_TB_BANNER_sDate")
+                entity.HasIndex(e => e.sDate, "IX_TB_BANNER_sDate")
                     .IsDescending()
                     .HasFillFactor(90);
 
-                entity.Property(e => e.BCode)
-                    .HasMaxLength(4)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasColumnName("bCode");
-                entity.Property(e => e.BIdx)
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasComment("배너타입Idx")
-                    .HasColumnName("bIdx");
-                entity.Property(e => e.BType)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValue("N")
-                    .IsFixedLength()
-                    .HasComment("배너타입(N:일반, C:카테고리)")
-                    .HasColumnName("bType");
                 entity.Property(e => e.BannerImage)
                     .HasMaxLength(50)
                     .HasComment("배너이미지");
@@ -1865,53 +1846,54 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .IsUnicode(false)
                     .HasDefaultValue("N")
                     .IsFixedLength();
-                entity.Property(e => e.EDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("eDate");
-                entity.Property(e => e.IsUse)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValue("Y")
-                    .IsFixedLength()
-                    .HasColumnName("isUse");
-                entity.Property(e => e.MIdx)
-                    .HasComment("회원UID")
-                    .HasColumnName("mIdx");
-                entity.Property(e => e.MType)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("((1))")
-                    .IsFixedLength()
-                    .HasComment("회원구분(기업:1)")
-                    .HasColumnName("mType");
                 entity.Property(e => e.Ord).HasDefaultValue(99);
                 entity.Property(e => e.RegDate)
                     .HasDefaultValueSql("(getdate())")
                     .HasColumnType("datetime");
-                entity.Property(e => e.RegId)
-                    .HasMaxLength(50)
-                    .HasColumnName("RegID");
-                entity.Property(e => e.RegIp)
+                entity.Property(e => e.RegID).HasMaxLength(50);
+                entity.Property(e => e.RegIP)
                     .HasMaxLength(23)
-                    .IsUnicode(false)
-                    .HasColumnName("RegIP");
-                entity.Property(e => e.SDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("sDate");
+                    .IsUnicode(false);
                 entity.Property(e => e.StartDateWithUse).HasColumnType("datetime");
+                entity.Property(e => e.bCode)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+                entity.Property(e => e.bIdx)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasComment("배너타입Idx");
+                entity.Property(e => e.bType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValue("N")
+                    .IsFixedLength()
+                    .HasComment("배너타입(N:일반, C:카테고리)");
+                entity.Property(e => e.eDate).HasColumnType("datetime");
+                entity.Property(e => e.isUse)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValue("Y")
+                    .IsFixedLength();
+                entity.Property(e => e.mIdx).HasComment("회원UID");
+                entity.Property(e => e.mType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("((1))")
+                    .IsFixedLength()
+                    .HasComment("회원구분(기업:1)");
+                entity.Property(e => e.sDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TbBannerClick>(entity =>
+            modelBuilder.Entity<TB_BANNER_CLICK>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
-
-                entity.ToTable("TB_BANNER_CLICK");
 
                 entity.HasIndex(e => e.InDate, "IX_TB_BANNER_CLICK_InDate")
                     .IsDescending()
                     .HasFillFactor(90);
 
-                entity.HasIndex(e => e.RegId, "IX_TB_BANNER_CLICK_RegID").HasFillFactor(90);
+                entity.HasIndex(e => e.RegID, "IX_TB_BANNER_CLICK_RegID").HasFillFactor(90);
 
                 entity.Property(e => e.BannerLink)
                     .HasMaxLength(200)
@@ -1927,89 +1909,96 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.RegDate)
                     .HasDefaultValueSql("(getdate())")
                     .HasColumnType("datetime");
-                entity.Property(e => e.RegId)
+                entity.Property(e => e.RegID)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("RegID");
-                entity.Property(e => e.RegIp)
+                    .IsUnicode(false);
+                entity.Property(e => e.RegIP)
                     .HasMaxLength(23)
-                    .IsUnicode(false)
-                    .HasColumnName("RegIP");
+                    .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TbBannerKeyword>(entity =>
+            modelBuilder.Entity<TB_BANNER_KEYWORD>(entity =>
             {
-                entity.HasKey(e => e.Uid).HasFillFactor(90);
-
-                entity.ToTable("TB_BANNER_KEYWORD");
+                entity.HasKey(e => e.UID).HasFillFactor(90);
 
                 entity.HasIndex(e => e.Deleted, "IX_TB_BANNER_KEYWORD_Deleted").HasFillFactor(90);
 
-                entity.HasIndex(e => e.KeyWord1, "IX_TB_BANNER_KEYWORD_KEY_WORD1").HasFillFactor(90);
+                entity.HasIndex(e => e.KEY_WORD1, "IX_TB_BANNER_KEYWORD_KEY_WORD1").HasFillFactor(90);
 
-                entity.HasIndex(e => e.KeyWord2, "IX_TB_BANNER_KEYWORD_KEY_WORD2").HasFillFactor(90);
+                entity.HasIndex(e => e.KEY_WORD2, "IX_TB_BANNER_KEYWORD_KEY_WORD2").HasFillFactor(90);
 
-                entity.HasIndex(e => e.KeyWord3, "IX_TB_BANNER_KEYWORD_KEY_WORD3").HasFillFactor(90);
+                entity.HasIndex(e => e.KEY_WORD3, "IX_TB_BANNER_KEYWORD_KEY_WORD3").HasFillFactor(90);
 
-                entity.HasIndex(e => e.KeyWord4, "IX_TB_BANNER_KEYWORD_KEY_WORD4").HasFillFactor(90);
+                entity.HasIndex(e => e.KEY_WORD4, "IX_TB_BANNER_KEYWORD_KEY_WORD4").HasFillFactor(90);
 
-                entity.HasIndex(e => e.MemberUid, "IX_TB_BANNER_KEYWORD_MEMBER_UID").HasFillFactor(90);
+                entity.HasIndex(e => e.MEMBER_UID, "IX_TB_BANNER_KEYWORD_MEMBER_UID").HasFillFactor(90);
 
-                entity.Property(e => e.Uid).HasColumnName("UID");
-                entity.Property(e => e.Amount)
+                entity.Property(e => e.AMOUNT)
                     .HasMaxLength(10)
-                    .HasDefaultValue("")
-                    .HasColumnName("AMOUNT");
-                entity.Property(e => e.ChargeDate).HasColumnName("CHARGE_DATE");
+                    .HasDefaultValue("");
                 entity.Property(e => e.Deleted)
                     .HasMaxLength(1)
                     .IsUnicode(false)
                     .HasDefaultValue("N")
                     .IsFixedLength();
-                entity.Property(e => e.Gubun)
-                    .HasMaxLength(10)
-                    .HasColumnName("GUBUN");
-                entity.Property(e => e.KeyWord1)
-                    .HasMaxLength(200)
-                    .HasColumnName("KEY_WORD1");
-                entity.Property(e => e.KeyWord2)
-                    .HasMaxLength(200)
-                    .HasColumnName("KEY_WORD2");
-                entity.Property(e => e.KeyWord3)
-                    .HasMaxLength(200)
-                    .HasColumnName("KEY_WORD3");
-                entity.Property(e => e.KeyWord4)
-                    .HasMaxLength(200)
-                    .HasColumnName("KEY_WORD4");
-                entity.Property(e => e.MemberGubun)
+                entity.Property(e => e.GUBUN).HasMaxLength(10);
+                entity.Property(e => e.KEY_WORD1).HasMaxLength(200);
+                entity.Property(e => e.KEY_WORD2).HasMaxLength(200);
+                entity.Property(e => e.KEY_WORD3).HasMaxLength(200);
+                entity.Property(e => e.KEY_WORD4).HasMaxLength(200);
+                entity.Property(e => e.MEMBER_GUBUN)
                     .HasMaxLength(5)
-                    .HasDefaultValue("1")
-                    .HasColumnName("MEMBER_GUBUN");
-                entity.Property(e => e.MemberUid).HasColumnName("MEMBER_UID");
-                entity.Property(e => e.Memo).HasColumnName("MEMO");
+                    .HasDefaultValue("1");
                 entity.Property(e => e.RegDate)
                     .HasDefaultValueSql("(getdate())")
                     .HasColumnType("datetime");
-                entity.Property(e => e.RegId)
-                    .HasMaxLength(50)
-                    .HasColumnName("RegID");
-                entity.Property(e => e.RegIp)
+                entity.Property(e => e.RegID).HasMaxLength(50);
+                entity.Property(e => e.RegIP)
                     .HasMaxLength(23)
-                    .IsUnicode(false)
-                    .HasColumnName("RegIP");
-                entity.Property(e => e.WordsEnd).HasColumnName("WORDS_END");
-                entity.Property(e => e.WordsLink)
+                    .IsUnicode(false);
+                entity.Property(e => e.WORDS_LINK)
                     .HasMaxLength(200)
-                    .HasDefaultValue("")
-                    .HasColumnName("WORDS_LINK");
-                entity.Property(e => e.WordsStart).HasColumnName("WORDS_START");
+                    .HasDefaultValue("");
             });
 
-            modelBuilder.Entity<TbBannerType>(entity =>
+            modelBuilder.Entity<TB_BANNER_TYPE_CAT>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
 
-                entity.ToTable("TB_BANNER_TYPE");
+                entity.HasIndex(e => e.Code, "IX_TB_BANNER_TYPE_CAT_Code").HasFillFactor(90);
+
+                entity.Property(e => e.BannerMode)
+                    .HasMaxLength(10)
+                    .HasComment("노출방식(fixed:고정 , rolling:롤링)");
+                entity.Property(e => e.Cat)
+                    .HasMaxLength(5)
+                    .IsUnicode(false);
+                entity.Property(e => e.CatName).HasMaxLength(50);
+                entity.Property(e => e.Code)
+                    .HasMaxLength(4)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+                entity.Property(e => e.Memo).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TB_BANNER_CATEGORY>(entity =>
+            {
+                entity.HasKey(e => e.Idx);
+
+                entity.HasIndex(e => new { e.BCCode, e.BCOrd, e.BCName }, "IX_TB_BANNER_CATEGORY");
+
+                entity.HasIndex(e => e.Idx, "IX_TB_BANNER_CATEGORY_1");
+
+                entity.Property(e => e.BCCode)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+                entity.Property(e => e.BCName).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<TB_BANNER_TYPE>(entity =>
+            {
+                entity.HasKey(e => e.Idx).HasFillFactor(90);
 
                 entity.HasIndex(e => e.BannerPosition, "IX_TB_BANNER_TYPE_BannerPosition").HasFillFactor(90);
 
@@ -2017,6 +2006,11 @@ namespace Freemold.Modules.Models.EntityConfigs
 
                 entity.HasIndex(e => e.Ord2, "IX_TB_BANNER_TYPE_Ord2").HasFillFactor(90);
 
+                entity.Property(e => e.BCCode).HasMaxLength(5);
+                entity.Property(e => e.BannerMode)
+                    .HasMaxLength(10)
+                    .HasComment("노출방식(fixed:고정 , rolling:롤링)");
+                entity.Property(e => e.BannerMonths).HasComment("계약기간");
                 entity.Property(e => e.BannerName1).HasMaxLength(20);
                 entity.Property(e => e.BannerName2).HasMaxLength(20);
                 entity.Property(e => e.BannerPosition)
@@ -2034,28 +2028,10 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.RegDate)
                     .HasDefaultValueSql("(getdate())")
                     .HasColumnType("datetime");
-                entity.Property(e => e.RegIp)
+                entity.Property(e => e.RegIP)
                     .HasMaxLength(23)
-                    .IsUnicode(false)
-                    .HasColumnName("RegIP");
-            });
-
-            modelBuilder.Entity<TbBannerTypeCat>(entity =>
-            {
-                entity.HasKey(e => e.Idx).HasFillFactor(90);
-
-                entity.ToTable("TB_BANNER_TYPE_CAT");
-
-                entity.HasIndex(e => e.Code, "IX_TB_BANNER_TYPE_CAT_Code").HasFillFactor(90);
-
-                entity.Property(e => e.Cat)
-                    .HasMaxLength(5)
                     .IsUnicode(false);
-                entity.Property(e => e.CatName).HasMaxLength(50);
-                entity.Property(e => e.Code)
-                    .HasMaxLength(4)
-                    .IsUnicode(false)
-                    .IsFixedLength();
+                entity.Property(e => e.UseYN).HasMaxLength(1);
             });
 
             modelBuilder.Entity<TbBlockIp>(entity =>
@@ -3749,56 +3725,44 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.Name).HasMaxLength(156);
             });
 
-            modelBuilder.Entity<VwNcategoryList>(entity =>
+            modelBuilder.Entity<VW_NCATEGORY_LIST>(entity =>
             {
                 entity
                     .HasNoKey()
                     .ToView("VW_NCATEGORY_LIST");
 
-                entity.Property(e => e.Acode)
+                entity.Property(e => e.ACode)
                     .HasMaxLength(4)
                     .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasColumnName("ACode");
-                entity.Property(e => e.Aeng)
+                    .IsFixedLength();
+                entity.Property(e => e.AEng)
                     .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("AEng");
-                entity.Property(e => e.Akor)
-                    .HasMaxLength(50)
-                    .HasColumnName("AKor");
-                entity.Property(e => e.Aord).HasColumnName("AOrd");
-                entity.Property(e => e.Bcode)
+                    .IsUnicode(false);
+                entity.Property(e => e.AKor).HasMaxLength(50);
+                entity.Property(e => e.BCode)
                     .HasMaxLength(4)
                     .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasColumnName("BCode");
-                entity.Property(e => e.Beng)
+                    .IsFixedLength();
+                entity.Property(e => e.BEng)
                     .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.BKor).HasMaxLength(50);
+                entity.Property(e => e.CCode)
+                    .HasMaxLength(4)
                     .IsUnicode(false)
-                    .HasColumnName("BEng");
-                entity.Property(e => e.Bkor)
-                    .HasMaxLength(50)
-                    .HasColumnName("BKor");
-                entity.Property(e => e.Bord).HasColumnName("BOrd");
+                    .IsFixedLength();
+                entity.Property(e => e.CEng)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+                entity.Property(e => e.CKor).HasMaxLength(50);
                 entity.Property(e => e.CatName).HasMaxLength(156);
-                entity.Property(e => e.Ccode)
-                    .HasMaxLength(4)
-                    .IsUnicode(false)
-                    .IsFixedLength()
-                    .HasColumnName("CCode");
-                entity.Property(e => e.Ceng)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("CEng");
-                entity.Property(e => e.Ckor)
-                    .HasMaxLength(50)
-                    .HasColumnName("CKor");
+                entity.Property(e => e.CatNameEng)
+                    .HasMaxLength(306)
+                    .IsUnicode(false);
                 entity.Property(e => e.Code)
                     .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength();
-                entity.Property(e => e.Cord).HasColumnName("COrd");
                 entity.Property(e => e.StdMld)
                     .HasMaxLength(1)
                     .IsUnicode(false)

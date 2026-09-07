@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Freemold.Modules;
+
+public partial class TB_BANNER_TYPE
+{
+    public int Idx { get; set; }
+
+    public string BannerPosition { get; set; } = null!;
+
+    public string BannerType { get; set; } = null!;
+
+    public short BannerCnt { get; set; }
+
+    public short BannerSizeX { get; set; }
+
+    public short BannerSizeY { get; set; }
+
+    public string? BannerSize { get; set; }
+
+    public int BannerPrice { get; set; }
+
+    public string? BannerName1 { get; set; }
+
+    public string? BannerName2 { get; set; }
+
+    /// <summary>
+    /// 노출방식(fixed:고정 , rolling:롤링)
+    /// </summary>
+    public string? BannerMode { get; set; }
+
+    /// <summary>
+    /// 계약기간
+    /// </summary>
+    public short? BannerMonths { get; set; }
+
+    public string? Memo { get; set; }
+
+    public int Ord1 { get; set; }
+
+    public int Ord2 { get; set; }
+
+    public string? UseYN { get; set; }
+
+    public string? BCCode { get; set; }
+
+    public string RegIP { get; set; } = null!;
+
+    public DateTime RegDate { get; set; }
+}

@@ -1,0 +1,851 @@
+﻿@{
+    ViewData["Title"] = "배너관리";
+    Layout = "_AdminLayout";
+}
+<script src="~/lib/tabler/libs/apexcharts/dist/apexcharts.min.js"></script>
+<!-- BEGIN PAGE HEADER -->
+
+<div class="page-header d-print-none" aria-label="Page header">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+
+                <h2 class="page-title">
+
+                    배너관리 > 전체현황
+                </h2>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- END PAGE HEADER -->
+<!-- BEGIN PAGE BODY -->
+<div class="page-body">
+
+
+    <div class="container-xl">
+
+		<div class="row row-deck row-cards">
+
+
+			<div class="col-sm-6 col-lg-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div class="page-title h2"><span class="status-dot bg-green me-2 status-dot-lg"></span> 운영중</div>
+							<div class="ms-auto lh-1">
+								<span class="badge bg-red text-red-fg fs-5 px-2 py-2">마감중 3</span>
+							</div>
+						</div>
+						<div class="border-top mt-2">
+							<div>
+
+								<div class="mt-1 mb-1">
+									<span class="fw-bold fs-1">133건</span>
+									<span class="text-secondary fs-3">/ 200건</span>
+								</div>
+
+								<div class="text-secondary mb-2">
+									현재 운영 중인 배너
+								</div>
+
+								<div class="border-top pt-2">
+
+									<div class="row text-center">
+
+										<div class="col-6 border-end">
+											<span class="me-2">유료</span>
+											<strong>118</strong>
+										</div>
+
+										<div class="col-6">
+											<span class="me-2">무료</span>
+											<strong>15</strong>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div class="page-title h2"><span class="status-dot bg-blue me-2 status-dot-lg"></span> 예약</div>
+						</div>
+						<div class="border-top mt-2">
+							<div>
+								<div class="mb-1">
+									<span class="fw-bold fs-1">3건</span>
+								</div>
+								<div class="text-secondary mb-2">
+									노출 예정 배너
+								</div>
+								<div class="border-top pt-2">
+
+									<div class="row text-center">
+
+										<div class="col-6 border-end">
+											<span class="me-2">유료</span>
+											<strong>118</strong>
+										</div>
+
+										<div class="col-6">
+											<span class="me-2">무료</span>
+											<strong>15</strong>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div class="page-title h2"><span class="status-dot bg-yellow me-2 status-dot-lg"></span> 대기</div>
+						</div>
+						<div class="border-top mt-2">
+							<div>
+								<div class="mb-1">
+									<span class="fw-bold fs-1">3건</span>
+								</div>
+								<div class="text-secondary mb-2">
+									순번 대기 중인 배너
+								</div>
+								<div class="border-top pt-2">
+
+									<div class="row text-center">
+
+										<div class="col-6 border-end">
+											<span class="me-2">유료</span>
+											<strong>118</strong>
+										</div>
+
+										<div class="col-6">
+											<span class="me-2">무료</span>
+											<strong>15</strong>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div class="page-title h2"><span class="status-dot bg-gray-500 me-2 status-dot-lg"></span> 공석</div>
+						</div>
+						<div class="border-top mt-2">
+							<div>
+								<div class="mb-1">
+									<span class="fw-bold fs-1">3건</span>
+								</div>
+								<div class="text-secondary">
+									현재 공석 상태 배너
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-12">
+				<div class="card">
+					<div class="card-table">
+						<div class="card-header">
+							<div class="row w-full">
+								<div class="col">
+									<h3 class="card-title mb-0">
+										배너 영역별 운영 현황
+									</h3>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<div class="table-responsive">
+								<table class="table table-vcenter  mb-3">
+									<thead>
+										<tr>
+											<th class="text-center">
+												배너 영역
+											</th>
+											<th class="text-center">
+												전체
+											</th>
+											<th class="text-center">
+												마감임박
+											</th>
+											<th class="text-center">
+												운영중
+											</th>
+											<th class="text-center">
+												예약
+											</th>
+											<th class="text-center">
+												대기
+											</th>
+											<th class="text-center">
+												공석
+											</th>
+											<th class="text-center">
+												주요이슈
+											</th>
+											<th class="text-center">
+												최근수정
+											</th>
+											<th class="text-center">
+												관리
+											</th>
+										</tr>
+									</thead>
+
+									<tbody class="table-tbody">
+										<tr>
+											<td class="text-center">
+												로고/팝업/검색창/로그인
+											</td>
+											<td class="text-center">
+												1
+											</td>
+											<td class="text-center">
+												2
+											</td>
+											<td class="text-center">
+												3
+											</td>
+											<td class="text-center">
+												4
+											</td>
+											<td class="text-center">
+												5
+											</td>
+											<td class="text-center">
+												6
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												<div>2026-08-26</div>
+												<div>관리자</div>
+											</td>
+											<td class="text-center">
+												<a class="btn btn-outline btn-dark"> 바로가기</a>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-center">
+												최상단/마이페이지/메인배터
+											</td>
+											<td class="text-center">
+												1
+											</td>
+											<td class="text-center">
+												2
+											</td>
+											<td class="text-center">
+												3
+											</td>
+											<td class="text-center">
+												4
+											</td>
+											<td class="text-center">
+												5
+											</td>
+											<td class="text-center">
+												6
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												<div>2026-08-26</div>
+												<div>관리자</div>
+											</td>
+											<td class="text-center">
+												<a class="btn btn-outline btn-dark"> 바로가기</a>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-center">
+												서브탑배너
+											</td>
+											<td class="text-center">
+												1
+											</td>
+											<td class="text-center">
+												2
+											</td>
+											<td class="text-center">
+												3
+											</td>
+											<td class="text-center">
+												4
+											</td>
+											<td class="text-center">
+												5
+											</td>
+											<td class="text-center">
+												6
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												<div>2026-08-26</div>
+												<div>관리자</div>
+											</td>
+											<td class="text-center">
+												<a class="btn btn-outline btn-dark"> 바로가기</a>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-center">
+												커뮤니티띠배너/쪽지창
+											</td>
+											<td class="text-center">
+												1
+											</td>
+											<td class="text-center">
+												2
+											</td>
+											<td class="text-center">
+												3
+											</td>
+											<td class="text-center">
+												4
+											</td>
+											<td class="text-center">
+												5
+											</td>
+											<td class="text-center">
+												6
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												<div>2026-08-26</div>
+												<div>관리자</div>
+											</td>
+											<td class="text-center">
+												<a class="btn btn-outline btn-dark"> 바로가기</a>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-center">
+												OEM/ODM배너
+											</td>
+											<td class="text-center">
+												1
+											</td>
+											<td class="text-center">
+												2
+											</td>
+											<td class="text-center">
+												3
+											</td>
+											<td class="text-center">
+												4
+											</td>
+											<td class="text-center">
+												5
+											</td>
+											<td class="text-center">
+												6
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												<div>2026-08-26</div>
+												<div>관리자</div>
+											</td>
+											<td class="text-center">
+												<a class="btn btn-outline btn-dark"> 바로가기</a>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-center">
+												카테고리배너
+											</td>
+											<td class="text-center">
+												1
+											</td>
+											<td class="text-center">
+												2
+											</td>
+											<td class="text-center">
+												3
+											</td>
+											<td class="text-center">
+												4
+											</td>
+											<td class="text-center">
+												5
+											</td>
+											<td class="text-center">
+												6
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												<div>2026-08-26</div>
+												<div>관리자</div>
+											</td>
+											<td class="text-center">
+												<a class="btn btn-outline btn-dark"> 바로가기</a>
+											</td>
+										</tr>
+										<tr class="bg-gray-100">
+											<td class="text-center">
+												통합
+											</td>
+											<td class="text-center">
+												133
+											</td>
+											<td class="text-center">
+												2(3%)
+											</td>
+											<td class="text-center">
+												3(80%)
+											</td>
+											<td class="text-center">
+												4(2%)
+											</td>
+											<td class="text-center">
+												5(10.5%)
+											</td>
+											<td class="text-center">
+												6(3%)
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												-
+											</td>
+											<td class="text-center">
+												-
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-12 col-lg-6">
+
+				<div class="card">
+					<div class="card-body">
+
+						<h3 class="card-title mb-3">
+							유/무료 현황
+						</h3>
+
+						<div class="row align-items-center">
+
+							<!-- 도넛 차트 -->
+							<div class="col-md-7">
+
+								<div id="chart-banner-status" style="height:280px;"></div>
+
+							</div>
+
+
+							<!-- 우측 현황표 -->
+							<div class="col-md-5">
+
+								<table class="table table-bordered table-vcenter mb-0">
+
+									<thead>
+										<tr>
+											<th colspan="2"
+												class="text-center">
+												건수
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+										<tr>
+											<td>
+												<span class="status-dot bg-blue me-2"></span>
+												유료
+											</td>
+
+											<td class="text-end fw-bold">
+												45건
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												<span class="status-dot bg-azure me-2"></span>
+												무료
+											</td>
+
+											<td class="text-end fw-bold">
+												25건
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												<span class="status-dot bg-teal me-2"></span>
+												무료_new
+											</td>
+
+											<td class="text-end fw-bold">
+												20건
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												<span class="status-dot bg-orange me-2"></span>
+												무료_자사
+											</td>
+
+											<td class="text-end fw-bold">
+												10건
+											</td>
+										</tr>
+
+									</tbody>
+
+								</table>
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="col-sm-12 col-lg-6">
+
+				<div class="card h-100">
+
+					<!-- 카드 헤더 -->
+					<div class="card-header d-flex align-items-center">
+
+						<h3 class="card-title mb-0">
+							실시간 인기 배너
+						</h3>
+
+						<div class="ms-auto">
+							<a href="/Banner"
+							   class="btn btn-primary btn-sm">
+								더보기
+							</a>
+						</div>
+
+					</div>
+
+
+					<!-- 테이블 -->
+					<div class="table-responsive">
+
+						<table class="table table-vcenter card-table mb-0">
+
+							<thead>
+								<tr>
+									<th class="text-center" style="width:60px;">
+										순위
+									</th>
+
+									<th class="text-center" style="width:180px;">
+										업체명
+									</th>
+
+									<th class="text-center">
+										위치
+									</th>
+
+									<th class="text-center" style="width:100px;">
+										클릭수
+									</th>
+								</tr>
+							</thead>
+
+
+							<tbody>
+
+								<tr>
+									<td class="text-center">
+										1
+									</td>
+
+									<td class="text-center fw-medium">
+										디자인플래닛
+									</td>
+
+									<td class="text-center">
+										메인_팝업
+									</td>
+
+									<td class="text-center fw-bold">
+										100
+									</td>
+								</tr>
+
+
+								<tr>
+									<td class="text-center">
+										2
+									</td>
+
+									<td class="text-center fw-medium">
+										펌텍코리아
+									</td>
+
+									<td class="text-center">
+										메인_최상단_중앙
+									</td>
+
+									<td class="text-center fw-bold">
+										80
+									</td>
+								</tr>
+
+
+								<tr>
+									<td class="text-center">
+										3
+									</td>
+
+									<td class="text-center fw-medium">
+										엘코스
+									</td>
+
+									<td class="text-center">
+										로그인
+									</td>
+
+									<td class="text-center fw-bold">
+										75
+									</td>
+								</tr>
+
+
+								<tr>
+									<td class="text-center">
+										4
+									</td>
+
+									<td class="text-center fw-medium">
+										엘케이코리아
+									</td>
+
+									<td class="text-center">
+										검색창
+									</td>
+
+									<td class="text-center fw-bold">
+										63
+									</td>
+								</tr>
+
+
+								<tr>
+									<td class="text-center">
+										5
+									</td>
+
+									<td class="text-center fw-medium">
+										티코스
+									</td>
+
+									<td class="text-center">
+										메인_팝업
+									</td>
+
+									<td class="text-center fw-bold">
+										25
+									</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+        
+
+
+
+    </div>
+
+
+
+</div>
+<!-- END PAGE BODY -->
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+
+		const chartElement =
+			document.getElementById("chart-banner-status");
+
+		if (!chartElement || typeof ApexCharts === "undefined") {
+			return;
+		}
+
+		const chart = new ApexCharts(chartElement, {
+
+			chart: {
+				type: "donut",
+				fontFamily: "inherit",
+				height: 280,
+				parentHeightOffset: 0,
+				toolbar: {
+					show: false
+				}
+			},
+
+			series: [
+				45,
+				25,
+				20,
+				10
+			],
+
+			labels: [
+				"유료",
+				"무료",
+				"무료_new",
+				"무료_자사"
+			],
+
+			colors: [
+				"#3b82f6",
+				"#5ba4f5",
+				"#34c99b",
+				"#f59f00"
+			],
+
+			stroke: {
+				width: 3,
+				colors: ["#ffffff"]
+			},
+
+			dataLabels: {
+				enabled: false
+			},
+
+			legend: {
+				show: false
+			},
+
+			plotOptions: {
+
+				pie: {
+
+					expandOnClick: false,
+
+					donut: {
+
+						size: "70%",
+
+						labels: {
+
+							show: true,
+
+							name: {
+								show: true,
+								offsetY: -8
+							},
+
+							value: {
+								show: true,
+								fontSize: "26px",
+								fontWeight: 700,
+
+								formatter: function (val) {
+									return val + "건";
+								}
+							},
+
+							total: {
+								show: true,
+								showAlways: true,
+								label: "총 배너",
+
+								fontSize: "14px",
+								fontWeight: 600,
+
+								formatter: function () {
+									return "100건";
+								}
+							}
+
+						}
+
+					}
+
+				}
+
+			},
+
+			tooltip: {
+
+				y: {
+					formatter: function (val) {
+						return val + "건";
+					}
+				}
+
+			}
+
+		});
+
+		chart.render();
+
+	});
+</script>

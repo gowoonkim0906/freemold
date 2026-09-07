@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "배너관리";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="page-header d-print-none" aria-label="Page header">
+	<div class="container-xl">
+		<div class="row g-2 align-items-center">
+			<div class="col">
+
+				<h2 class="page-title">
+
+					배너관리 > 배너검색
+				</h2>
+
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- END PAGE HEADER -->
+<!-- BEGIN PAGE BODY -->
+<div class="page-body">
+
+	<div class="container-xl">
+
+		<div class="row">
+			<div class="col-12 col-lg-12">
+                <div class="">
+                    <div class="col mb-3">
+
+                        <div class="ms-auto d-flex flex-wrap gap-2">
+                            <div class="input-group input-group-flat w-auto">
+                                <span class="input-group-text">
+                                    <img src="~/images/icon/search.svg" width="20" height="20" />
+                                </span>
+
+                                <input id="advanced-table-search" type="text" class="form-control" autocomplete="off">
+
+                            </div>
+
+                            <a href="#" class="btn btn-0">검색</a>
+
+                            <div>
+                                <select name="" class="form-select">
+                                    <option>운영 구분 전체</option>
+                                    <option>운영중</option>
+                                    <option>마감임박</option>
+                                    <option>예약</option>
+                                    <option>대기</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <select name="" class="form-select">
+                                    <option>유·무료 전체</option>
+                                    <option>유료</option>
+                                    <option>무료</option>
+                                    <option>무료 메인신규</option>
+                                    <option>무료 지사</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-vcenter mb-0">
+
+                            <thead>
+
+                                <tr class="text-center">
+                                    <th style="width:20%;">
+                                        배너위치
+                                    </th>
+                                    <th style="width:8%;">
+                                        유/무료
+                                    </th>
+                                    <th style="width:10%;">
+                                        등록일
+                                    </th>
+                                    <th style="width:10%;">
+                                        게재기간
+                                    </th>
+                                    <th style="width:10%;">
+                                        업체명
+                                    </th>
+                                    <th style="width:10%;">
+                                        이미지
+                                    </th>
+                                    <th class="text-center">
+                                        메모
+                                    </th>
+                                    <th style="width:10%;">
+                                        금액
+                                    </th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+
+                                <tr>
+
+                                    <td colspan="8" class="text-center text-secondary py-4">
+
+                                        좌측 배너위치를 선택해주세요.
+
+                                    </td>
+
+                                </tr>
+
+                                <tr class="text-center">
+                                    <td class="text-center">카테고리고정배터_프리몰드_Bottle</td>
+                                    <td class="text-center">유료</td>
+                                    <td class="text-center">2026-06-10</td>
+                                    <td class="text-center"><div>2026-07-20</div><div>~2026-08-20</div></td>
+                                    <td>업체명</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>300,000</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+			</div>
+		</div>
+	</div>
+</div>

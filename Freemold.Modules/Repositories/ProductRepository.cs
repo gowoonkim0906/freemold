@@ -56,7 +56,7 @@ namespace Freemold.Modules.Repositories
                 var prodUids = (from i in _appdbcontext.product_list
                                 let catNorm = i.Cat.Replace(";"+ Acode+";", "").Replace(";;", ",").Replace(";", "")
                                 from s in _appdbcontext.FnSplit(catNorm, ",")
-                                join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
+                                join c in _appdbcontext.VW_NCATEGORY_LIST on s.Val equals c.Code
                                 where c.StdMld == "Y" && EF.Functions.Like(i.UpCat, "%" + Acode + "%")
                                 select i.PROD_UID).Distinct();
 
@@ -177,7 +177,7 @@ namespace Freemold.Modules.Repositories
                 var query = from i in _appdbcontext.product_list
                             let catNorm = i.Cat.Replace(";;", ",").Replace(";", "")
                             from s in _appdbcontext.FnSplit(catNorm, ",")
-                            join c in _appdbcontext.VwNcategoryLists on s.Val equals c.Code
+                            join c in _appdbcontext.VW_NCATEGORY_LIST on s.Val equals c.Code
                             join p in _appdbcontext.member1 on i.MEMBER_UID equals p.UID
                             select new AdminProductModel
                             {
