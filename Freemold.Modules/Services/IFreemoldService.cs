@@ -1,4 +1,5 @@
 ﻿using Freemold.Modules.Models;
+using Freemold.Modules.Models.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,9 @@ namespace Freemold.Modules.Services
         Task<JoinAuthModel> JoinAuth(int conidx, string mobile, string email, string authtype, string regip, string memberid);
 
         Task<DupCheckResponse> DuplicateCheck(DuplicateCheckRequest duplicatecheckrequest);
+
+        Task<bool> DirectimportVisitorSave(DirectimportVisitorRequest item);
+
+        Task<dynamic> GetDbInfo();
     }
 }

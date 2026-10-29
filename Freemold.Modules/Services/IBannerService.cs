@@ -9,7 +9,7 @@ namespace Freemold.Modules.Services
 {
     public interface IBannerService
     {
-        Task<List<TB_BANNER>> BannerList(List<string> bannerIds);
+        Task<List<TB_BANNER>> BannerList(List<int> bannerIds);
 
         Task<List<BannerSettingModel>> BannerSettingList();
 

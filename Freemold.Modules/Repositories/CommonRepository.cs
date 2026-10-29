@@ -4,7 +4,7 @@ using Freemold.Modules.Models.Table;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-
+using Dapper;
 
 namespace Freemold.Modules.Repositories
 {
@@ -68,6 +68,38 @@ namespace Freemold.Modules.Repositories
             {
                 return new UspconnectionModel();
             }
+        }
+
+        //직수입 접속 카운트
+        public async Task SaveDirectImportVisitor(DirectimportVisitorRequest item)
+        {
+            var param = new
+            {
+                mTimeStamp = item.mtimestamp,
+                MemberID = item.memberid,
+                mType = item.mtype,
+                MemberName = item.membername,
+                RegIP = item.regip
+            };
+
+            await _connection.ExecuteAsync(
+                "dbo.USP_DIRECTIMPORT_VISITOR",
+                param,
+                commandType: CommandType.StoredProcedure
+            );
+        }
+
+
+
+        public async Task<dynamic> GetDbInfo()
+        {
+            const string sql = @"
+            SELECT
+                @@SERVERNAME AS ServerName,
+                DB_NAME() AS DatabaseName
+            ";
+
+                return await _connection.QuerySingleAsync(sql);
         }
     }
 }

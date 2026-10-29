@@ -17,5 +17,7 @@ namespace Freemold.Modules.Models.Table
         public long Idx { get; set; }
 
         public int mTimeStamp { get; set; }
-    } 
+    }
+
+    
 }

@@ -27,7 +27,7 @@ public partial class TB_BANNER
     /// <summary>
     /// 배너타입Idx
     /// </summary>
-    public string bIdx { get; set; } = null!;
+    public int bIdx { get; set; }
 
     /// <summary>
     /// 배너이미지

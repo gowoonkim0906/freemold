@@ -2,6 +2,8 @@
 using Freemold.Modules.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Dapper;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -110,7 +112,7 @@ namespace Freemold.Modules.Repositories
             {
                 var query = from p in _appdbcontext.TB_BANNER_CATEGORY
                             join c in _appdbcontext.TB_BANNER_TYPE on p.BCCode equals c.BCCode
-                            join b in _appdbcontext.TB_BANNER on c.Idx equals b.bIdx into banners
+                           // join b in _appdbcontext.TB_BANNER on c.Idx equals b.bIdx into banners
                             where c.BannerPosition != "Menu"
                             select new BannerManagementModel
                             {
@@ -122,7 +124,8 @@ namespace Freemold.Modules.Repositories
                                 bannername = c.BannerName2,
                                 bannercnt = c.BannerCnt,
                                 ord1 = c.Ord1,
-                                ord2 = c.Ord2
+                                ord2 = c.Ord2,
+                                //cnt1 = banners.Count(x => x.eDate <= )
                             };
 
                 return query;
@@ -208,6 +211,25 @@ namespace Freemold.Modules.Repositories
             }
 
 
+        }
+
+
+        public async Task<List<BannerSearchDataModel>> GetBannerSearchList(BannerSearchModel item)
+        {
+
+            var param = new
+            {
+                Page = item.page,
+                PageSize = item.pagesize
+            };
+
+            var result = await _connection.QueryAsync<BannerSearchDataModel>(
+                "dbo.USP_BANNER_LIST",
+                param,
+                commandType: CommandType.StoredProcedure
+            );
+
+            return result.ToList();
         }
 
         public async Task<string> BannerTypeCatInsert(BannerSetSettingModel item, CancellationToken ct = default)

@@ -2,19 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Freemold.Modules.Repositories
 {
     public abstract class BaseRepository
     {
         protected readonly AppDbContext _appdbcontext;
+        protected readonly DbConnection _connection;
 
         protected BaseRepository(AppDbContext appdbcontext)
         {
             this._appdbcontext = appdbcontext;
+            this._connection = appdbcontext.Database.GetDbConnection();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Freemold.Modules.Models;
+using Freemold.Modules.Models.Table;
 using Freemold.Modules.Repositories;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -13,10 +14,12 @@ namespace Freemold.Modules.Services
     public class FreemoldService : IFreemoldService
     {
         private readonly MemberRepository _memberRepository;
+        private readonly CommonRepository _commonRepository;
 
-        public FreemoldService(MemberRepository memberRepository)
+        public FreemoldService(MemberRepository memberRepository, CommonRepository commonRepository)
         {
             this._memberRepository = memberRepository;
+            _commonRepository = commonRepository;
         }
 
 
@@ -31,6 +34,28 @@ namespace Freemold.Modules.Services
         {
             var result = _memberRepository.DuplicateCheck(duplicatecheckrequest);
             return await result;
+        }
+
+        public async Task<bool> DirectimportVisitorSave(DirectimportVisitorRequest item)
+        {
+
+            try
+            {
+                await _commonRepository.SaveDirectImportVisitor(item);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+
+        public async Task<dynamic> GetDbInfo()
+        {
+            return await _commonRepository.GetDbInfo();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Freemold.Modules.Models
 
     public class PopupModel
     {
-        public List<string> idxs { get; set; } = new List<string>();
+        public List<int> idxs { get; set; } = new List<int>();
 
     }
 
@@ -94,5 +94,34 @@ namespace Freemold.Modules.Models
         public string? bmemo { get; set; }
         public string? bbcode { get; set; }
         public string? bgubun { get; set; }
+    }
+
+
+    public class BannerSearchDataModel
+    {
+        public int idx { get; set; }
+        public int bidx { get; set; }
+        public string? bannerposition { get; set; }
+        public string? bannername { get; set; }
+        public string? companyname { get; set; }
+        public string? bannerimage { get; set; }
+        public string? bannersubject { get; set; }
+        public int ord { get; set; }
+        public string? bannerunlimit { get; set; }
+        public string? sdate { get; set; }
+        public string? edate { get; set; }
+        public string? isuse { get; set; }
+        public string? btype { get; set; }
+        public string? regdate { get; set; }
+        public string? sortcode { get; set; }
+        public int bannertypeidx { get; set; }
+    }
+
+
+    public class BannerSearchModel
+    {
+        public int page { get; set; }
+        public int pagesize { get; set; }
+        
     }
 }

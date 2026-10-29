@@ -30,4 +30,13 @@ namespace Freemold.Modules.Models
         public string search_mode { get; set; } = "fast";
         public bool remove_bg { get; set; } = false;
     }
+
+    public class DirectimportVisitorRequest
+    {
+        public int mtimestamp { get; set; }
+        public string memberid { get; set; } = null!;
+        public string mtype { get; set; } = null!;
+        public string membername { get; set; } = null!;
+        public string regip { get; set; } = null!;
+    }
 }

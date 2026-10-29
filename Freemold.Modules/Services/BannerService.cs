@@ -23,7 +23,7 @@ namespace Freemold.Modules.Services
             this._bannerRepository = bannerRepository;
         }
 
-        public async Task<List<TB_BANNER>> BannerList(List<string> bannerIds)
+        public async Task<List<TB_BANNER>> BannerList(List<int> bannerIds)
         {
 
             var today = DateTime.Today;

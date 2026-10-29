@@ -1859,10 +1859,7 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength();
-                entity.Property(e => e.bIdx)
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasComment("배너타입Idx");
+                entity.Property(e => e.bIdx).HasComment("배너타입Idx");
                 entity.Property(e => e.bType)
                     .HasMaxLength(1)
                     .IsUnicode(false)
