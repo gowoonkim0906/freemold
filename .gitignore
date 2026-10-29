@@ -7,3 +7,7 @@ Freemold.Modules/Services/SendgridService.cs
 Freemold.Api/appsettings.json
 /Freemold.Api/appsettings.json
 /standardmold.Admin/appsettings.json
+/FreemoldAPI2/appsettings.json
+/FreemoldAPI2/appsettings.Development.json
+/APITest/appsettings.json
+/APITest/appsettings.Development.json
