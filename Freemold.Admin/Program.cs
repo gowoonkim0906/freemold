@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Net;
 
@@ -46,6 +47,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // 동의 없이도 필수 쿠키로 사용
 });
 
+builder.Services
+    .AddOptions<StorageOptions>()
+    .Bind(builder.Configuration.GetSection("Storage"))
+    .Validate(o => !string.IsNullOrWhiteSpace(o.RootPath), "Storage:RootPath is required.")
+    .ValidateOnStart();
+
 
 
 var app = builder.Build();
@@ -58,6 +65,18 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
+    var rootPath = builder.Configuration["Storage:RootPath"];
+
+    if (!string.IsNullOrWhiteSpace(rootPath) && Directory.Exists(rootPath))
+    {
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(rootPath),
+            RequestPath = "/Data"
+        });
+    }
+
+
     app.UseDeveloperExceptionPage();
 }
 
@@ -97,6 +116,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IBannerService, BannerService>();
     builder.Services.AddScoped<ICodeService, CodeService>();
     builder.Services.AddScoped<IFileService, FileService>();
+    builder.Services.AddScoped<IMemberService, MemberService>();
 
     //Repository 등록
     builder.Services.AddScoped<MemberRepository>();

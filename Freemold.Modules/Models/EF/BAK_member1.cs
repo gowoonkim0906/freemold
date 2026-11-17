@@ -211,6 +211,8 @@ public partial class BAK_member1
 
     public DateTime? CO_REMOVE_DATE { get; set; }
 
+    public string? CO_FOREIGN { get; set; }
+
     public string LEAVE_DATE { get; set; } = null!;
 
     public string INTERCEPT_DATE { get; set; } = null!;
@@ -255,6 +257,8 @@ public partial class BAK_member1
 
     public string PayUse { get; set; } = null!;
 
+    public string? PaymentUse { get; set; }
+
     public string? MarketingAgree { get; set; }
 
     public string? UpCat { get; set; }
@@ -266,6 +270,8 @@ public partial class BAK_member1
     public string Deleted { get; set; } = null!;
 
     public string? ADMIN_MEMO { get; set; }
+
+    public string? INVOICE { get; set; }
 
     public string BRegType { get; set; } = null!;
 

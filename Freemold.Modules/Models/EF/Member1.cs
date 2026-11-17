@@ -207,9 +207,20 @@ public partial class member1
 
     public string? CO_LIMIT { get; set; }
 
+    /// <summary>
+    /// 탈퇴여부
+    /// </summary>
     public string? CO_REMOVE { get; set; }
 
+    /// <summary>
+    /// 탈퇴일자
+    /// </summary>
     public DateTime? CO_REMOVE_DATE { get; set; }
+
+    /// <summary>
+    /// 국내 여부(ko 국내)
+    /// </summary>
+    public string? CO_FOREIGN { get; set; }
 
     public string LEAVE_DATE { get; set; } = null!;
 
@@ -255,6 +266,8 @@ public partial class member1
 
     public string PayUse { get; set; } = null!;
 
+    public string? PaymentUse { get; set; }
+
     public string MarketingAgree { get; set; } = null!;
 
     public string UpCat { get; set; } = null!;
@@ -266,4 +279,6 @@ public partial class member1
     public string Deleted { get; set; } = null!;
 
     public string? ADMIN_MEMO { get; set; }
+
+    public string? INVOICE { get; set; }
 }

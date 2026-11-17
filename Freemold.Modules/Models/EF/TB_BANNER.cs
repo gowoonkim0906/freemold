@@ -75,4 +75,14 @@ public partial class TB_BANNER
     public string RegIP { get; set; } = null!;
 
     public DateTime RegDate { get; set; }
+
+    /// <summary>
+    /// 배너 광고 금액
+    /// </summary>
+    public decimal? BannerPrice { get; set; }
+
+    /// <summary>
+    /// 대기
+    /// </summary>
+    public string? BannerWaiting { get; set; }
 }

@@ -1,7 +1,57 @@
-﻿@{
+﻿@using Freemold.Modules.Models;
+@{
     Layout = null;
 
+    var binfo = ViewBag.bannertype as BannerManagementModel ?? new BannerManagementModel();
+    var bannerinfo = ViewBag.bannerinfo as BannerResponseModel ?? new BannerResponseModel();
+    var rootpath = ViewBag.rootpath ?? "";
+
+    string company_name = "";
+    int uid = 0;
+    int idx = 0;
+    int midx = 0;
+    int bidx = 0;
+    string bannerimage = "";
+    string bannerlink = "";
+    string bannersubject = "";
+    string sdate = "";
+    string edate = "";
+    string isuse = "";
+    int ord = 0;
+    decimal? bannerprice = 0;
+    string bannerwaiting = "";
+
+    if (bannerinfo.idx > 0)
+    {
+        company_name = bannerinfo.company_name ?? "";
+        uid = bannerinfo.uid;
+        idx = bannerinfo.idx;
+        midx = bannerinfo.midx;
+        bidx = bannerinfo.bidx;
+        bannerimage = bannerinfo.bannerimage ?? "";
+        bannerlink = bannerinfo.bannerlink ?? "";
+        bannersubject = bannerinfo.bannersubject ?? "";
+        sdate = bannerinfo.sdate?.ToString("yyyy-MM-dd") ?? "";
+        edate = bannerinfo.edate?.ToString("yyyy-MM-dd") ?? "";
+        isuse = bannerinfo.isuse ?? "";
+        ord = bannerinfo.ord;
+        bannerprice = bannerinfo.bannerprice;
+        bannerwaiting = bannerinfo.bannerwaiting ?? "";
+    }
+    else
+    {
+
+        bannerprice = binfo.bannerprice;
+    }
 }
+
+<!--배너타입-->
+<input type="hidden" id="bidx" name="bidx" value="@(binfo.banneridx)" />
+<!--배너개수-->
+<input type="hidden" id="bcnt" name="bcnt" value="@(binfo.bannercnt)" />
+<!--배너번호(수정시만 적용)-->
+<input type="hidden" id="idx" name="idx" value="@(idx)" /> 
+
 <div class="modal-header py-1">
     <h5 class="modal-title" id="setbannermodal-title">배너 등록</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -12,10 +62,21 @@
     <div class="mb-1">
         <label class="form-label">업체명</label>
         <div class="d-flex gap-2">
-            <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+            <input type="text" class="form-control" name="companyname" id="companyname" placeholder="회사명"  value="@(company_name)">
 
-            <select class="form-select w-auto">
-                <option value="">업체명을 입력해주세요.</option>
+            <select class="form-select w-auto" id="midx" onchange="companysel(this)">
+                @{
+                    if (uid > 0)
+                    {
+                        <option value="">업체를 선택해주세요.</option>
+                        <option value="@(uid)" selected>@(company_name)</option>
+
+                    }
+                    else
+                    {
+                        <option value="">업체명을 입력해주세요.</option>
+                    }
+                }
             </select>
 
         </div>
@@ -24,27 +85,41 @@
     <div class="mb-1">
         <label class="form-label">링크(url)</label>
         <div>
-            <input type="text" class="form-control" name="example-text-input">
+            <input type="text" class="form-control" name="bannerlink" id="bannerlink" value="@(bannerlink)">
             <small class="form-hint">링크주소가 없을 경우 미니홈피로 지정됩니다. 우튜브주소위치</small>
         </div>
     </div>
 
     <div class="mb-1">
         <div class="form-label">이미지</div>
-        <input type="file" class="form-control">
+        
+        <div class="d-flex align-items-center gap-2">
+
+            <input type="hidden" name="inputbannerimage" id="inputbannerimage" value="@(bannerimage)" />
+            <input type="file" class="form-control" name="bannerimage" id="bannerimage">
+
+            @if (idx > 0 && !string.IsNullOrEmpty(bannerimage))
+            {
+                <img src="@Url.Content("~/Data/BannerImg/" + bannerimage)"
+                     style="width:200px; object-fit:contain; cursor:pointer;"
+                     title="기존 배너 이미지">
+            }
+
+        </div>
+        <small class="form-hint">배너사이즈 : @binfo.bannersizex x @binfo.bannersizey</small>
     </div>
 
     <div class="mb-1">
-        <label class="form-label">기타(설명) <span class="form-label-description">56/100</span></label>
-        <textarea class="form-control" name="example-textarea-input" rows="4" placeholder="Content.."></textarea>
+        <label class="form-label">기타(설명) <!--<span class="form-label-description">56/100</span> --></label>
+        <input type="text" class="form-control" name="bannersubject" id="bannersubject" value="@(bannersubject)">
     </div>
 
     <div class="mb-1">
         <label class="form-label">사용기간</label>
         <div class="d-flex align-items-center gap-2">
-            <input type="date" class="form-control">
+            <input type="date" class="form-control" name="sdate" id="sdate" value="@(sdate)">
             <span>~</span>
-            <input type="date" class="form-control">
+            <input type="date" class="form-control" name="edate" id="edate" value="@(edate)">
         </div>
     </div>
     <div class="row">
@@ -52,43 +127,51 @@
             <div class="mb-1">
                 <label class="form-label">노출</label>
                 <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radios-inline" checked="">
+                    <input class="form-check-input" type="checkbox" name="isuse" id="isuse" @(isuse == "Y" ? "checked" : "")>
                     <span class="form-check-label">사용</span>
-                </label>
-                <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radios-inline">
-                    <span class="form-check-label">예약</span>
-                </label>
-                <label class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radios-inline">
-                    <span class="form-check-label">대기</span>
                 </label>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="mb-1">
-                <label class="form-label">순번</label>
-                <input type="text" class="form-control" style="width:150px;">
+                <label class="form-label">대기</label>
+                <label class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="bannerwaiting" id="bannerwaiting" onchange="waitingchk(this)" @(bannerwaiting == "Y" ? "checked" : "")>
+                    <span class="form-check-label">대기</span>
+                </label>
             </div>
         </div>
         
     </div>
 
-    <div class="mb-1">
-        <label class="form-label">금액</label>
-        <div class="d-flex align-items-center gap-2">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="mb-1">
+                <label class="form-label">순번</label>
+                <input type="text" class="form-control number" name="ord" id="ord" style="width:150px;" value="@(ord)">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-1">
+                <label class="form-label">금액</label>
+                <div class="d-flex align-items-center gap-2">
+                    <input type="text" class="form-control number" name="bannerprice" id="bannerprice" style="width:150px;" value="@(bannerprice)">
+                    <span>원</span>
+                </div>
+            </div>
+        </div>
 
-            <input type="text"  class="form-control" style="width:150px;">
-            <span>원</span>
+    </div>
 
+    <!--
+    <div class="mt-2">
+        <div class="d-flex">
             <span class="ms-auto text-secondary small">
                 (최종 수정자 : 2026-08-01 아무개)
             </span>
-
         </div>
     </div>
-
- 
+    -->
 
 </div>
 
@@ -98,9 +181,260 @@
     <a href="#" class="btn btn-danger" data-bs-dismiss="modal">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></svg>
         취소</a>
-    <a href="#" class="btn btn-primary btn-5 ms-auto" data-bs-dismiss="modal">
+    <a href="#" onclick="bannersave()" class="btn btn-primary btn-5 ms-auto" >
         <!-- Download SVG icon from http://tabler.io/icons/icon/plus -->
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-2"><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
         저장
     </a>
 </div>
+
+<script>
+
+    var companySearchTimer = null;
+    var companySearchXhr = null;
+
+    // 기존 이벤트 중복 등록 방지
+    $(document).off("input.companySearch", "#companyname");
+    $(document).on("input.companySearch", "#companyname", function () {
+
+        const companyname = $(this).val().trim();
+        const $select = $("#midx");
+
+        clearTimeout(companySearchTimer);
+
+        // 이전 AJAX 요청 취소
+        if (companySearchXhr) {
+            companySearchXhr.abort();
+            companySearchXhr = null;
+        }
+
+        $select.empty();
+        $select.append(new Option("업체명을 입력해주세요.", ""));
+
+        // 2글자 미만이면 검색하지 않음
+        if (companyname.length < 2) {
+            return;
+        }
+
+        
+
+        // 입력 완료 후 300ms 뒤 자동 검색
+        companySearchTimer = setTimeout(function () {
+
+            companySearchXhr = $.ajax({
+                url: "/Banner/AjaxGetSearchCompany",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    companyname: companyname
+                },
+                success: function (data) {
+
+                    // 입력값이 변경됐으면 이전 검색 결과 무시
+                    if ($("#companyname").val().trim() !== companyname) {
+                        return;
+                    }
+
+                    $select.empty();
+
+                    if (data.items.totalcount === 0) {
+                        $select.append(
+                            new Option("검색 결과가 없습니다.", "")
+                        );
+                        return;
+                    }
+
+                    $select.append(
+                        new Option("업체를 선택해주세요.", "")
+                    );
+
+                    $.each(data.items.items, function (index, item) {
+                        $select.append(
+                            new Option(item.companyname, item.uid)
+                        );
+                    });
+                },
+                error: function (xhr, status) {
+                    if (status === "abort") return;
+
+                    console.error(xhr.responseText);
+
+                    $select.empty().append(
+                        new Option("검색 오류", "")
+                    );
+                }
+            });
+
+        }, 300);
+    });
+
+    function waitingchk(obj){
+
+
+        const sdate = $("#sdate")
+        const edate = $("#edate")
+    
+        if (obj.checked) {
+            sdate.val('');
+            edate.val('');
+
+            sdate.prop("disabled", true);
+            edate.prop("disabled", true);
+
+        } else {
+
+            sdate.prop("disabled", false);
+            edate.prop("disabled", false);
+        }
+    }
+
+    function companysel(obj){
+    
+        const text = $(obj).find("option:selected").text();
+
+        $("#companyname").val(text);
+
+    }
+
+    function bannersave(){
+        
+
+        const bannerList =  document.querySelector("banner-data-list");
+    
+        const bidx = $("#bidx").val();
+        const midx = $("#midx").val();
+        const idx = $("#idx").val();
+        const bannerimage = $("#bannerimage")[0].files;
+        const inputbannerimage = $("#inputbannerimage").val();
+        const bannerprice = $("#bannerprice").val().trim();
+        const ord = $("#ord").val().trim();
+
+        const sdate = $("#sdate").val();
+        const edate = $("#edate").val();
+
+        const bannerwaiting = $("#bannerwaiting").is(":checked");
+        const bcode = "";
+        const deleted = "N";
+
+        const bcnt = $("#bcnt").val();
+
+
+        if (!midx) {
+            alert("업체명을 선택해주세요.");
+            $("#midx").focus();
+            return false;
+        }
+
+
+        // 이미지
+        if (bannerimage.length === 0  && idx == 0) {
+            alert("배너 이미지를 선택해주세요.");
+            $("#bannerimage").focus();
+            return false;
+        }
+
+        
+
+        // 대기 상태가 아닐 경우 날짜 필수
+        if (!bannerwaiting) {
+
+            if (!sdate) {
+                alert("시작일을 선택해주세요.");
+                $("#sdate").focus();
+                return false;
+            }
+
+            if (!edate) {
+                alert("종료일을 선택해주세요.");
+                $("#edate").focus();
+                return false;
+            }
+
+            // 날짜 비교
+            if (sdate > edate) {
+                alert("종료일은 시작일보다 빠를 수 없습니다.");
+                $("#edate").focus();
+                return false;
+            }
+        }
+
+        // 금액
+        if (!bannerprice) {
+            alert("금액을 입력해주세요.");
+            $("#bannerprice").focus();
+            return false;
+        }
+
+        // 순번
+        if (!ord) {
+            alert("순번을 입력해주세요.");
+            $("#ord").focus();
+            return false;
+        }
+
+
+        const formData = new FormData();
+
+        
+        formData.append("bidx", bidx);
+        formData.append("midx", midx);
+        formData.append("idx", idx);
+        formData.append("btype", "N");
+
+        formData.append("inputbannerimage", inputbannerimage);
+        formData.append("bannerimage", bannerimage[0]);
+        formData.append("bannerprice", bannerprice.replace(/,/g, ""));
+        formData.append("ord", ord);
+
+        formData.append("bannerlink", $("#bannerlink").val());
+        formData.append("bannersubject", $("#bannersubject").val());
+        formData.append("isuse", $("#isuse").is(":checked") ? "Y" : "N");
+        formData.append("bannerwaiting", bannerwaiting ? "Y" : "N");
+
+        formData.append("sdate", bannerwaiting ? "" : sdate);
+        formData.append("edate", bannerwaiting ? "" : edate);
+
+        formData.append("bcode", bcode ? "" : bcode);
+        formData.append("deleted", deleted);
+
+        formData.append("regid", "freemold");
+        formData.append("regip", "127.0.0.1");
+        formData.append("bcnt", bcnt);
+        
+
+        $.ajax({
+            url: "/Banner/AjaxSetBanner",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+
+                if (data.items == 'success') {
+                    alert("배너가 저장되었습니다.");
+
+
+                    $('#setbannermodal').modal('hide');
+                    $('#setbannermodal-content').modal('hide');
+
+
+                    bannerList.selectBanner(bidx ,1 , 10, '');
+                    bannerdatacnt(bidx);
+
+                }else if(data.items == 'over'){
+                    alert("입력하신 일자에 배너 등록 개수를 초과하였습니다.");
+                    return false;
+                }else {
+                    alert(data.message || "배너 저장에 실패했습니다.");
+                    return false;
+                }
+            },
+            error: function (xhr, status) {
+                console.error(xhr.responseText);
+                alert("배너 저장 중 오류가 발생했습니다.");
+            }
+        });
+
+    }
+
+</script>

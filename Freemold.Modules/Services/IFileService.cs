@@ -17,6 +17,8 @@ namespace Freemold.Modules.Services
         Task<string> Searchfile(IFormFile searchfile, string userId);
         Task<int> DeleteVectorimg(int[] prod_uid);
         Task<int> DeleteVectorimgDev(int[] prod_uid);
+        Task<bool> SaveFile(IFormFile inputFile, Stream outStream);
+        bool DeleteFile(string filePath);
 
 
     }

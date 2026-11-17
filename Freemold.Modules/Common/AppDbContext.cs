@@ -14,14 +14,12 @@ namespace Freemold.Modules.Common
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options) { }
 
+        public virtual DbSet<BAK_BANNER> BAK_BANNER { get; set; }
+        public virtual DbSet<BAK_BANNER_KEYWORD> BAK_BANNER_KEYWORD { get; set; }
 
-        public virtual DbSet<BakBanner> BakBanners { get; set; }
+        public virtual DbSet<BAK_BOARD_DATA> BAK_BOARD_DATA { get; set; }
 
-        public virtual DbSet<BakBannerKeyword> BakBannerKeywords { get; set; }
-
-        public virtual DbSet<BakBoardDatum> BakBoardData { get; set; }
-
-        public virtual DbSet<BakBoardRegcontent> BakBoardRegcontents { get; set; }
+        public virtual DbSet<BAK_BOARD_REGCONTENT> BAK_BOARD_REGCONTENT { get; set; }
 
         public virtual DbSet<BakCategory> BakCategories { get; set; }
 

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Crypto;
 using System.Globalization;
 using System.Threading.Channels;
+using System.IO;
 
 namespace Freemold.Modules.Services
 {
@@ -259,7 +260,7 @@ namespace Freemold.Modules.Services
                     using (var fs = new FileStream(candidate, FileMode.CreateNew, FileAccess.Write, FileShare.None))
                     {
                         await searchfile.CopyToAsync(fs);
-                        savedName = fnFolderDate+"/"+name;
+                        savedName = fnFolderDate + "/" + name;
                     }
 
                     return savedName;
@@ -274,7 +275,7 @@ namespace Freemold.Modules.Services
 
         public async Task<int> DeleteVectorimg(int[] prod_uid)
         {
-            
+
             return await _productRepository.DeleteVectorimg(prod_uid);
         }
 
@@ -282,6 +283,44 @@ namespace Freemold.Modules.Services
         {
 
             return await _productRepository.DeleteVectorimgDev(prod_uid);
+        }
+
+
+        public async Task<bool> SaveFile(IFormFile inputFile, Stream outStream)
+        {
+            try
+            {
+                await inputFile.CopyToAsync(outStream);
+                await outStream.FlushAsync();
+
+                return true; // 저장 성공
+            }
+            catch (Exception ex)
+            {
+              
+                return false; // 저장 실패
+            }
+        }
+
+
+        public bool DeleteFile(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    return false;
+                }
+
+                File.Delete(filePath);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // 로그 기록
+                return false;
+            }
         }
     }
 }

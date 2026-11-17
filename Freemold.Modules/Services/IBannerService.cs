@@ -16,7 +16,14 @@ namespace Freemold.Modules.Services
         Task<List<BannerSettingCategoryModel>> BannerSettingCategoryList();
         Task<BannerSettingModel?> BannerSettingView(int bidx);
         Task<BannerSettingCategoryModel?> BannerSettingCategoryView(string bcode);
-
         Task<string> BannerSettingSet(BannerSetSettingModel input, CancellationToken ct = default);
+        Task<PagedResult<BannerResponseModel>> TypeBannerList(int bidx, int page, int pagesize, string searchtype);
+        Task<string> TypeBannerDelete(BannerDeleteRequestModel item, CancellationToken ct = default);
+        Task<BannerCntModel> TypeBannerCnt(int bidx);
+        Task<BannerManagementModel> TypeBannerView(int bidx);
+        Task<string> SetBanner(BannerSetRequestModel item, CancellationToken ct = default);
+        Task<string> ModifyBanner(BannerSetRequestModel item, CancellationToken ct = default);
+        Task<BannerResponseModel> GetBanner(int banneridx, int idx);
+        
     }
 }

@@ -25,31 +25,25 @@ public partial class FreemoldContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<BakBanner>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_BANNER");
 
-            entity.Property(e => e.BCode)
-                .HasMaxLength(4)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("bCode");
-            entity.Property(e => e.BIdx)
-                .HasMaxLength(5)
-                .IsUnicode(false)
-                .HasColumnName("bIdx");
-            entity.Property(e => e.BType)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("bType");
+        modelBuilder.Entity<BAK_BANNER>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.BRegDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.BRegID).HasMaxLength(50);
+            entity.Property(e => e.BRegIP)
+                .HasMaxLength(23)
+                .IsUnicode(false);
+            entity.Property(e => e.BRegType).HasMaxLength(50);
             entity.Property(e => e.BakIdx).ValueGeneratedOnAdd();
             entity.Property(e => e.BannerImage).HasMaxLength(50);
             entity.Property(e => e.BannerLink)
                 .HasMaxLength(200)
                 .IsUnicode(false);
+            entity.Property(e => e.BannerPrice).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.BannerSubject).HasMaxLength(200);
             entity.Property(e => e.BannerType)
                 .HasMaxLength(1)
@@ -59,126 +53,78 @@ public partial class FreemoldContext : DbContext
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.BregDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("BRegDate");
-            entity.Property(e => e.BregId)
-                .HasMaxLength(50)
-                .HasColumnName("BRegID");
-            entity.Property(e => e.BregIp)
-                .HasMaxLength(23)
-                .IsUnicode(false)
-                .HasColumnName("BRegIP");
-            entity.Property(e => e.BregType)
-                .HasMaxLength(50)
-                .HasColumnName("BRegType");
             entity.Property(e => e.Deleted)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.EDate)
-                .HasColumnType("datetime")
-                .HasColumnName("eDate");
-            entity.Property(e => e.IsUse)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("isUse");
-            entity.Property(e => e.MIdx).HasColumnName("mIdx");
-            entity.Property(e => e.MType)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("mType");
             entity.Property(e => e.RegDate).HasColumnType("datetime");
-            entity.Property(e => e.RegId)
-                .HasMaxLength(50)
-                .HasColumnName("RegID");
-            entity.Property(e => e.RegIp)
+            entity.Property(e => e.RegID).HasMaxLength(50);
+            entity.Property(e => e.RegIP)
                 .HasMaxLength(23)
-                .IsUnicode(false)
-                .HasColumnName("RegIP");
-            entity.Property(e => e.SDate)
-                .HasColumnType("datetime")
-                .HasColumnName("sDate");
+                .IsUnicode(false);
             entity.Property(e => e.StartDateWithUse).HasColumnType("datetime");
+            entity.Property(e => e.bCode)
+                .HasMaxLength(4)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.bIdx)
+                .HasMaxLength(5)
+                .IsUnicode(false);
+            entity.Property(e => e.bType)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.eDate).HasColumnType("datetime");
+            entity.Property(e => e.isUse)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.mType)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
+            entity.Property(e => e.sDate).HasColumnType("datetime");
         });
 
-        modelBuilder.Entity<BakBannerKeyword>(entity =>
+        modelBuilder.Entity<BAK_BANNER_KEYWORD>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_BANNER_KEYWORD");
+            entity.HasNoKey();
 
-            entity.Property(e => e.Amount)
-                .HasMaxLength(10)
-                .HasColumnName("AMOUNT");
-            entity.Property(e => e.Bidx)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("BIdx");
-            entity.Property(e => e.BregDate)
+            entity.Property(e => e.AMOUNT).HasMaxLength(10);
+            entity.Property(e => e.BIdx).ValueGeneratedOnAdd();
+            entity.Property(e => e.BRegDate)
                 .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("BRegDate");
-            entity.Property(e => e.BregId)
-                .HasMaxLength(50)
-                .HasColumnName("BRegID");
-            entity.Property(e => e.BregIp)
+                .HasColumnType("datetime");
+            entity.Property(e => e.BRegID).HasMaxLength(50);
+            entity.Property(e => e.BRegIP)
                 .HasMaxLength(23)
-                .IsUnicode(false)
-                .HasColumnName("BRegIP");
-            entity.Property(e => e.BregType)
-                .HasMaxLength(50)
-                .HasColumnName("BRegType");
-            entity.Property(e => e.ChargeDate).HasColumnName("CHARGE_DATE");
+                .IsUnicode(false);
+            entity.Property(e => e.BRegType).HasMaxLength(50);
             entity.Property(e => e.Deleted)
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.Gubun)
-                .HasMaxLength(10)
-                .HasColumnName("GUBUN");
-            entity.Property(e => e.KeyWord1)
-                .HasMaxLength(200)
-                .HasColumnName("KEY_WORD1");
-            entity.Property(e => e.KeyWord2)
-                .HasMaxLength(200)
-                .HasColumnName("KEY_WORD2");
-            entity.Property(e => e.KeyWord3)
-                .HasMaxLength(200)
-                .HasColumnName("KEY_WORD3");
-            entity.Property(e => e.KeyWord4)
-                .HasMaxLength(200)
-                .HasColumnName("KEY_WORD4");
-            entity.Property(e => e.MemberGubun)
-                .HasMaxLength(5)
-                .HasColumnName("MEMBER_GUBUN");
-            entity.Property(e => e.MemberUid).HasColumnName("MEMBER_UID");
-            entity.Property(e => e.Memo).HasColumnName("MEMO");
+            entity.Property(e => e.GUBUN).HasMaxLength(10);
+            entity.Property(e => e.KEY_WORD1).HasMaxLength(200);
+            entity.Property(e => e.KEY_WORD2).HasMaxLength(200);
+            entity.Property(e => e.KEY_WORD3).HasMaxLength(200);
+            entity.Property(e => e.KEY_WORD4).HasMaxLength(200);
+            entity.Property(e => e.MEMBER_GUBUN).HasMaxLength(5);
             entity.Property(e => e.RegDate).HasColumnType("datetime");
-            entity.Property(e => e.RegId)
-                .HasMaxLength(50)
-                .HasColumnName("RegID");
-            entity.Property(e => e.RegIp)
+            entity.Property(e => e.RegID).HasMaxLength(50);
+            entity.Property(e => e.RegIP)
                 .HasMaxLength(23)
-                .IsUnicode(false)
-                .HasColumnName("RegIP");
-            entity.Property(e => e.Uid).HasColumnName("UID");
-            entity.Property(e => e.WordsEnd).HasColumnName("WORDS_END");
-            entity.Property(e => e.WordsLink)
-                .HasMaxLength(200)
-                .HasColumnName("WORDS_LINK");
-            entity.Property(e => e.WordsStart).HasColumnName("WORDS_START");
+                .IsUnicode(false);
+            entity.Property(e => e.WORDS_LINK).HasMaxLength(200);
         });
 
-        modelBuilder.Entity<BakBoardDatum>(entity =>
+        modelBuilder.Entity<BAK_BOARD_DATA>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_BOARD_DATA");
+            entity.HasNoKey();
 
             entity.Property(e => e.APPR).HasMaxLength(1);
+            entity.Property(e => e.APPR_USER).HasMaxLength(100);
+            entity.Property(e => e.Admin_YN).HasMaxLength(1);
             entity.Property(e => e.BIdx).ValueGeneratedOnAdd();
             entity.Property(e => e.BOARD_CODE).HasMaxLength(20);
             entity.Property(e => e.BRegDate)
@@ -234,14 +180,9 @@ public partial class FreemoldContext : DbContext
                 .IsFixedLength();
         });
 
-        modelBuilder.Entity<BakBoardRegcontent>(entity =>
+        modelBuilder.Entity<BAK_BOARD_REGCONTENT>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("BAK_BOARD_REGCONTENT");
-
-            entity.Property(e => e.RegContent).HasColumnName("REG_CONTENT");
-            entity.Property(e => e.Uid).HasColumnName("UID");
+            entity.HasNoKey();
         });
 
         modelBuilder.Entity<BakCategory>(entity =>

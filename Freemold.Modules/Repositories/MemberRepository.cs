@@ -170,6 +170,7 @@ namespace Freemold.Modules.Repositories
             
         }
 
+        //패스워드 변경
         public async Task<string> PasswordUpdate(int memberuid, string pwd)
         {
 
@@ -200,6 +201,29 @@ namespace Freemold.Modules.Repositories
 
             return result;
         }
+
+        //회사명
+        public IQueryable<CompanyMemberModel> GetCompanySearchList(string companyname)
+        {
+            try
+            {
+                var query = from p in _appdbcontext.member1
+                            where p.APPROVAL == "Y" && p.COMPANY_NAME.Contains(companyname)
+                            select new CompanyMemberModel
+                            {
+                                uid = p.UID,
+                                companyname = p.COMPANY_NAME
+                            };
+
+                return query;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
 
     }
 }
