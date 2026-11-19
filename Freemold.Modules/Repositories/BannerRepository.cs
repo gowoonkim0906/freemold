@@ -38,6 +38,7 @@ namespace Freemold.Modules.Repositories
 
 
 
+
         public IQueryable<BannerSettingModel> GetBannerSettingList()
         {
             var today = DateTime.Today;
@@ -100,6 +101,125 @@ namespace Freemold.Modules.Repositories
                             };
 
                 return query;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<BannerTypeCountModel>> GetBannerTypeTotal()
+        {
+            var today = DateTime.Today;
+            var deadline = today.AddDays(30);
+
+            try
+            {
+                var typeQuery =
+                        from p in _appdbcontext.TB_BANNER_CATEGORY
+                        join c in _appdbcontext.TB_BANNER_TYPE on p.BCCode equals c.BCCode
+                        join t in _appdbcontext.TB_BANNER
+                                  .Where(x => x.Deleted == "N" && x.bType == "N")
+                                  on c.Idx equals t.bIdx into tg
+                        from d in tg.DefaultIfEmpty()
+                        where c.UseYN == "Y" && c.BannerPosition != "Standard"
+                        group d by new
+                        {
+                            p.BCCode,
+                            p.BCName,
+                            p.BCOrd,
+                            c.Idx,
+                            c.BannerCnt
+                        } into g
+                        select new
+                        {
+                            g.Key.BCCode,
+                            g.Key.BCName,
+                            BCOrd = g.Key.BCOrd ?? 0,
+                            BannerCnt = g.Key.BannerCnt,
+                            waiting = g.Count(x => x != null && x.BannerWaiting == "Y"),
+                            reservation = g.Count(x => x != null && x.isUse == "Y" && x.sDate > today),
+                            ing = g.Count(x => x != null && x.isUse == "Y" && x.sDate <= today && x.eDate >= today),
+                            deadline = g.Count(x => x != null && x.isUse == "Y" && x.sDate <= today && x.eDate >= today && x.eDate <= deadline)
+                        };
+
+                var types = await typeQuery.ToListAsync();
+
+                return types
+                    .GroupBy(x => new { x.BCCode, x.BCName, x.BCOrd })
+                    .OrderBy(g => g.Key.BCOrd)
+                    .Select(g => new BannerTypeCountModel
+                    {
+                        bccode = g.Key.BCCode,
+                        bcname = g.Key.BCName,
+                        bcord = g.Key.BCOrd,
+                        total = g.Sum(x => x.BannerCnt),
+                        deadline = g.Sum(x => x.deadline),
+                        ing = g.Sum(x => x.ing),
+                        reservation = g.Sum(x => x.reservation),
+                        waiting = g.Sum(x => x.waiting),
+                        empty = g.Sum(x => x.BannerCnt) - g.Sum(x => x.ing)
+                    }).ToList();
+
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<BannerCategoryCountModel> GetBannerCategoryTotal()
+        {
+            var today = DateTime.Today;
+            var deadlineday = today.AddDays(30);
+
+            try
+            {
+                var typeQuery =
+                        from p in _appdbcontext.TB_CATEGORY
+                        join c in _appdbcontext.TB_BANNER_TYPE_CAT on p.Code equals c.Code
+                        join t in _appdbcontext.TB_BANNER
+                                  .Where(x => x.Deleted == "N" && x.bType == "C")
+                                  on c.Code equals t.bCode into tg
+                        from d in tg.DefaultIfEmpty()
+                        group d by new
+                        {
+                            p.Code,
+                            c.BannerCnt
+                        } into g
+                        select new
+                        {
+                            g.Key.Code,
+                            BannerCnt = g.Key.BannerCnt,
+                            waiting = g.Count(x => x != null && x.BannerWaiting == "Y"),
+                            reservation = g.Count(x => x != null && x.isUse == "Y" && x.sDate > today),
+                            ing = g.Count(x => x != null && x.isUse == "Y" && x.sDate <= today && x.eDate >= today),
+                            deadline = g.Count(x => x != null && x.isUse == "Y" && x.sDate <= today && x.eDate >= today && x.eDate <= deadlineday)
+                        };
+
+                var types = await typeQuery.ToListAsync();
+
+
+                var total = types.Sum(x => x.BannerCnt);
+                var deadline = types.Sum(x => x.deadline);
+                var ing = types.Sum(x => x.ing);
+                var reservation = types.Sum(x => x.reservation);
+                var waiting = types.Sum(x => x.waiting);
+                var empty = types.Sum(x => x.BannerCnt) - types.Sum(x => x.ing);
+
+
+                return new BannerCategoryCountModel
+                {
+                    total = total,
+                    deadline = deadline,
+                    ing = ing,
+                    reservation = reservation,
+                    waiting = waiting,
+                    empty = empty
+                };
+
+
             }
             catch
             {
@@ -335,7 +455,10 @@ namespace Freemold.Modules.Repositories
             var param = new
             {
                 Page = item.page,
-                PageSize = item.pagesize
+                PageSize = item.pagesize,
+                SearchType = item.searchtype ?? "",
+                CompanyName = item.companyname ?? "",
+                SearchFree = item.searchfree ?? ""
             };
 
             var result = await _connection.QueryAsync<BannerSearchDataModel>(
@@ -555,6 +678,17 @@ namespace Freemold.Modules.Repositories
 
                 return "fail";
             }
+        }
+
+        public async Task<BannerTotalCountModel> GetBannerTotalCount()
+        {
+
+            var result = await _connection.QuerySingleAsync<BannerTotalCountModel>(
+                "dbo.USP_BANNER_COUNT",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return result;
         }
     }
 

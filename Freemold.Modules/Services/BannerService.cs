@@ -148,7 +148,7 @@ namespace Freemold.Modules.Services
             var query = _bannerRepository.GetTypeBannerList(bidx).AsNoTracking();
 
             if (searchtype == "w") query = query.Where(x => x.bannerwaiting == "Y");  //대기
-            if (searchtype == "d") query = query.Where(x => x.isuse == "Y" && x.edate >= today && x.edate <= deadline);  //마감임박
+            if (searchtype == "d") query = query.Where(x => x.isuse == "Y" && x.edate >= today && x.edate <= deadline && x.sdate <= today);  //마감임박
             if (searchtype == "r") query = query.Where(x => x.isuse == "Y" && x.sdate > today);  //예약
             if (searchtype == "i") query = query.Where(x => x.isuse == "Y" && x.sdate <= today && x.edate >= today);  //운영중
 
@@ -449,6 +449,60 @@ namespace Freemold.Modules.Services
 
             return item;
 
+        }
+
+        //배너검색 리스트
+        public async Task<PagedResult<BannerSearchDataModel>> SearchBannerList(BannerSearchModel bannersearchmodel)
+        {
+
+
+            var today = DateTime.Today;
+            var deadline = today.AddDays(30);
+
+            IEnumerable<BannerSearchDataModel> query = await _bannerRepository.GetBannerSearchList(bannersearchmodel);
+
+            // 프로시저에서 계산한 전체 건수
+            int totalCount = query.FirstOrDefault()?.totalcount ?? 0;
+
+
+            var items = query
+            .ToList();
+
+
+            return new PagedResult<BannerSearchDataModel>
+            {
+                items = items,
+                totalcount = totalCount
+            };
+
+        }
+
+
+        public async Task<BannerTotalCountModel> GetBannerTotalCount()
+        {
+            
+            var items = await _bannerRepository.GetBannerTotalCount();
+
+            return items;
+
+        }
+
+        public async Task<List<BannerTypeCountModel>> GetBannerTypeTotal() {
+
+
+            var items = await _bannerRepository.GetBannerTypeTotal();
+
+            return items;
+        }
+
+
+        public async Task<BannerCategoryCountModel> GetBannerCategoryTotal()
+        {
+
+
+            var items = await _bannerRepository.GetBannerCategoryTotal();
+
+            return items;
         }
     }
 }

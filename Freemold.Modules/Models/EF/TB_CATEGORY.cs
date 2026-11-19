@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Freemold.Modules;
 
-public partial class TbCategory
+public partial class TB_CATEGORY
 {
     public int Idx { get; set; }
 
@@ -11,9 +11,9 @@ public partial class TbCategory
 
     public string Code { get; set; } = null!;
 
-    public string NameKor { get; set; } = null!;
+    public string Name_Kor { get; set; } = null!;
 
-    public string? NameEng { get; set; }
+    public string? Name_Eng { get; set; }
 
     public byte Depth { get; set; }
 

@@ -22,15 +22,15 @@ namespace allinkbeauty.Controllers
         }
         public async Task<IActionResult> Index(int page = 1, string code1 = "", string code2 = "", string volume1 = "", string volume2 = "")
         {
-            List<TbCategory> categorylist = new List<TbCategory>();
+            List<TB_CATEGORY> categorylist = new List<TB_CATEGORY>();
             categorylist = await _codeService.GetCategoryList("A001", "Y");
 
-            List<TbCategory> categorylist2 = new List<TbCategory>();
+            List<TB_CATEGORY> categorylist2 = new List<TB_CATEGORY>();
             if(code1 != "") {
                 categorylist2 = await _codeService.GetCategoryList(code1, "Y");
             }
 
-            List<TbCode> codelist = new List<TbCode>();
+            List<TB_CODE> codelist = new List<TB_CODE>();
             codelist = await _codeService.GetCodeList("용량");
 
 

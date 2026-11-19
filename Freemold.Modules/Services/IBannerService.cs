@@ -24,6 +24,9 @@ namespace Freemold.Modules.Services
         Task<string> SetBanner(BannerSetRequestModel item, CancellationToken ct = default);
         Task<string> ModifyBanner(BannerSetRequestModel item, CancellationToken ct = default);
         Task<BannerResponseModel> GetBanner(int banneridx, int idx);
-        
+        Task<PagedResult<BannerSearchDataModel>> SearchBannerList(BannerSearchModel bannersearchmodel);
+        Task<BannerTotalCountModel> GetBannerTotalCount();
+        Task<List<BannerTypeCountModel>> GetBannerTypeTotal();
+        Task<BannerCategoryCountModel> GetBannerCategoryTotal();
     }
 }

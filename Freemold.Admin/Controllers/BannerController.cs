@@ -3,6 +3,7 @@ using Freemold.Modules.Models;
 using Freemold.Modules.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Freemold.Admin.Controllers
@@ -22,12 +23,25 @@ namespace Freemold.Admin.Controllers
             _bannerService = bannerService;
             _memberService = memberService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            BannerTotalCountModel item = new BannerTotalCountModel();
+            List<BannerTypeCountModel> btypelist = new List<BannerTypeCountModel>();
+            BannerCategoryCountModel bcategorylist = new BannerCategoryCountModel();
+
+            item = await _bannerService.GetBannerTotalCount();
+            btypelist = await _bannerService.GetBannerTypeTotal();
+            bcategorylist = await _bannerService.GetBannerCategoryTotal();
+
+            ViewBag.bannertotalcount = item;
+            ViewBag.bannertypelist = btypelist;
+            ViewBag.bcategorylist = bcategorylist;
+
             return View();
         }
 
-        public async Task<IActionResult> Management()
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> Management(string searchbccode = "")
         {
             List<BannerSettingModel> list1 = new List<BannerSettingModel>();
             list1 = await _bannerService.BannerSettingList();
@@ -37,6 +51,8 @@ namespace Freemold.Admin.Controllers
 
             ViewBag.bannerlist = list1;
             ViewBag.bannercategorylist = list2;
+
+            ViewBag.openmenu = searchbccode;
 
 
             return View();
@@ -246,6 +262,31 @@ namespace Freemold.Admin.Controllers
                 return Json(new { items = "fail" });
             }
         }
+
+
+        [HttpPost]
+        public async Task<JsonResult> AjaxGetSearchBanner(BannerSearchModel item)
+        {
+            try
+            {
+                
+                var result = await _bannerService.SearchBannerList(item);
+
+
+                return Json(new { items = result.items, totalCount = result.totalcount });
+
+            }
+            catch
+            {
+                return Json(new { items = Array.Empty<object>(), totalCount = 0 });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AjaxBannerPositionModal() { 
         
+            return View();
+        }
+
     }
 }

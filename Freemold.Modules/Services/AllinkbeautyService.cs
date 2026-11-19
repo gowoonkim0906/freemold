@@ -644,7 +644,7 @@ namespace Freemold.Modules.Services
             try
             {
                 var cnt = _commonRepository.GetBlockIp().AsNoTracking()
-                          .Where(m => m.BlockIp == ip).Count();
+                          .Where(m => m.Block_IP == ip).Count();
 
                 if (cnt > 0)
                 {

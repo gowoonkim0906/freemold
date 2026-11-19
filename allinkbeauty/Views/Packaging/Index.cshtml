@@ -1,9 +1,9 @@
 ﻿@using Freemold.Modules;
 @{
 
-    var categorylist = ViewBag.categorylist as List<TbCategory> ?? new List<TbCategory>();
-    var categorylist2 = ViewBag.categorylist2 as List<TbCategory> ?? new List<TbCategory>();
-    var codelist = ViewBag.codelist as List<TbCode> ?? new List<TbCode>();
+    var categorylist = ViewBag.categorylist as List<TB_CATEGORY> ?? new List<TB_CATEGORY>();
+    var categorylist2 = ViewBag.categorylist2 as List<TB_CATEGORY> ?? new List<TB_CATEGORY>();
+    var codelist = ViewBag.codelist as List<TB_CODE> ?? new List<TB_CODE>();
 
     string filepath = ViewBag.filepath as string ?? ""; 
 
@@ -29,7 +29,7 @@
                     {
                         foreach (var item in categorylist)
                         {
-                            <li class="prd-nav__item"><a href="#" onclick="return scategory('@item.Code', this, event)" class="prd-nav__btn" data-code="@item.Code" aria-current="@(code1 == item.Code ? "page" : "")">@item.NameEng</a></li>
+                            <li class="prd-nav__item"><a href="#" onclick="return scategory('@item.Code', this, event)" class="prd-nav__btn" data-code="@item.Code" aria-current="@(code1 == item.Code ? "page" : "")">@item.Name_Eng</a></li>
                         }
                     }
                 </ul>
@@ -42,7 +42,7 @@
                         <li class="prd-nav__item"><a href="#" onclick="return scategory2(this, event)" class="prd-nav__btn" data-code="" aria-current="@(code2 == "" ? "page" : "")">ALL</a></li>
                         foreach (var item in categorylist2)
                         {
-                            <li class="prd-nav__item"><a href="#" onclick="return scategory2(this, event)" class="prd-nav__btn" data-code="@item.Code" aria-current="@(code2 == item.Code ? "page" : "")">@item.NameEng</a></li>
+                            <li class="prd-nav__item"><a href="#" onclick="return scategory2(this, event)" class="prd-nav__btn" data-code="@item.Code" aria-current="@(code2 == item.Code ? "page" : "")">@item.Name_Eng</a></li>
                         }
                     }
                     else

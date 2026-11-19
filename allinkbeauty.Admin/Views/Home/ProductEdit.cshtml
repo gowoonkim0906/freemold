@@ -4,8 +4,8 @@
 @{
     var productinfo = ViewBag.productinfo as ProductDetailModel ?? new ProductDetailModel();
     var productcategory = ViewBag.productcategory as List<CategoryFullnameModel> ?? new List<CategoryFullnameModel>();
-    var categorylist = ViewBag.categorylist as List<TbCategory> ?? new List<TbCategory>();
-    var codelist = ViewBag.codelist as List<TbCode> ?? new List<TbCode>();
+    var categorylist = ViewBag.categorylist as List<TB_CATEGORY> ?? new List<TB_CATEGORY>();
+    var codelist = ViewBag.codelist as List<TB_CODE> ?? new List<TB_CODE>();
     string fileurl = ViewBag.fileurl as string ?? "";
 
     string UpCat = productinfo.UpCat.Replace(";;", ",").Replace(";", "");
@@ -59,7 +59,7 @@
                                 {
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="upcat" id="@item.Code" value="@item.Code" @(item.Code.Contains(UpCat) ? "checked" : "")>
-                                        <label class="form-check-label" for="@item.Code">@item.NameKor</label>
+                                        <label class="form-check-label" for="@item.Code">@item.Name_Kor</label>
                                     </div>
 
                                 }

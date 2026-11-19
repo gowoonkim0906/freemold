@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Freemold.Modules;
 
-public partial class TbCode
+public partial class TB_CODE
 {
     public int Idx { get; set; }
 
@@ -15,7 +15,9 @@ public partial class TbCode
 
     public string Name { get; set; } = null!;
 
+    public string? EngName { get; set; }
+
     public short Ord { get; set; }
 
-    public string IsUse { get; set; } = null!;
+    public string isUse { get; set; } = null!;
 }

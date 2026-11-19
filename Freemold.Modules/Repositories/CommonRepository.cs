@@ -14,11 +14,11 @@ namespace Freemold.Modules.Repositories
         { }
 
         //차단아이피 목록
-        public IQueryable<TbBlockIp> GetBlockIp()
+        public IQueryable<TB_BLOCK_IP> GetBlockIp()
         {
             try
             {
-                return _appdbcontext.TbBlockIps;
+                return _appdbcontext.TB_BLOCK_IP;
             }
             catch
             {

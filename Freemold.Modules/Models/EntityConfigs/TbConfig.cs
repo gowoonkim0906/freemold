@@ -1995,58 +1995,53 @@ namespace Freemold.Modules.Models.EntityConfigs
                 entity.Property(e => e.UseYN).HasMaxLength(1);
             });
 
-            modelBuilder.Entity<TbBlockIp>(entity =>
+            modelBuilder.Entity<TB_BLOCK_IP>(entity =>
             {
                 entity.HasKey(e => e.Idx);
 
-                entity.ToTable("TB_BLOCK_IP");
+                entity.HasIndex(e => e.Block_IP, "IX_TB_BLOCK_IP");
 
-                entity.Property(e => e.BlockIp)
+                entity.Property(e => e.Block_IP)
                     .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("Block_IP");
-                entity.Property(e => e.DelYn)
+                    .IsUnicode(false);
+                entity.Property(e => e.Del_YN)
                     .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("Del_YN");
+                    .IsUnicode(false);
+                entity.Property(e => e.Etc)
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+                entity.Property(e => e.ModDate).HasColumnType("datetime");
                 entity.Property(e => e.RegDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<TbBoardWview>(entity =>
+            modelBuilder.Entity<TB_BOARD_WVIEW>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
-
-                entity.ToTable("TB_BOARD_WVIEW");
 
                 entity.HasIndex(e => e.BoardIdx, "IX_TB_BOARD_WVIEW_BoardIdx")
                     .IsDescending()
                     .HasFillFactor(90);
 
-                entity.HasIndex(e => e.MemberId, "IX_TB_BOARD_WVIEW_MemberID").HasFillFactor(90);
+                entity.HasIndex(e => e.MemberID, "IX_TB_BOARD_WVIEW_MemberID").HasFillFactor(90);
 
-                entity.Property(e => e.MemberId)
-                    .HasMaxLength(50)
-                    .HasColumnName("MemberID");
+                entity.Property(e => e.MemberID).HasMaxLength(50);
                 entity.Property(e => e.RegDate)
                     .HasDefaultValueSql("(getdate())")
                     .HasColumnType("datetime");
-                entity.Property(e => e.RegIp)
+                entity.Property(e => e.RegIP)
                     .HasMaxLength(23)
-                    .IsUnicode(false)
-                    .HasColumnName("RegIP");
+                    .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TbCategory>(entity =>
+            modelBuilder.Entity<TB_CATEGORY>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
-
-                entity.ToTable("TB_CATEGORY");
 
                 entity.HasIndex(e => e.Code, "IX_TB_CATEGORY_Code").HasFillFactor(90);
 
                 entity.HasIndex(e => e.Depth, "IX_TB_CATEGORY_Depth").HasFillFactor(90);
 
-                entity.HasIndex(e => e.NameKor, "IX_TB_CATEGORY_Name_Kor").HasFillFactor(90);
+                entity.HasIndex(e => e.Name_Kor, "IX_TB_CATEGORY_Name_Kor").HasFillFactor(90);
 
                 entity.HasIndex(e => e.Ord, "IX_TB_CATEGORY_Ord").HasFillFactor(90);
 
@@ -2059,13 +2054,10 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .IsUnicode(false)
                     .IsFixedLength();
                 entity.Property(e => e.Memo).HasMaxLength(100);
-                entity.Property(e => e.NameEng)
+                entity.Property(e => e.Name_Eng)
                     .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("Name_Eng");
-                entity.Property(e => e.NameKor)
-                    .HasMaxLength(50)
-                    .HasColumnName("Name_Kor");
+                    .IsUnicode(false);
+                entity.Property(e => e.Name_Kor).HasMaxLength(50);
                 entity.Property(e => e.StdMld)
                     .HasMaxLength(1)
                     .IsUnicode(false)
@@ -2076,11 +2068,9 @@ namespace Freemold.Modules.Models.EntityConfigs
                     .IsFixedLength();
             });
 
-            modelBuilder.Entity<TbCode>(entity =>
+            modelBuilder.Entity<TB_CODE>(entity =>
             {
                 entity.HasKey(e => e.Idx).HasFillFactor(90);
-
-                entity.ToTable("TB_CODE");
 
                 entity.HasIndex(e => e.Code, "IX_TB_CODE_Code").HasFillFactor(90);
 
@@ -2092,18 +2082,18 @@ namespace Freemold.Modules.Models.EntityConfigs
 
                 entity.HasIndex(e => e.Sort, "IX_TB_CODE_Sort").HasFillFactor(90);
 
-                entity.HasIndex(e => e.IsUse, "IX_TB_CODE_isUse").HasFillFactor(90);
+                entity.HasIndex(e => e.isUse, "IX_TB_CODE_isUse").HasFillFactor(90);
 
                 entity.Property(e => e.Code).HasMaxLength(20);
                 entity.Property(e => e.Code2).HasMaxLength(20);
-                entity.Property(e => e.IsUse)
+                entity.Property(e => e.EngName).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Sort).HasMaxLength(10);
+                entity.Property(e => e.isUse)
                     .HasMaxLength(1)
                     .IsUnicode(false)
                     .HasDefaultValue("Y")
-                    .IsFixedLength()
-                    .HasColumnName("isUse");
-                entity.Property(e => e.Name).HasMaxLength(20);
-                entity.Property(e => e.Sort).HasMaxLength(10);
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<TbCompareChain>(entity =>

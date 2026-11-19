@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,24 +113,32 @@ namespace Freemold.Modules.Models
         public string? bannerposition { get; set; }
         public string? bannername { get; set; }
         public string? companyname { get; set; }
+        public int mIdx { get; set; }
         public string? bannerimage { get; set; }
         public string? bannersubject { get; set; }
         public int ord { get; set; }
         public string? bannerunlimit { get; set; }
-        public string? sdate { get; set; }
-        public string? edate { get; set; }
+        public DateTime sdate { get; set; }
+        public DateTime edate { get; set; }
         public string? isuse { get; set; }
         public string? btype { get; set; }
-        public string? regdate { get; set; }
+        public DateTime regdate { get; set; }
         public string? sortcode { get; set; }
         public int bannertypeidx { get; set; }
+        public int bannerprice { get; set; }
+        public string bannerwaiting { get; set; } = "N";
+        public int remaindays { get; set; } = 0;
+        public int totalcount { get; set; }
     }
 
 
     public class BannerSearchModel
     {
-        public int page { get; set; }
-        public int pagesize { get; set; }
+        public int page { get; set; } = 1;
+        public int pagesize { get; set; } = 20;
+        public string? searchtype { get; set; }    
+        public string? companyname { get; set; }
+        public string? searchfree { get; set; }
         
     }
 
@@ -209,5 +218,74 @@ namespace Freemold.Modules.Models
         public string bregip { get; set; } = null!; //등록아이피(수정시 bak 테이블에 등록된 아이디)
     }
 
-   
+    public class BannerTotalCountModel
+    {
+
+        public int typetotal { get; set; }
+        public int typereg { get; set; }
+        public int typewait { get; set; }
+        public int typewaitprice { get; set; }
+        public int typeuse { get; set; }
+        public int typeuseprice { get; set; }
+        public int typedeadline { get; set; }
+        public int typereservation { get; set; }
+        public int typereservationprice { get; set; }
+        public int typeempty { get; set; }
+        public int typepaid { get; set; }
+        public int typefree { get; set; }
+        public int typenewfree { get; set; }
+        public int typecompanyfree { get; set; }
+        public int cattotal { get; set; }
+        public int catreg { get; set; }
+        public int catwait { get; set; }
+        public int catwaitprice { get; set; }
+        public int catuse { get; set; }
+        public int catuseprice { get; set; }
+        public int catdeadline { get; set; }
+        public int catreservation { get; set; }
+        public int catreservationprice { get; set; }
+        public int catempty { get; set; }
+        public int catpaid { get; set; }
+        public int catfree { get; set; }
+        public int catcompanyfree { get; set; }
+        public int totalbanner { get; set; }
+        public int regbanner { get; set; }
+        public int waitbanner { get; set; }
+        public int waitpricebanner { get; set; }
+        public int usebanner { get; set; }
+        public int usepricebanner { get; set; }
+        public int deadlinebanner { get; set; }
+        public int reservationbanner { get; set; }
+        public int reservationpricebanner { get; set; }
+        public int emptybanner { get; set; }
+        public int paidbanner { get; set; }
+        public int freebanner { get; set; }
+        public int newfreebanner { get; set; }
+        public int companyfreebanner { get; set; }
+    }
+
+
+    public class BannerTypeCountModel
+    {
+        public string bccode { get; set; }
+        public string bcname { get; set; }
+        public int bcord { get; set; }
+        public int total { get; set; }        // 전체
+        public int deadline { get; set; }     // 마감임박
+        public int ing { get; set; }          // 운영중
+        public int reservation { get; set; }  // 예약
+        public int waiting { get; set; }      // 대기
+        public int empty { get; set; }        // 공석
+    }
+
+    public class BannerCategoryCountModel
+    {
+        public string? bcode { get; set; }
+        public int total { get; set; }        // 전체
+        public int deadline { get; set; }     // 마감임박
+        public int ing { get; set; }          // 운영중
+        public int reservation { get; set; }  // 예약
+        public int waiting { get; set; }      // 대기
+        public int empty { get; set; }        // 공석
+    }
 }

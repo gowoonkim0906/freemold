@@ -66,7 +66,7 @@ namespace allinkbeauty.Controllers
         public async Task<JsonResult> CategoryList(string ACode)
         {
 
-            List<TbCategory> categorylist = new List<TbCategory>();
+            List<TB_CATEGORY> categorylist = new List<TB_CATEGORY>();
             categorylist = await _codeService.GetCategoryList(ACode, "Y");
 
             return Json(new { Item1 = "success", Item2 = categorylist });

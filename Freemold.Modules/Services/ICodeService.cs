@@ -9,8 +9,8 @@ namespace Freemold.Modules.Services
 {
     public interface ICodeService
     {
-        Task<List<TbCode>> GetCodeList(string sort);
-        Task<List<TbCategory>> GetCategoryList(string UpCode, string StdMld = "");
+        Task<List<TB_CODE>> GetCodeList(string sort);
+        Task<List<TB_CATEGORY>> GetCategoryList(string UpCode, string StdMld = "");
         Task<List<VW_NCATEGORY_LIST>> GetVwNcategoryList(string[] ACode, string StdMld = "");
         Task<List<CategoryModel>> GetModalVwNcategoryList(string ACode, string StdMld = "", string[] Selectval = null);
         Task<string> GetCategoryFullname(string catagory);

@@ -1,0 +1,212 @@
+﻿<style>
+    /* ===== 실제 노출 위치 : 내용(탭/이미지)만 스타일 적용 ===== */
+    #positionbannermodal {
+        --pos-point: #0f766e;
+        --pos-text: #1f1f1f;
+        --pos-sub: #8a8a8a;
+    }
+
+    /* 모달 폭 (lg 800px → 960px) */
+    @@media (min-width: 992px) {
+        #positionbannermodal .modal-dialog {
+            max-width: 960px;
+        }
+    }
+
+        /* 탭 : 밑줄형, 한 줄 */
+        #positionbannermodal .pos-tabs {
+            display: flex;
+            flex-wrap: nowrap;
+            margin: 0 0 16px;
+            padding: 0;
+            list-style: none;
+            border: 0;
+            border-bottom: 1px solid #e9ecef;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+            #positionbannermodal .pos-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            #positionbannermodal .pos-tabs .nav-item {
+                flex: 1 1 auto;
+                margin: 0;
+            }
+
+            #positionbannermodal .pos-tabs .nav-link {
+                display: block;
+                width: 100%;
+                margin: 0 0 -1px;
+                padding: 10px 6px;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 1.3;
+                color: #868e96;
+                text-align: center;
+                background: none;
+                border: 0;
+                border-bottom: 2px solid transparent;
+                border-radius: 0;
+                box-shadow: none;
+                white-space: nowrap;
+                transition: color .2s, border-color .2s;
+            }
+
+                #positionbannermodal .pos-tabs .nav-link:hover {
+                    color: var(--pos-text);
+                }
+
+                #positionbannermodal .pos-tabs .nav-link.active,
+                #positionbannermodal .pos-tabs .nav-link.active:hover {
+                    color: var(--pos-point);
+                    font-weight: 700;
+                    background: none;
+                    border-bottom-color: var(--pos-point);
+                }
+
+        /* 이미지 영역 : 테두리 없이, 화면 높이 안에 다 보이게 */
+        #positionbannermodal .tab-content {
+            padding: 0;
+            background: none;
+            border: 0;
+        }
+
+        #positionbannermodal .pos-img {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+        }
+
+            #positionbannermodal .pos-img img {
+                display: block;
+                max-width: 100%;
+                max-height: calc(100vh - 280px);
+                width: auto;
+                height: auto;
+                object-fit: contain;
+            }
+
+            /* 이미지 없을 때 */
+            #positionbannermodal .pos-img.is-empty {
+                align-items: center;
+                min-height: 300px;
+                font-size: 13px;
+                color: #b3b3b3;
+                background: repeating-linear-gradient(45deg, #fff, #fff 10px, #f7f7f7 10px, #f7f7f7 20px);
+                border-radius: 8px;
+            }
+
+                #positionbannermodal .pos-img.is-empty img {
+                    display: none;
+                }
+
+        #positionbannermodal .pos-caption {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 10px 0 0;
+            font-size: 12px;
+            color: var(--pos-sub);
+        }
+
+            #positionbannermodal .pos-caption::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                background: var(--pos-point);
+                border-radius: 50%;
+            }
+
+    @@media (max-width: 575.98px) {
+        #positionbannermodal .pos-tabs .nav-link {
+            padding: 9px 8px;
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="modal-header">
+    <h5 class="modal-title" id="positionbannermodal-title">실제 노출 위치</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+</div>
+
+<div class="modal-body">
+    <!-- 탭 -->
+    <ul class="nav pos-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pos-tab-1" data-bs-toggle="tab" data-bs-target="#pos-pane-1" type="button" role="tab" aria-controls="pos-pane-1" aria-selected="false">로고/팝업/검색창/로그인</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pos-tab-2" data-bs-toggle="tab" data-bs-target="#pos-pane-2" type="button" role="tab" aria-controls="pos-pane-2" aria-selected="true">최상단/마이페이지/메인배너</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pos-tab-3" data-bs-toggle="tab" data-bs-target="#pos-pane-3" type="button" role="tab" aria-controls="pos-pane-3" aria-selected="false">서브탑 배너</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pos-tab-4" data-bs-toggle="tab" data-bs-target="#pos-pane-4" type="button" role="tab" aria-controls="pos-pane-4" aria-selected="false">커뮤니티배너/특지장</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pos-tab-5" data-bs-toggle="tab" data-bs-target="#pos-pane-5" type="button" role="tab" aria-controls="pos-pane-5" aria-selected="false">OEM/ODM배너</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pos-tab-6" data-bs-toggle="tab" data-bs-target="#pos-pane-6" type="button" role="tab" aria-controls="pos-pane-6" aria-selected="false">직수입배너</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pos-tab-7" data-bs-toggle="tab" data-bs-target="#pos-pane-7" type="button" role="tab" aria-controls="pos-pane-7" aria-selected="false">카테고리배너</button>
+        </li>
+    </ul>
+
+    <!-- 탭 내용 (이미지) -->
+    <div class="tab-content">
+        <div class="tab-pane fade" id="pos-pane-1" role="tabpanel" aria-labelledby="pos-tab-1" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_01.jpg" alt="로고/팝업/검색창/로그인 노출 위치"></div>
+            <p class="pos-caption">로고 · 팝업 · 검색창 · 로그인 영역</p>
+        </div>
+        <div class="tab-pane fade show active" id="pos-pane-2" role="tabpanel" aria-labelledby="pos-tab-2" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_02.jpg" alt="최상단/마이페이지/메인배너 노출 위치"></div>
+            <p class="pos-caption">최상단 · 마이페이지 · 메인배너 영역</p>
+        </div>
+        <div class="tab-pane fade" id="pos-pane-3" role="tabpanel" aria-labelledby="pos-tab-3" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_03.jpg" alt="서브탑 배너 노출 위치"></div>
+            <p class="pos-caption">서브탑 배너 영역</p>
+        </div>
+        <div class="tab-pane fade" id="pos-pane-4" role="tabpanel" aria-labelledby="pos-tab-4" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_04.jpg" alt="커뮤니티배너/특지장 노출 위치"></div>
+            <p class="pos-caption">커뮤니티배너 · 특지장 영역</p>
+        </div>
+        <div class="tab-pane fade" id="pos-pane-5" role="tabpanel" aria-labelledby="pos-tab-5" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_05.jpg" alt="OEM/ODM배너 노출 위치"></div>
+            <p class="pos-caption">OEM/ODM 배너 영역</p>
+        </div>
+        <div class="tab-pane fade" id="pos-pane-6" role="tabpanel" aria-labelledby="pos-tab-6" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_06.jpg" alt="직수입배너 노출 위치"></div>
+            <p class="pos-caption">직수입 배너 영역</p>
+        </div>
+        <div class="tab-pane fade" id="pos-pane-7" role="tabpanel" aria-labelledby="pos-tab-7" tabindex="0">
+            <div class="pos-img"><img src="/images/banner/pos_07.jpg" alt="카테고리배너 노출 위치"></div>
+            <p class="pos-caption">카테고리배너 영역</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        // 이미지가 없으면 "이미지 준비중입니다" 표시
+        document.querySelectorAll('#positionbannermodal .pos-img img').forEach(function (img) {
+            var mark = function () {
+                var box = img.parentNode;
+                box.classList.add('is-empty');
+                if (!box.querySelector('.pos-empty-txt')) {
+                    var s = document.createElement('span');
+                    s.className = 'pos-empty-txt';
+                    s.textContent = '이미지 준비중입니다';
+                    box.appendChild(s);
+                }
+            };
+            img.addEventListener('error', mark);
+            if (img.complete && img.naturalWidth === 0) mark();
+        });
+    })();
+</script>

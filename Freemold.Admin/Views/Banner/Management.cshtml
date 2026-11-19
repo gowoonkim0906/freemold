@@ -11,7 +11,7 @@
                 .ToList();
 
 
-
+    var openmenu = ViewBag.openmenu as string ?? "";
 }
 
 <div class="page-header d-print-none" aria-label="Page header">
@@ -127,6 +127,7 @@
                         @foreach (var group in groups)
                         {
                             var groupId = group.Key.bccode;
+                            var isOpen = groupId == openmenu;
                             var items = group
                                         .OrderBy(x => x.ord1)
                                         .ThenBy(x => x.ord2)
@@ -136,23 +137,23 @@
                             <div class="list-group-item bg-gray-100 fw-bold">
 
                                 <a href="#@(groupId)"
-                                   class="d-flex align-items-center text-reset text-decoration-none"
+                                   class="d-flex align-items-center text-reset text-decoration-none @(isOpen ? "" : "collapsed")"
                                    data-bs-toggle="collapse"
-                                   aria-expanded="false">
+                                   aria-expanded="@(isOpen ? "true" : "false")">
 
                                     <span>
                                         @(group.Key.bcname)
                                     </span>
 
                                     <span class="ms-auto">
-                                        +
+                                        @(isOpen ? "−" : "+")
                                     </span>
 
                                 </a>
 
                             </div>
 
-                            <div class="collapse" id="@groupId">
+                            <div class="collapse @(isOpen ? "show" : "")" id="@groupId">
 
                             @for (int i = 0; i < items.Count; i++)
                             {

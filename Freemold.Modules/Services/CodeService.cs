@@ -16,12 +16,12 @@ namespace Freemold.Modules.Services
         }
 
         //code 검색 sort = "용량" , sort "원산지"
-        public async Task<List<TbCode>> GetCodeList(string sort)
+        public async Task<List<TB_CODE>> GetCodeList(string sort)
         {
             try
             {
                 var query = _codeRepository.GetCodeList().AsNoTracking();
-                var list = await query.Where(x => x.Sort == sort && x.IsUse == "Y").OrderBy(x => x.Ord).ToListAsync();
+                var list = await query.Where(x => x.Sort == sort && x.isUse == "Y").OrderBy(x => x.Ord).ToListAsync();
                 return list;
             }
             catch
@@ -41,7 +41,7 @@ namespace Freemold.Modules.Services
         A008	금형/기계/시공
         A009	디자인/마케팅
         */
-        public async Task<List<TbCategory>> GetCategoryList(string UpCode, string StdMld = "")
+        public async Task<List<TB_CATEGORY>> GetCategoryList(string UpCode, string StdMld = "")
         {
             try
             {

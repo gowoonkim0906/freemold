@@ -36,7 +36,7 @@ namespace Freemold.Modules.Repositories
 
                 var query = (
                     from i in _appdbcontext.TB_CONNECTION_ALLINKBEAUTY
-                    join p in _appdbcontext.TbCodes
+                    join p in _appdbcontext.TB_CODE
                     on i.cCode equals p.Code 
                     where p.Sort == "국가코드_국문" && i.InDate >= sDate && i.InDate <= eDate
                     select new StatisticsCountryModel

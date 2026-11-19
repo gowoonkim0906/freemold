@@ -150,25 +150,25 @@ namespace Freemold.Modules.Repositories
             {
                 var query =
                     from a in _appdbcontext.TB_ALLINKBEAUTY_CONTACT
-                    join b in _appdbcontext.TbCodes
+                    join b in _appdbcontext.TB_CODE
                         on a.Country equals b.Code
-                    join c0 in _appdbcontext.TbCodes
+                    join c0 in _appdbcontext.TB_CODE
                         on a.ProductCategory equals c0.Code into cJoin
                     from c in cJoin.DefaultIfEmpty()
-                    join d0 in _appdbcontext.TbCodes
+                    join d0 in _appdbcontext.TB_CODE
                         on a.TargetLaunchTimeline equals d0.Code into dJoin
                     from d in dJoin.DefaultIfEmpty()
-                    join e0 in _appdbcontext.TbCodes
+                    join e0 in _appdbcontext.TB_CODE
                         on a.EstimatedOrderQuantity equals e0.Code into eJoin
                     from e in eJoin.DefaultIfEmpty()
-                    join f0 in _appdbcontext.TbCodes
+                    join f0 in _appdbcontext.TB_CODE
                         on a.BudgetRange equals f0.Code into fJoin
                     from f in fJoin.DefaultIfEmpty()
-                    where b.Sort == "국가코드_영문" && b.IsUse == "Y"
-                       && (c == null || (c.Sort == "p_category" && c.IsUse == "Y"))
-                       && (d == null || (d.Sort == "timeline" && d.IsUse == "Y"))
-                       && (e == null || (e.Sort == "o_quantity" && e.IsUse == "Y"))
-                       && (f == null || (f.Sort == "b_range" && f.IsUse == "Y"))
+                    where b.Sort == "국가코드_영문" && b.isUse == "Y"
+                       && (c == null || (c.Sort == "p_category" && c.isUse == "Y"))
+                       && (d == null || (d.Sort == "timeline" && d.isUse == "Y"))
+                       && (e == null || (e.Sort == "o_quantity" && e.isUse == "Y"))
+                       && (f == null || (f.Sort == "b_range" && f.isUse == "Y"))
                     orderby a.Idx descending
                     select new ContactModel
                     {

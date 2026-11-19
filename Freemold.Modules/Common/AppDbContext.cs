@@ -73,15 +73,15 @@ namespace Freemold.Modules.Common
 
         public virtual DbSet<TB_BANNER_TYPE> TB_BANNER_TYPE { get; set; }
 
-        public virtual DbSet<TbBlockIp> TbBlockIps { get; set; }
+        public virtual DbSet<TB_BLOCK_IP> TB_BLOCK_IP { get; set; }
 
         public virtual DbSet<TB_BOARD_DATA> TB_BOARD_DATA { get; set; }
 
-        public virtual DbSet<TbBoardWview> TbBoardWviews { get; set; }
+        public virtual DbSet<TB_BOARD_WVIEW> TB_BOARD_WVIEW { get; set; }
 
-        public virtual DbSet<TbCategory> TbCategories { get; set; }
+        public virtual DbSet<TB_CATEGORY> TB_CATEGORY { get; set; }
 
-        public virtual DbSet<TbCode> TbCodes { get; set; }
+        public virtual DbSet<TB_CODE> TB_CODE { get; set; }
 
         public virtual DbSet<TbCompareChain> TbCompareChains { get; set; }
 

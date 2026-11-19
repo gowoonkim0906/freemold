@@ -239,10 +239,10 @@ namespace standardmold.Admin.Controllers
             ProductDetailModel productinfo = _allinkbeautyService.ProductView(produid);
 
 
-            List<TbCode> codelist = new List<TbCode>();
+            List<TB_CODE> codelist = new List<TB_CODE>();
             codelist = await _codeService.GetCodeList("원산지");
 
-            List<TbCategory> categorylist = new List<TbCategory>();
+            List<TB_CATEGORY> categorylist = new List<TB_CATEGORY>();
             categorylist = await _codeService.GetCategoryList("0000" , "Y");
 
             var tasks = await _codeService.GetCategoryFullnameLIst(productinfo.Cat);
@@ -330,10 +330,10 @@ namespace standardmold.Admin.Controllers
             ProductDetailModel productinfo = _allinkbeautyService.ProductView(produid);
 
 
-            List<TbCode> codelist = new List<TbCode>();
+            List<TB_CODE> codelist = new List<TB_CODE>();
             codelist = await _codeService.GetCodeList("원산지");
 
-            List<TbCategory> categorylist = new List<TbCategory>();
+            List<TB_CATEGORY> categorylist = new List<TB_CATEGORY>();
             categorylist = await _codeService.GetCategoryList("0000", "Y");
 
             var tasks = await _codeService.GetCategoryFullnameLIst(productinfo.Cat);
@@ -353,10 +353,10 @@ namespace standardmold.Admin.Controllers
             ProductDetailModel productinfo = _allinkbeautyService.ProductView(produid);
 
 
-            List<TbCode> codelist = new List<TbCode>();
+            List<TB_CODE> codelist = new List<TB_CODE>();
             codelist = await _codeService.GetCodeList("원산지");
 
-            List<TbCategory> categorylist = new List<TbCategory>();
+            List<TB_CATEGORY> categorylist = new List<TB_CATEGORY>();
             categorylist = await _codeService.GetCategoryList("0000", "Y");
 
             var tasks = await _codeService.GetCategoryFullnameLIst(productinfo.Cat);

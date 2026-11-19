@@ -19,11 +19,11 @@ namespace Freemold.Modules.Repositories
         }
 
         //용량 목록 조회
-        public IQueryable<TbCode> GetCodeList()
+        public IQueryable<TB_CODE> GetCodeList()
         {
             try
             {
-                return _appdbcontext.TbCodes;
+                return _appdbcontext.TB_CODE;
             }
             catch 
             {
@@ -32,11 +32,11 @@ namespace Freemold.Modules.Repositories
         }
 
         //카테고리 목록 조회
-        public IQueryable<TbCategory> GetCategoryList()
+        public IQueryable<TB_CATEGORY> GetCategoryList()
         {
             try
             {
-                return _appdbcontext.TbCategories;
+                return _appdbcontext.TB_CATEGORY;
             }
             catch
             {

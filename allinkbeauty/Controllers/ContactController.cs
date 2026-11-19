@@ -20,19 +20,19 @@ namespace allinkbeauty.Controllers
 
         public async Task<IActionResult> Index(string PCode = "", string type = "")
         {
-            List<TbCode> countrylist = new List<TbCode>();
+            List<TB_CODE> countrylist = new List<TB_CODE>();
             countrylist = await _codeService.GetCodeList("국가코드_영문");
 
-            List<TbCode> product_category = new List<TbCode>();
+            List<TB_CODE> product_category = new List<TB_CODE>();
             product_category = await _codeService.GetCodeList("p_category");
 
-            List<TbCode> timeline = new List<TbCode>();
+            List<TB_CODE> timeline = new List<TB_CODE>();
             timeline = await _codeService.GetCodeList("timeline");
 
-            List<TbCode> budget_range = new List<TbCode>();
+            List<TB_CODE> budget_range = new List<TB_CODE>();
             budget_range = await _codeService.GetCodeList("b_range");
 
-            List<TbCode> order_quantity = new List<TbCode>();
+            List<TB_CODE> order_quantity = new List<TB_CODE>();
             order_quantity = await _codeService.GetCodeList("o_quantity");
 
             string FormulaPCoe = "";

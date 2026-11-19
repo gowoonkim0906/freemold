@@ -1,6 +1,64 @@
-﻿@{
-    ViewData["Title"] = "배너관리";
-    Layout = "_AdminLayout";
+﻿@using Freemold.Modules.Models;
+@{
+	ViewData["Title"] = "배너관리";
+	Layout = "_AdminLayout";
+
+
+	var bannertotal = ViewBag.bannertotalcount as BannerTotalCountModel;
+	var bannertypelist = ViewBag.bannertypelist as List<BannerTypeCountModel> ?? new List<BannerTypeCountModel>();
+	var bcategorylist = ViewBag.bcategorylist as BannerCategoryCountModel;
+
+
+	int totalbanner = 0;
+	int regbanner = 0;
+	int waitbanner = 0;
+	int waitpricebanner = 0;
+	int usebanner = 0;
+	int usepricebanner = 0;
+	int deadlinebanner = 0;
+	int reservationbanner = 0;
+	int reservationpricebanner = 0;
+	int emptybanner = 0;
+
+	int paidbanner = 0;
+	int freebanner = 0;
+	int newfreebanner = 0;
+	int companyfreebanner = 0;
+
+	string deadlinerate = "0";
+	string userate = "0";
+	string reservationrate = "0";
+	string waitrate = "0";
+	string emptyrate = "0";
+
+	
+
+	if (bannertotal != null)
+	{
+		totalbanner = bannertotal.typetotal;
+		regbanner = bannertotal.typereg;
+		waitbanner = bannertotal.typewait;
+		waitpricebanner = bannertotal.typewaitprice;
+		usebanner = bannertotal.typeuse;
+		usepricebanner = bannertotal.typeuseprice;
+		deadlinebanner = bannertotal.typedeadline;
+		reservationbanner = bannertotal.typereservation;
+		reservationpricebanner = bannertotal.typereservationprice;
+		emptybanner = bannertotal.typeempty;
+
+		paidbanner = bannertotal.paidbanner;
+		freebanner = bannertotal.freebanner;
+		newfreebanner = bannertotal.newfreebanner;
+		companyfreebanner = bannertotal.companyfreebanner;
+
+
+		deadlinerate = totalbanner == 0 ? "0" : ((double)deadlinebanner / totalbanner * 100).ToString("N2");
+		userate = totalbanner == 0 ? "0" : ((double)usebanner / totalbanner * 100).ToString("N2");
+		reservationrate = totalbanner == 0 ? "0" : ((double)reservationbanner / totalbanner * 100).ToString("N2");
+		waitrate = totalbanner == 0 ? "0" : ((double)waitbanner / totalbanner * 100).ToString("N2");
+		emptyrate = totalbanner == 0 ? "0" : ((double)emptybanner / totalbanner * 100).ToString("N2");
+
+	}
 }
 <script src="~/lib/tabler/libs/apexcharts/dist/apexcharts.min.js"></script>
 <!-- BEGIN PAGE HEADER -->
@@ -38,15 +96,15 @@
 						<div class="d-flex align-items-center">
 							<div class="page-title h2"><span class="status-dot bg-green me-2 status-dot-lg"></span> 운영중</div>
 							<div class="ms-auto lh-1">
-								<span class="badge bg-red text-red-fg fs-5 px-2 py-2">마감중 3</span>
+								<span class="badge bg-red text-red-fg fs-5 px-2 py-2">마감중 @(deadlinebanner)</span>
 							</div>
 						</div>
 						<div class="border-top mt-2">
 							<div>
 
 								<div class="mt-1 mb-1">
-									<span class="fw-bold fs-1">133건</span>
-									<span class="text-secondary fs-3">/ 200건</span>
+									<span class="fw-bold fs-1">@(usebanner)건</span>
+									<span class="text-secondary fs-3">/ @(totalbanner)건</span>
 								</div>
 
 								<div class="text-secondary mb-2">
@@ -59,12 +117,12 @@
 
 										<div class="col-6 border-end">
 											<span class="me-2">유료</span>
-											<strong>118</strong>
+											<strong>@(usepricebanner)</strong>
 										</div>
 
 										<div class="col-6">
 											<span class="me-2">무료</span>
-											<strong>15</strong>
+											<strong>@(usebanner - usepricebanner)</strong>
 										</div>
 
 									</div>
@@ -87,7 +145,7 @@
 						<div class="border-top mt-2">
 							<div>
 								<div class="mb-1">
-									<span class="fw-bold fs-1">3건</span>
+									<span class="fw-bold fs-1">@(reservationbanner)건</span>
 								</div>
 								<div class="text-secondary mb-2">
 									노출 예정 배너
@@ -98,12 +156,12 @@
 
 										<div class="col-6 border-end">
 											<span class="me-2">유료</span>
-											<strong>118</strong>
+											<strong>@(reservationpricebanner)</strong>
 										</div>
 
 										<div class="col-6">
 											<span class="me-2">무료</span>
-											<strong>15</strong>
+											<strong>@(reservationbanner - reservationpricebanner)</strong>
 										</div>
 
 									</div>
@@ -126,7 +184,7 @@
 						<div class="border-top mt-2">
 							<div>
 								<div class="mb-1">
-									<span class="fw-bold fs-1">3건</span>
+									<span class="fw-bold fs-1">@(waitbanner)건</span>
 								</div>
 								<div class="text-secondary mb-2">
 									순번 대기 중인 배너
@@ -137,12 +195,12 @@
 
 										<div class="col-6 border-end">
 											<span class="me-2">유료</span>
-											<strong>118</strong>
+											<strong>@(waitpricebanner)</strong>
 										</div>
 
 										<div class="col-6">
 											<span class="me-2">무료</span>
-											<strong>15</strong>
+											<strong>@(waitbanner - waitpricebanner)</strong>
 										</div>
 
 									</div>
@@ -165,7 +223,7 @@
 						<div class="border-top mt-2">
 							<div>
 								<div class="mb-1">
-									<span class="fw-bold fs-1">3건</span>
+									<span class="fw-bold fs-1">@(emptybanner)건</span>
 								</div>
 								<div class="text-secondary">
 									현재 공석 상태 배너
@@ -183,11 +241,13 @@
 				<div class="card">
 					<div class="card-table">
 						<div class="card-header">
-							<div class="row w-full">
-								<div class="col">
-									<h3 class="card-title mb-0">
-										배너 영역별 운영 현황
-									</h3>
+							<div class="col d-flex align-items-center">
+								<h3 class="card-title mb-0">
+									배너 영역별 운영 현황
+								</h3>
+
+								<div class="ms-auto">
+									<button onclick="bannerpositionmodal()" class="btn btn-primary btn-sm">실제 배너 위치(배치도) 보기</button>
 								</div>
 							</div>
 						</div>
@@ -219,243 +279,104 @@
 												공석
 											</th>
 											<th class="text-center">
-												주요이슈
-											</th>
-											<th class="text-center">
-												최근수정
-											</th>
-											<th class="text-center">
 												관리
 											</th>
 										</tr>
 									</thead>
 
 									<tbody class="table-tbody">
-										<tr>
-											<td class="text-center">
-												로고/팝업/검색창/로그인
-											</td>
-											<td class="text-center">
-												1
-											</td>
-											<td class="text-center">
-												2
-											</td>
-											<td class="text-center">
-												3
-											</td>
-											<td class="text-center">
-												4
-											</td>
-											<td class="text-center">
-												5
-											</td>
-											<td class="text-center">
-												6
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												<div>2026-08-26</div>
-												<div>관리자</div>
-											</td>
-											<td class="text-center">
-												<a class="btn btn-outline btn-dark"> 바로가기</a>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												최상단/마이페이지/메인배터
-											</td>
-											<td class="text-center">
-												1
-											</td>
-											<td class="text-center">
-												2
-											</td>
-											<td class="text-center">
-												3
-											</td>
-											<td class="text-center">
-												4
-											</td>
-											<td class="text-center">
-												5
-											</td>
-											<td class="text-center">
-												6
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												<div>2026-08-26</div>
-												<div>관리자</div>
-											</td>
-											<td class="text-center">
-												<a class="btn btn-outline btn-dark"> 바로가기</a>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												서브탑배너
-											</td>
-											<td class="text-center">
-												1
-											</td>
-											<td class="text-center">
-												2
-											</td>
-											<td class="text-center">
-												3
-											</td>
-											<td class="text-center">
-												4
-											</td>
-											<td class="text-center">
-												5
-											</td>
-											<td class="text-center">
-												6
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												<div>2026-08-26</div>
-												<div>관리자</div>
-											</td>
-											<td class="text-center">
-												<a class="btn btn-outline btn-dark"> 바로가기</a>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												커뮤니티띠배너/쪽지창
-											</td>
-											<td class="text-center">
-												1
-											</td>
-											<td class="text-center">
-												2
-											</td>
-											<td class="text-center">
-												3
-											</td>
-											<td class="text-center">
-												4
-											</td>
-											<td class="text-center">
-												5
-											</td>
-											<td class="text-center">
-												6
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												<div>2026-08-26</div>
-												<div>관리자</div>
-											</td>
-											<td class="text-center">
-												<a class="btn btn-outline btn-dark"> 바로가기</a>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												OEM/ODM배너
-											</td>
-											<td class="text-center">
-												1
-											</td>
-											<td class="text-center">
-												2
-											</td>
-											<td class="text-center">
-												3
-											</td>
-											<td class="text-center">
-												4
-											</td>
-											<td class="text-center">
-												5
-											</td>
-											<td class="text-center">
-												6
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												<div>2026-08-26</div>
-												<div>관리자</div>
-											</td>
-											<td class="text-center">
-												<a class="btn btn-outline btn-dark"> 바로가기</a>
-											</td>
-										</tr>
-										<tr>
-											<td class="text-center">
-												카테고리배너
-											</td>
-											<td class="text-center">
-												1
-											</td>
-											<td class="text-center">
-												2
-											</td>
-											<td class="text-center">
-												3
-											</td>
-											<td class="text-center">
-												4
-											</td>
-											<td class="text-center">
-												5
-											</td>
-											<td class="text-center">
-												6
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												<div>2026-08-26</div>
-												<div>관리자</div>
-											</td>
-											<td class="text-center">
-												<a class="btn btn-outline btn-dark"> 바로가기</a>
-											</td>
-										</tr>
+										@{
+											if (bannertypelist.Any())
+											{
+												foreach (var item in bannertypelist)
+												{
+													<tr>
+														<td class="text-center">
+															@(item.bcname)
+														</td>
+														<td class="text-center">
+															@(item.total)
+														</td>
+														<td class="text-center">
+															@(item.deadline)
+														</td>
+														<td class="text-center">
+															@(item.ing)
+														</td>
+														<td class="text-center">
+															@(item.reservation)
+														</td>
+														<td class="text-center">
+															@(item.waiting)
+														</td>
+														<td class="text-center">
+															@(item.empty)
+														</td>
+														<td class="text-center">
+															<buttion onclick="typelink('@(item.bccode)')" class="btn btn-outline btn-dark"> 바로가기</buttion>
+														</td>
+													</tr>
+
+												}
+
+											}
+										}
+										@{
+											if (bcategorylist != null)
+											{
+
+                                                var item = bcategorylist;
+
+												<tr>
+													<td class="text-center">
+														카테고리배너
+													</td>
+													<td class="text-center">
+														@(item.total)
+													</td>
+													<td class="text-center">
+														@(item.deadline)
+													</td>
+													<td class="text-center">
+														@(item.ing)
+													</td>
+													<td class="text-center">
+														@(item.reservation)
+													</td>
+													<td class="text-center">
+														@(item.waiting)
+													</td>
+													<td class="text-center">
+														@(item.empty)
+													</td>
+													<td class="text-center">
+														<button onclick="typelink('BC007')" class="btn btn-outline btn-dark"> 바로가기</button>
+													</td>
+												</tr>
+											}
+										}
+										
 										<tr class="bg-gray-100">
 											<td class="text-center">
 												통합
 											</td>
 											<td class="text-center">
-												133
+												@(totalbanner)
 											</td>
 											<td class="text-center">
-												2(3%)
+												@(deadlinebanner)(@(deadlinerate)%)
 											</td>
 											<td class="text-center">
-												3(80%)
+												@(usebanner)(@(userate)%)
 											</td>
 											<td class="text-center">
-												4(2%)
+												@(reservationbanner)(@(reservationrate)%)
 											</td>
 											<td class="text-center">
-												5(10.5%)
+												@(waitbanner)(@(waitrate)%)
 											</td>
 											<td class="text-center">
-												6(3%)
-											</td>
-											<td class="text-center">
-												-
-											</td>
-											<td class="text-center">
-												-
+												@(emptybanner)(@(emptyrate)%)
 											</td>
 											<td class="text-center">
 												-
@@ -513,7 +434,7 @@
 											</td>
 
 											<td class="text-end fw-bold">
-												45건
+												@(paidbanner)건
 											</td>
 										</tr>
 
@@ -524,7 +445,7 @@
 											</td>
 
 											<td class="text-end fw-bold">
-												25건
+												@(freebanner)건
 											</td>
 										</tr>
 
@@ -535,18 +456,18 @@
 											</td>
 
 											<td class="text-end fw-bold">
-												20건
+												@(newfreebanner)건
 											</td>
 										</tr>
 
 										<tr>
 											<td>
-												<span class="status-dot bg-orange me-2"></span>
+												<span class="status-dot bg-yellow me-2"></span>
 												무료_자사
 											</td>
 
 											<td class="text-end fw-bold">
-												10건
+												@(companyfreebanner)건
 											</td>
 										</tr>
 
@@ -727,6 +648,27 @@
 </div>
 <!-- END PAGE BODY -->
 
+<div class="modal modal-blur fade"
+	 id="positionbannermodal"
+	 tabindex="-1"
+	 role="dialog"
+	 aria-labelledby="positionbannermodal-title"
+	 aria-hidden="true"
+	 data-bs-backdrop="static"
+	 data-bs-keyboard="false">
+
+	<div class="modal-dialog  modal-dialog-centered" role="document">
+
+		<div class="modal-content" id="positionbannermodal-content">
+
+			<!-- Ajax 내용 -->
+
+		</div>
+
+	</div>
+
+</div>
+
 <script>
 	document.addEventListener("DOMContentLoaded", function () {
 
@@ -736,6 +678,16 @@
 		if (!chartElement || typeof ApexCharts === "undefined") {
 			return;
 		}
+
+		const seriesData = [
+			@paidbanner,
+			@freebanner,
+			@newfreebanner,
+			@companyfreebanner
+		];
+
+
+		const totalCount = seriesData.reduce(function (a, b) { return a + b; }, 0);
 
 		const chart = new ApexCharts(chartElement, {
 
@@ -749,12 +701,7 @@
 				}
 			},
 
-			series: [
-				45,
-				25,
-				20,
-				10
-			],
+			series: seriesData,
 
 			labels: [
 				"유료",
@@ -821,7 +768,7 @@
 								fontWeight: 600,
 
 								formatter: function () {
-									return "100건";
+									return totalCount + "건";
 								}
 							}
 
@@ -848,4 +795,30 @@
 		chart.render();
 
 	});
+
+	function bannerpositionmodal() {
+
+		
+
+		$("#positionbannermodal-content").html("");
+
+		const ajaxlink = '/Banner/AjaxBannerPositionModal';
+
+
+
+		$.post(ajaxlink, '', function (html) {
+			$('#positionbannermodal-content').html(html);
+		});
+
+
+		$('#positionbannermodal').modal('show');
+
+	}
+
+	function typelink(bccode) {
+		var f = $('<form method="post" action="/Banner/Management"></form>');
+		f.append($('<input type="hidden" name="searchbccode">').val(bccode));
+		$('body').append(f);
+		f.submit();
+    }
 </script>

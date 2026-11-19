@@ -38,30 +38,50 @@
                                     <img src="~/images/icon/search.svg" width="20" height="20" />
                                 </span>
 
-                                <input id="advanced-table-search" type="text" class="form-control" autocomplete="off">
+                                <input id="companyname" name="companyname" type="text" class="form-control" autocomplete="off">
 
                             </div>
 
-                            <a href="#" class="btn btn-0">검색</a>
+                            <button class="btn btn-0" onclick="companysearch()">검색</button>
+
+                            <button class="btn btn-0" onclick="cleansearch()">초기화</button>
 
                             <div>
-                                <select name="" class="form-select">
-                                    <option>운영 구분 전체</option>
-                                    <option>운영중</option>
-                                    <option>마감임박</option>
-                                    <option>예약</option>
-                                    <option>대기</option>
+                                <select name="freetype" id="freetype" class="form-select" onchange="freesearch(this)">
+                                    <option value="">유·무료 전체</option>
+                                    <option value="f1">유료</option>
+                                    <option value="f2">무료</option>
+                                    <option value="f3">무료 메인신규</option>
+                                    <option value="f4">무료 지사</option>
                                 </select>
                             </div>
 
-                            <div>
-                                <select name="" class="form-select">
-                                    <option>유·무료 전체</option>
-                                    <option>유료</option>
-                                    <option>무료</option>
-                                    <option>무료 메인신규</option>
-                                    <option>무료 지사</option>
-                                </select>
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="#" onclick="bannersearch(''); return false;" class="text-reset text-decoration-none">
+                                    <span class="status-dot bg-dark me-2 status-dot-11"></span>
+                                    전체<span id="btotal"></span>
+                                </a>
+
+                                <a href="#" onclick="bannersearch('d'); return false;" class="text-reset text-decoration-none">
+                                    <span class="status-dot bg-red me-2 status-dot-11"></span>
+                                    마감임박<span id="bdeadline"></span>
+                                </a>
+
+                                <a href="#" onclick="bannersearch('i'); return false;" class="text-reset text-decoration-none">
+                                    <span class="status-dot bg-green me-2 status-dot-11"></span>
+                                    운영중<span id="bing"></span>
+                                </a>
+
+                                <a href="#" onclick="bannersearch('r'); return false;" class="text-reset text-decoration-none">
+                                    <span class="status-dot bg-blue me-2 status-dot-11"></span>
+                                    예약<span id="breservation"></span>
+                                </a>
+
+                                <a href="#" onclick="bannersearch('w'); return false;" class="text-reset text-decoration-none">
+                                    <span class="status-dot bg-yellow me-2 status-dot-11"></span>
+                                    대기<span id="bwaiting"></span>
+                                </a>
+
                             </div>
                             
                         </div>
@@ -71,64 +91,7 @@
 
                     <div class="table-responsive">
 
-                        <table class="table table-vcenter mb-0">
-
-                            <thead>
-
-                                <tr class="text-center">
-                                    <th style="width:20%;">
-                                        배너위치
-                                    </th>
-                                    <th style="width:8%;">
-                                        유/무료
-                                    </th>
-                                    <th style="width:10%;">
-                                        등록일
-                                    </th>
-                                    <th style="width:10%;">
-                                        게재기간
-                                    </th>
-                                    <th style="width:10%;">
-                                        업체명
-                                    </th>
-                                    <th style="width:10%;">
-                                        이미지
-                                    </th>
-                                    <th class="text-center">
-                                        메모
-                                    </th>
-                                    <th style="width:10%;">
-                                        금액
-                                    </th>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-
-                                <tr>
-
-                                    <td colspan="8" class="text-center text-secondary py-4">
-
-                                        좌측 배너위치를 선택해주세요.
-
-                                    </td>
-
-                                </tr>
-
-                                <tr class="text-center">
-                                    <td class="text-center">카테고리고정배터_프리몰드_Bottle</td>
-                                    <td class="text-center">유료</td>
-                                    <td class="text-center">2026-06-10</td>
-                                    <td class="text-center"><div>2026-07-20</div><div>~2026-08-20</div></td>
-                                    <td>업체명</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>300,000</td>
-                                </tr>
-
-                            </tbody>
-
-                        </table>
+                        <banner-search-data-list></banner-search-data-list>
 
                     </div>
 
@@ -137,3 +100,58 @@
 		</div>
 	</div>
 </div>
+<script>
+
+    const bannerList =  document.querySelector("banner-search-data-list");
+
+    function bannersearch(searchtype){
+
+        // Lit 컴포넌트에 선택한 배너 전달
+        const bannerList =  document.querySelector("banner-search-data-list");
+    }
+
+    function cleansearch(){
+        
+        $("#companyname").val('');
+        $("#freetype").val('');
+
+        bannerList.searchtype = "";
+        bannerList.companyname = "";
+        bannerList.searchfree = "";
+        bannerList.page = 1;
+        bannerList.getBannerList();
+    }
+
+    function companysearch(){
+    
+        const companyname = $("#companyname").val();
+
+        if(!hasValue(companyname)){
+        
+            alert('업체명을 입력해주세요');
+            return false;
+        }
+
+        bannerList.companyname = companyname;
+        bannerList.page = 1;
+        bannerList.getBannerList();
+    }
+
+
+    function bannersearch(searchtype){
+
+
+        bannerList.searchtype = searchtype;
+        bannerList.page = 1;
+        bannerList.getBannerList();
+    }
+    
+
+    function freesearch(e){
+
+        bannerList.searchfree = e.value;
+        bannerList.page = 1;
+        bannerList.getBannerList();
+    }
+
+</script>
